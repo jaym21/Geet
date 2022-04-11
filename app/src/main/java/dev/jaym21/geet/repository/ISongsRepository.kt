@@ -1,15 +1,15 @@
-package dev.jaym21.geet.ui.repository
+package dev.jaym21.geet.repository
 
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
-import dev.jaym21.geet.ui.extensions.getInt
-import dev.jaym21.geet.ui.extensions.getLong
-import dev.jaym21.geet.ui.extensions.getString
-import dev.jaym21.geet.ui.extensions.getStringOrNull
-import dev.jaym21.geet.ui.models.Song
-import dev.jaym21.geet.ui.utils.PreferencesHelper
+import dev.jaym21.geet.extensions.getInt
+import dev.jaym21.geet.extensions.getLong
+import dev.jaym21.geet.extensions.getString
+import dev.jaym21.geet.extensions.getStringOrNull
+import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.utils.PreferencesHelper
 
 interface ISongsRepository {
 

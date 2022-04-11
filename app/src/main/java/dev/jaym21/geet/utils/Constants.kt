@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui.utils
+package dev.jaym21.geet.utils
 
 object Constants {
 

@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui.extensions
+package dev.jaym21.geet.extensions
 
 import android.database.Cursor
 

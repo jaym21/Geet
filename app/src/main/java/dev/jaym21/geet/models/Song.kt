@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui.models
+package dev.jaym21.geet.models
 
 data class Song(
     var id: Long = 0,
