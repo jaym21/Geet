@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/songsFragment">
+
+    <fragment
+        android:id="@+id/songsFragment"
+        android:name="dev.jaym21.geet.ui.SongsFragment"
+        android:label="fragment_songs"
+        tools:layout="@layout/fragment_songs" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="dev.jaym21.geet.ui.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library" />
+
+</navigation>
