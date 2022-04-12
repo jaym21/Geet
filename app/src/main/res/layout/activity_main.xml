@@ -25,6 +25,7 @@
         app:labelVisibilityMode="selected"
         app:itemIconTint="@drawable/bottom_nav_foreground"
         app:itemTextColor="@drawable/bottom_nav_foreground"
+        app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

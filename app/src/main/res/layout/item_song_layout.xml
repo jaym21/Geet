@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/ivSongArtwork"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSongTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Abcd"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        style="@style/TextAppearance.Subtitle1"
+        app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
+        app:layout_constraintEnd_toStartOf="@id/ivMoreMenu"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="12dp"/>
+
+    <TextView
+        android:id="@+id/tvArtistName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="xyz"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        style="@style/TextAppearance.Body1"
+        app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
+        app:layout_constraintEnd_toStartOf="@id/ivMoreMenu"
+        app:layout_constraintTop_toBottomOf="@id/tvSongTitle"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="12dp"/>
+
+    
+    <ImageView
+        android:id="@+id/ivMoreMenu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_more"
+        app:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
