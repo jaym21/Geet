@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
+import android.util.Log
 import dev.jaym21.geet.extensions.getInt
 import dev.jaym21.geet.extensions.getLong
 import dev.jaym21.geet.extensions.getString
@@ -13,49 +14,57 @@ import dev.jaym21.geet.utils.PreferencesHelper
 
 interface ISongsRepository {
 
-    fun getSongs(): List<Song>
+    suspend fun getSongs(): List<Song>
 }
 
-class SongsRepository(private val contentResolver: ContentResolver, private val context: Context): ISongsRepository {
+class SongsRepository(private val context: Context): ISongsRepository {
 
-    override fun getSongs(): List<Song> {
+    override suspend fun getSongs(): List<Song> {
         val cursor = makeSongCursor(null, null)
         val songs = arrayListOf<Song>()
-        if (cursor.moveToFirst()) {
+        Log.d("TAGYOYO", "getSongs: ${cursor?.count}")
+        if (cursor!= null && cursor.moveToFirst()) {
             do {
                 songs.add(getSongFromCursor(cursor))
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return songs
     }
 
 
-    private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor {
-        return makeSongCursor(selection, paramArrayOfString, PreferencesHelper.getSongSortOrder(context))
+    private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
+        return makeSongCursor(selection, paramArrayOfString, MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
     }
 
     private fun makeSongCursor(
         selection: String?,
         paramArrayOfString: Array<String>?,
         sortOrder: String?
-    ): Cursor {
-        val selectionStatement = StringBuilder("is_music=1 AND title != ''")
+    ): Cursor? {
+        val selectionStatement = StringBuilder(MediaStore.Audio.AudioColumns.IS_MUSIC + "=1" + " AND " + MediaStore.Audio.AudioColumns.TITLE + " != ''")
 
         if (!selection.isNullOrEmpty()) {
             selectionStatement.append(" AND $selection")
         }
 
-        val projection =
-            arrayOf("_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id")
+        val projection = arrayOf(
+            MediaStore.Audio.AudioColumns._ID,
+            MediaStore.Audio.AudioColumns.TITLE,
+            MediaStore.Audio.AudioColumns.ARTIST,
+            MediaStore.Audio.AudioColumns.ALBUM,
+            MediaStore.Audio.AudioColumns.DURATION,
+            MediaStore.Audio.AudioColumns.TRACK,
+            MediaStore.Audio.AudioColumns.ARTIST_ID,
+            MediaStore.Audio.AudioColumns.ALBUM_ID,)
 
-        return contentResolver.query(
+        return context.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             projection,
-            selectionStatement.toString(),
-            paramArrayOfString,
-            sortOrder
-        ) ?: throw IllegalStateException("Unable to query, null returned")
+            null,
+            null,
+            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
+        )
     }
 
     private fun getSongFromCursor(cursor: Cursor): Song {

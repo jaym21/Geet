@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/songsFragment"
-        android:name="dev.jaym21.geet.ui.SongsFragment"
+        android:name="dev.jaym21.geet.ui.songs.SongsFragment"
         android:label="fragment_songs"
         tools:layout="@layout/fragment_songs" />
 
