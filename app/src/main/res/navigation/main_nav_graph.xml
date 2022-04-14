@@ -9,12 +9,28 @@
         android:id="@+id/songsFragment"
         android:name="dev.jaym21.geet.ui.songs.SongsFragment"
         android:label="fragment_songs"
-        tools:layout="@layout/fragment_songs" />
+        tools:layout="@layout/fragment_songs" >
+        <action
+            android:id="@+id/action_songsFragment_to_nowPlayingFragment"
+            app:destination="@id/nowPlayingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/libraryFragment"
         android:name="dev.jaym21.geet.ui.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="dev.jaym21.geet.ui.nowplaying.NowPlayingFragment"
+        android:label="fragment_now_playing"
+        tools:layout="@layout/fragment_now_playing" >
+
+        <argument
+            android:name="currentSong"
+            app:argType="dev.jaym21.geet.models.Song" />
+
+    </fragment>
 
 </navigation>
