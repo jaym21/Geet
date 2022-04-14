@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.ItemSongLayoutBinding
 import dev.jaym21.geet.models.Song
 
-class SongsRVAdapter: ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
+class SongsRVAdapter(private val listener: ISongsRVAdapter): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
 
     class SongsDiffUtil: DiffUtil.ItemCallback<Song>() {
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
@@ -32,6 +33,7 @@ class SongsRVAdapter: ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDif
         val title: TextView = itemView.findViewById(R.id.tvSongTitle)
         val artist: TextView = itemView.findViewById(R.id.tvArtistName)
         val artwork: ImageView = itemView.findViewById(R.id.ivSongArtwork)
+        val root: ConstraintLayout = itemView.findViewById(R.id.clSongRoot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsViewHolder {
@@ -47,5 +49,13 @@ class SongsRVAdapter: ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDif
         val albumArtUri = ContentUris.withAppendedId(artworkUri,currentItem.albumId)
 
         Glide.with(holder.itemView.context).load(albumArtUri).into(holder.artwork)
+
+        holder.root.setOnClickListener {
+            listener.onSongClicked(currentItem)
+        }
     }
+}
+
+interface ISongsRVAdapter {
+    fun onSongClicked(song: Song)
 }

@@ -16,16 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSongsBinding
+import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.utils.Constants
 
-class SongsFragment : Fragment() {
+class SongsFragment : Fragment(), ISongsRVAdapter {
 
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
     private lateinit var viewModel: SongsViewModel
-    private val songsAdapter = SongsRVAdapter()
+    private val songsAdapter = SongsRVAdapter(this)
 
     private var readPermissionGranted = false
     private var writePermissionGranted = false
@@ -81,5 +82,9 @@ class SongsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onSongClicked(song: Song) {
+
     }
 }
