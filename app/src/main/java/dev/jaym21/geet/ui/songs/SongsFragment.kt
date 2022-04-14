@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSongsBinding
@@ -85,6 +86,8 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
     }
 
     override fun onSongClicked(song: Song) {
-
+        val bundle = Bundle()
+        bundle.putParcelable("currentSong", song)
+        findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment, bundle)
     }
 }
