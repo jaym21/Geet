@@ -10,4 +10,5 @@
     <color name="black_alpha_85">#d80a0a0a</color>
     <color name="white_alpha_70">#B3FFFFFF</color>
     <color name="white_alpha_60">#99FFFFFF</color>
+    <color name="white_alpha_50">#80FFFFFF</color>
 </resources>

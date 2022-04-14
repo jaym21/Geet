@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    android:background="@color/colorDark">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -23,6 +24,7 @@
         app:menu="@menu/bottom_nav_menu"
         app:itemIconSize="25dp"
         app:labelVisibilityMode="selected"
+        android:background="@color/colorDark"
         app:itemIconTint="@drawable/bottom_nav_foreground"
         app:itemTextColor="@drawable/bottom_nav_foreground"
         app:elevation="0dp"

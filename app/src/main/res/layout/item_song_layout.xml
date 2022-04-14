@@ -5,13 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    android:id="@+id/clSongRoot">
+    android:id="@+id/clSongRoot"
+    android:background="@color/colorDark">
 
     <ImageView
         android:id="@+id/ivSongArtwork"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -21,11 +23,12 @@
         android:layout_height="wrap_content"
         tools:text="Abcd"
         android:textSize="16sp"
+        android:textColor="@color/white"
         android:singleLine="true"
         android:ellipsize="end"
-        style="@style/TextAppearance.Subtitle1"
+        android:fontFamily="@font/publicsans_medium"
         app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toStartOf="@id/ivMoreMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="12dp"/>
@@ -36,22 +39,23 @@
         android:layout_height="wrap_content"
         tools:text="xyz"
         android:textSize="12sp"
+        android:textColor="@color/white_alpha_70"
         android:singleLine="true"
         android:ellipsize="end"
-        style="@style/TextAppearance.Body1"
+        android:fontFamily="@font/publicsans_regular"
         app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toStartOf="@id/ivMoreMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSongTitle"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="12dp"/>
 
-    <ImageView
-        android:id="@+id/ivMoreMenu"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_more"
-        app:tint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/ivMoreMenu"-->
+<!--        android:layout_width="25dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:src="@drawable/ic_more"-->
+<!--        app:tint="@color/white"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
     
 </androidx.constraintlayout.widget.ConstraintLayout>
