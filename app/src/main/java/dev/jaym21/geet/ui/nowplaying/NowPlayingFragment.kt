@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
+import dev.jaym21.geet.models.Song
 
 class NowPlayingFragment : Fragment() {
 
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding: FragmentNowPlayingBinding
         get() = _binding!!
+    private var currentSong: Song? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +28,12 @@ class NowPlayingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        currentSong = arguments?.getParcelable("currentSong")
+
+        if (currentSong != null) {
+            
+        }
     }
 
     override fun onDestroy() {
