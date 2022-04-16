@@ -17,4 +17,14 @@ object Constants {
     const val SONG_PLAYED = "song_played"
     const val SONG_PAUSED = "song_paused"
     const val SONG_ENDED = "song_ended"
+    const val IS_PLAYING = "is_playing"
+
+    //notification
+    const val NOTIFICATION_SONG_ID = 1
+    const val NOTIFICATION_SONG_CHANNEL_ID = "notification_song_channel_id"
+    const val FROM_NOTIFICATION = "from_notification"
+    const val CURRENT_PLAYING_SONG_POSITION = "current_playing_song_position"
+    const val NEXT_CLICKED = "next_clicked"
+    const val PREVIOUS_CLICKED = "previous_clicked"
+    const val PLAY_PAUSE_CLICKED = "play_pause_clicked"
 }

@@ -1,13 +1,16 @@
-package dev.jaym21.geet.ui.songs
+package dev.jaym21.geet.ui
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SongsViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository = SongsRepository(application.applicationContext)
 

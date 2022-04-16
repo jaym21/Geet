@@ -11,23 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSongsBinding
 import dev.jaym21.geet.models.Song
-import dev.jaym21.geet.repository.SongsRepository
+import dev.jaym21.geet.ui.MainViewModel
 import dev.jaym21.geet.utils.Constants
+import dev.jaym21.geet.utils.PreferencesHelper
 
 class SongsFragment : Fragment(), ISongsRVAdapter {
 
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
-    private lateinit var viewModel: SongsViewModel
+    private lateinit var viewModel: MainViewModel
     private val songsAdapter = SongsRVAdapter(this)
+    private var songs = listOf<Song>()
 
     private var readPermissionGranted = false
     private var writePermissionGranted = false
@@ -53,7 +54,7 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
 
         setUpRecyclerView()
 
-        viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         if (readPermissionGranted) {
             if (writePermissionGranted) {
@@ -61,6 +62,7 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
 
                 viewModel.songs.observe(viewLifecycleOwner) {
                     Log.d("TAGYOYO", "onViewCreated: $it")
+                    songs = it
                     if (!it.isNullOrEmpty()) {
                         songsAdapter.submitList(it)
                     }
@@ -86,6 +88,28 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
     }
 
     override fun onSongClicked(song: Song) {
+        val idList = mutableListOf<Long>()
+        for (i in songs) {
+            idList.add(i.id)
+        }
+
+        val idArray = idList.toLongArray()
+        val index = idArray.indexOf(song.id)
+
+        val reqArray = idArray.copyOfRange(index, idArray.size)
+
+        PreferencesHelper.setQueueIds(requireContext(), reqArray)
+
+        for (i in idArray) {
+            Log.d("TAGYOYO", "idArray: $i")
+        }
+
+        for (i in reqArray) {
+            Log.d("TAGYOYO", "reqArray: $i")
+        }
+
+        Log.d("TAGYOYO", "index $index")
+
         val bundle = Bundle()
         bundle.putParcelable("currentSong", song)
         findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment, bundle)

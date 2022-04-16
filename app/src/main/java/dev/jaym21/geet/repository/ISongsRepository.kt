@@ -1,20 +1,22 @@
 package dev.jaym21.geet.repository
 
-import android.content.ContentResolver
+
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
-import android.util.Log
 import dev.jaym21.geet.extensions.getInt
 import dev.jaym21.geet.extensions.getLong
 import dev.jaym21.geet.extensions.getString
 import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.Song
-import dev.jaym21.geet.utils.PreferencesHelper
 
 interface ISongsRepository {
 
     suspend fun getSongs(): List<Song>
+
+    suspend fun getSongForId(id: Long): Song
+
+    suspend fun getSongsForIds(ids: LongArray): List<Song>
 }
 
 class SongsRepository(private val context: Context): ISongsRepository {
@@ -22,7 +24,39 @@ class SongsRepository(private val context: Context): ISongsRepository {
     override suspend fun getSongs(): List<Song> {
         val cursor = makeSongCursor(null, null)
         val songs = arrayListOf<Song>()
-        Log.d("TAGYOYO", "getSongs: ${cursor?.count}")
+
+        if (cursor!= null && cursor.moveToFirst()) {
+            do {
+                songs.add(getSongFromCursor(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+        return songs
+    }
+
+    override suspend fun getSongForId(id: Long): Song {
+        val cursor = makeSongCursor("${MediaStore.Audio.AudioColumns._ID} = $id", null)
+        var song = Song()
+        if (cursor!= null && cursor.moveToFirst()) {
+            song = getSongFromCursor(cursor)
+        }
+        return song
+    }
+
+    override suspend fun getSongsForIds(ids: LongArray): List<Song> {
+        var selection = "${MediaStore.Audio.AudioColumns._ID} IN ("
+        for (id in ids) {
+            selection += "$id,"
+        }
+
+        if (ids.isNotEmpty()) {
+            selection = selection.substring(0, selection.length - 1)
+        }
+        selection += ")"
+
+        val cursor = makeSongCursor(selection, null)
+        val songs = arrayListOf<Song>()
+
         if (cursor!= null && cursor.moveToFirst()) {
             do {
                 songs.add(getSongFromCursor(cursor))
