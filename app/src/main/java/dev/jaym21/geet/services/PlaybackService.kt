@@ -213,6 +213,10 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         startSong()
     }
 
+    fun seek(position: Int) {
+        mediaPlayer.seekTo(position)
+    }
+
     private fun setState(state: String) {
         songState = state
     }
