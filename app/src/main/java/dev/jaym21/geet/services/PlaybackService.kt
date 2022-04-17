@@ -38,8 +38,8 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var notificationGenerator: NotificationGenerator
     private lateinit var handler: Handler
-    private lateinit var viewSongInterface: ViewSongInterface
-    private lateinit var songInterface: ViewSongInterface
+    private var viewSongInterface: ViewSongInterface? = null
+    private var playbackServiceInterface: PlaybackServiceInterface? = null
     private var queuedSongs = listOf<Song>()
     var songState = ""
     private var isForeground = false
@@ -120,7 +120,13 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
 
         handler.postDelayed(Runnable {
             val current = mediaPlayer.currentPosition
-            if ()
+            if (viewSongInterface != null)
+                viewSongInterface?.onSongProgress(current / 100)
+
+            if (songPosition < queuedSongs.size)
+                playbackServiceInterface?.onSongProgress(((current * 10000) / queuedSongs[songPosition].duration).toInt())
+
+            handler.postDelayed({}, 100)
         }, 100)
     }
 
@@ -252,6 +258,14 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         fun getService(): PlaybackService {
             return this@PlaybackService
         }
+    }
+
+    fun setPlaybackServiceCallbacks(playbackServiceInterface: PlaybackServiceInterface) {
+        this.playbackServiceInterface = playbackServiceInterface
+    }
+
+    fun setViewSongInterface(viewSongInterface: ViewSongInterface) {
+        this.viewSongInterface = viewSongInterface
     }
 
     interface PlaybackServiceInterface {
