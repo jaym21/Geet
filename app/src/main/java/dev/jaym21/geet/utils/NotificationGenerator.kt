@@ -21,7 +21,7 @@ class NotificationGenerator {
     lateinit var remoteReviews: RemoteViews
     private lateinit var bigRemoteReviews: RemoteViews
 
-    private fun showSongNotification(context: Context, songPosition: Int, queuedSongs: List<Song>, bitmap: Bitmap?) {
+    fun showSongNotification(context: Context, songPosition: Int, queuedSongs: List<Song>, bitmap: Bitmap?) {
         currentSongPosition = songPosition
 
         remoteReviews = RemoteViews(context.packageName, R.layout.song_notification)
@@ -85,7 +85,7 @@ class NotificationGenerator {
         notificationManager.notify(Constants.NOTIFICATION_SONG_ID, notificationBuilder.build())
     }
 
-    private fun updateView(isPlaying: Boolean, currentSongPosition: Int) {
+    fun updateView(isPlaying: Boolean, currentSongPosition: Int) {
         this.isPlaying = isPlaying
         this.currentSongPosition = currentSongPosition
 

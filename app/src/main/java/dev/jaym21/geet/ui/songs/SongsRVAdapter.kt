@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.ItemSongLayoutBinding
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.utils.SongUtils
 
 class SongsRVAdapter(private val listener: ISongsRVAdapter): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
 
@@ -45,8 +46,7 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter): ListAdapter<Song, S
         holder.title.text = currentItem.title
         holder.artist.text = currentItem.artist
 
-        val artworkUri = Uri.parse("content://media/external/audio/albumart")
-        val albumArtUri = ContentUris.withAppendedId(artworkUri,currentItem.albumId)
+        val albumArtUri = SongUtils.getAlbumArtUri(currentItem.albumId)
 
         Glide.with(holder.itemView.context).load(albumArtUri).into(holder.artwork)
 

@@ -42,4 +42,16 @@ object PreferencesHelper {
         }
         return longList.toLongArray()
     }
+
+    fun setIsRepeatOn(context: Context, isRepeatOn: Boolean) {
+        val sharedPreferences = context.getSharedPreferences(Constants.PREFERENCES_HELPER, Activity.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(Constants.IS_REPEAT_ON, isRepeatOn)
+        editor.apply()
+    }
+
+    fun getIsRepeatOn(context: Context): Boolean {
+        val sharedPreferences = context.getSharedPreferences(Constants.PREFERENCES_HELPER, Activity.MODE_PRIVATE)
+        return sharedPreferences.getBoolean(Constants.IS_REPEAT_ON, false)
+    }
 }
