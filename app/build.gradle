@@ -73,6 +73,9 @@ dependencies {
     def gson = "2.9.0"
     implementation "com.google.code.gson:gson:$gson"
 
+    //palette
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
     //unit testing
     testImplementation 'junit:junit:4.13.2'
 
