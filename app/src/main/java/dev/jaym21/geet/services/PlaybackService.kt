@@ -42,7 +42,6 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
     private var playbackServiceInterface: PlaybackServiceInterface? = null
     private var queuedSongs = listOf<Song>()
     var songState = ""
-    private var isForeground = false
     private var songPosition = 0
 
     private val serviceJob = Job()
@@ -146,11 +145,20 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        stopForeground(true)
+    }
+
     private fun startSong() {
         val song = queuedSongs[songPosition]
 
         showNotification(song)
         setState(Constants.SONG_LOADED)
+
+        playbackServiceInterface?.onSongChanged(songPosition)
+        if (viewSongInterface != null)
+            viewSongInterface?.onSongChanged(songPosition)
 
         mediaPlayer.reset()
 
@@ -219,6 +227,10 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
 
     private fun setState(state: String) {
         songState = state
+
+        playbackServiceInterface?.onSongDisturbed(state, queuedSongs[songPosition])
+        if (viewSongInterface != null)
+            viewSongInterface?.onSongDisturbed(state, queuedSongs[songPosition])
     }
 
     private fun showNotification(song: Song) {
