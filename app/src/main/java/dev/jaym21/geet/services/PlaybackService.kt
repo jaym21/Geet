@@ -112,6 +112,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
     }
 
     override fun onPrepared(mp: MediaPlayer?) {
+        //TODO: use non deprecated code
         audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
         mediaPlayer.start()
         setState(Constants.SONG_STARTED)
@@ -176,6 +177,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
 
     private fun playSong() {
         if (songState.isNotEmpty()) {
+            //TODO: use non deprecated code
             audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
             mediaPlayer.start()
             setState(Constants.SONG_PLAYED)

@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.services.PlaybackService
 import dev.jaym21.geet.utils.Constants
+import dev.jaym21.geet.utils.SongUtils
 
 class NowPlayingFragment : Fragment() {
 
@@ -53,7 +56,13 @@ class NowPlayingFragment : Fragment() {
                         Constants.SONG_LOADED -> {
                             binding.tvSongTitle.text = song.title
                             binding.tvSongArtist.text = song.artist
-                            binding.tvDuration.text =
+                            binding.tvDuration.text =  SongUtils.formatTimeStringShort(requireContext(), song.duration)
+                            binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), 0)
+                            binding.seekBar.progress = 0
+                            binding.seekBar.isEnabled = false
+                            binding.seekBar.isClickable = false
+                            binding.seekBar.max = (song.duration / 100).toInt()
+                            binding.ivPlay.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pause))
                         }
                         Constants.SONG_STARTED -> {
 
