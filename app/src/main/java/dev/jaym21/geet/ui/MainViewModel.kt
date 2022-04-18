@@ -14,11 +14,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository = SongsRepository(application.applicationContext)
 
-    private val _songs =  MutableLiveData<List<Song>>()
+    private val _songs: MutableLiveData<List<Song>> =  MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
 
+    private val _songsForIds: MutableLiveData<List<Song>> =  MutableLiveData()
+    val songsForIds: LiveData<List<Song>> = _songsForIds
 
     fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
         _songs.postValue(repository.getSongs())
+    }
+
+    fun getSongForIds(ids: LongArray) = viewModelScope.launch {
+        _songsForIds.postValue(repository.getSongsForIds(ids))
     }
 }
