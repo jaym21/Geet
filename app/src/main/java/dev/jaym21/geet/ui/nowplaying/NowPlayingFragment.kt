@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -121,10 +122,27 @@ class NowPlayingFragment : Fragment() {
         viewModel.songsForIds.observe(viewLifecycleOwner) {
             queuedSongs = it
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, i: Int, b: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        requireContext().stopService(playIntent)
+        requireContext().unbindService(songConnection)
+        playbackService = null
         _binding = null
     }
 }
