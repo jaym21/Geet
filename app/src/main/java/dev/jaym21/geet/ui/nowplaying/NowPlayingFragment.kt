@@ -1,6 +1,8 @@
 package dev.jaym21.geet.ui.nowplaying
 
 import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
@@ -9,20 +11,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.services.PlaybackService
+import dev.jaym21.geet.ui.MainViewModel
 import dev.jaym21.geet.utils.Constants
+import dev.jaym21.geet.utils.PreferencesHelper
 import dev.jaym21.geet.utils.SongUtils
+import kotlinx.coroutines.launch
 
 class NowPlayingFragment : Fragment() {
 
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding: FragmentNowPlayingBinding
         get() = _binding!!
+    private lateinit var viewModel: MainViewModel
     private var currentSong: Song? = null
     private var playbackService: PlaybackService? = null
+    private var playIntent: Intent? = null
+    private var queuedSongs = listOf<Song>()
     private var isSongBound = false
     private var currentPlayingPosition = 0
 
@@ -40,8 +50,18 @@ class NowPlayingFragment : Fragment() {
 
         currentSong = arguments?.getParcelable("currentSong")
 
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         if (currentSong != null) {
-            
+            attachListeners()
+            val queueIds = PreferencesHelper.getQueueIds(requireContext())
+            viewModel.getSongForIds(queueIds)
+
+            if (playIntent == null) {
+                playIntent = Intent(requireContext(), PlaybackService::class.java)
+                requireContext().bindService(playIntent, songConnection, Context.BIND_AUTO_CREATE)
+                requireContext().startService(playIntent)
+            }
         }
     }
 
@@ -94,6 +114,12 @@ class NowPlayingFragment : Fragment() {
 
         override fun onServiceDisconnected(p0: ComponentName?) {
             isSongBound = false
+        }
+    }
+
+    private fun attachListeners() {
+        viewModel.songsForIds.observe(viewLifecycleOwner) {
+            queuedSongs = it
         }
     }
 
