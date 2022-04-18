@@ -24,6 +24,7 @@ class NowPlayingFragment : Fragment() {
     private var currentSong: Song? = null
     private var playbackService: PlaybackService? = null
     private var isSongBound = false
+    private var currentPlayingPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,13 +83,12 @@ class NowPlayingFragment : Fragment() {
                 }
 
                 override fun onSongChanged(newPosition: Int) {
-
+                    currentPlayingPosition = newPosition
                 }
 
                 override fun onSongProgress(position: Int) {
 
                 }
-
             })
         }
 
