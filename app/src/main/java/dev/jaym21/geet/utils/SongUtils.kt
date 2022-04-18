@@ -38,4 +38,21 @@ object SongUtils {
             BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
         }
     }
+
+    fun formatTimeStringShort(context: Context, secs: Long): String {
+        var seconds = secs
+        val hours: Long = seconds / 3600
+        seconds %= 3600
+        val minutes: Long = seconds / 60
+        seconds %= 60
+
+        val formatString = if (hours == 0L) {
+            R.string.duration_format_short
+        } else {
+            R.string.duration_format_long
+        }
+
+        val durationFormat = context.resources.getString(formatString)
+        return String.format(durationFormat, hours, minutes, seconds)
+    }
 }
