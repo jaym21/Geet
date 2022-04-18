@@ -1,13 +1,17 @@
 package dev.jaym21.geet.ui.nowplaying
 
+import android.content.ComponentName
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.services.PlaybackService
+import dev.jaym21.geet.utils.Constants
 
 class NowPlayingFragment : Fragment() {
 
@@ -15,7 +19,8 @@ class NowPlayingFragment : Fragment() {
     private val binding: FragmentNowPlayingBinding
         get() = _binding!!
     private var currentSong: Song? = null
-
+    private var playbackService: PlaybackService? = null
+    private var isSongBound = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +38,51 @@ class NowPlayingFragment : Fragment() {
 
         if (currentSong != null) {
             
+        }
+    }
+
+    private val songConnection = object : ServiceConnection {
+        override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
+            val binder = service as PlaybackService.PlaybackBinder
+            playbackService = binder.getService()
+            isSongBound = true
+
+            playbackService?.setViewSongInterface(object : PlaybackService.ViewSongInterface {
+                override fun onSongDisturbed(state: String, song: Song) {
+                    when(state) {
+                        Constants.SONG_LOADED -> {
+                            binding.tvSongTitle.text = song.title
+                            binding.tvSongArtist.text = song.artist
+                            binding.tvDuration.text =
+                        }
+                        Constants.SONG_STARTED -> {
+
+                        }
+                        Constants.SONG_PLAYED -> {
+
+                        }
+                        Constants.SONG_PAUSED -> {
+
+                        }
+                        Constants.SONG_ENDED -> {
+
+                        }
+                    }
+                }
+
+                override fun onSongChanged(newPosition: Int) {
+
+                }
+
+                override fun onSongProgress(position: Int) {
+
+                }
+
+            })
+        }
+
+        override fun onServiceDisconnected(p0: ComponentName?) {
+
         }
     }
 
