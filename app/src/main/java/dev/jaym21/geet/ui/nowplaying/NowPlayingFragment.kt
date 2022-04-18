@@ -70,7 +70,7 @@ class NowPlayingFragment : Fragment() {
                             binding.ivPlay.isClickable = true
                         }
                         Constants.SONG_PLAYED -> {
-
+                            binding.ivPlay.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pause))
                         }
                         Constants.SONG_PAUSED -> {
 
