@@ -93,7 +93,7 @@ class NowPlayingFragment : Fragment() {
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
-
+            isSongBound = false
         }
     }
 
