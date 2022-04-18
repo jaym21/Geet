@@ -87,7 +87,7 @@ class NowPlayingFragment : Fragment() {
                 }
 
                 override fun onSongProgress(position: Int) {
-
+                    binding.seekBar.progress = position
                 }
             })
         }
