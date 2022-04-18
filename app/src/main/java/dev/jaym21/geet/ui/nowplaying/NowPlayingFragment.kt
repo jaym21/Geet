@@ -125,15 +125,18 @@ class NowPlayingFragment : Fragment() {
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, i: Int, b: Boolean) {
-
+                if (playbackService != null && b) {
+                    playbackService?.seek(i * 100)
+                }
+                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), (i * 100).toLong())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
+                playbackService?.pauseSong()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
+                playbackService?.playSong()
             }
         })
     }

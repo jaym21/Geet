@@ -151,7 +151,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         stopForeground(true)
     }
 
-    private fun startSong() {
+    fun startSong() {
         val song = queuedSongs[songPosition]
 
         showNotification(song)
@@ -175,7 +175,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         }
     }
 
-    private fun playSong() {
+    fun playSong() {
         if (songState.isNotEmpty()) {
             //TODO: use non deprecated code
             audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
@@ -187,13 +187,13 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         }
     }
 
-    private fun pauseSong() {
+    fun pauseSong() {
         mediaPlayer.pause()
         setState(Constants.SONG_PAUSED)
         notificationGenerator.updateView(false, songPosition)
     }
 
-    private fun playNextSong() {
+    fun playNextSong() {
         //TODO: CHECK SHUFFLE
         if (songPosition == queuedSongs.size -1) {
             if (PreferencesHelper.getIsRepeatOn(applicationContext)) {
@@ -208,7 +208,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
         startSong()
     }
 
-    private fun playPreviousSong() {
+    fun playPreviousSong() {
         //TODO: CHECK SHUFFLE
         if (songPosition == 0) {
             if (PreferencesHelper.getIsRepeatOn(applicationContext)) {
