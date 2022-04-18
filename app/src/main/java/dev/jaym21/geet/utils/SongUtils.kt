@@ -8,7 +8,9 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import androidx.palette.graphics.Palette
 import dev.jaym21.geet.R
+import kotlinx.coroutines.CoroutineScope
 import java.io.FileNotFoundException
 
 object SongUtils {
@@ -54,5 +56,20 @@ object SongUtils {
 
         val durationFormat = context.resources.getString(formatString)
         return String.format(durationFormat, hours, minutes, seconds)
+    }
+
+    fun getBackgroundColorFromPalette(palette: Palette): Int {
+        var background = palette.getDarkVibrantColor(0xFF616261.toInt())
+
+        if (background == (0xFF616261).toInt())
+            background = palette.getDarkMutedColor(0xFF616261.toInt())
+
+        if (background == (0xFF616261).toInt())
+            background = palette.getVibrantColor(0xFF616261.toInt())
+
+        if (background == (0xFF616261).toInt())
+            background = palette.getMutedColor(0xFF616261.toInt())
+
+        return background
     }
 }

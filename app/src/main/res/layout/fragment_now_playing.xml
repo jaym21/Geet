@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.nowplaying.NowPlayingFragment"
+    android:id="@+id/clNowPlayingRoot"
     android:background="@color/colorDark">
 
     <ImageView

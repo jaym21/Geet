@@ -4,6 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.IBinder
 import androidx.fragment.app.Fragment
@@ -14,6 +17,7 @@ import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.palette.graphics.Palette
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.Song
@@ -30,12 +34,13 @@ class NowPlayingFragment : Fragment() {
     private val binding: FragmentNowPlayingBinding
         get() = _binding!!
     private lateinit var viewModel: MainViewModel
+    private var currentSongPosition: Int = 0
     private var currentSong: Song? = null
     private var playbackService: PlaybackService? = null
     private var playIntent: Intent? = null
     private var queuedSongs = listOf<Song>()
+    private var gradientDrawable: GradientDrawable? = null
     private var isSongBound = false
-    private var currentPlayingPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +59,9 @@ class NowPlayingFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         if (currentSong != null) {
+            initialize()
             attachListeners()
+
             val queueIds = PreferencesHelper.getQueueIds(requireContext())
             viewModel.getSongForIds(queueIds)
 
@@ -64,6 +71,37 @@ class NowPlayingFragment : Fragment() {
                 requireContext().startService(playIntent)
             }
         }
+    }
+
+    private fun initialize() {
+        val albumArtBitmap = SongUtils.getAlbumArtBitmap(requireContext(), queuedSongs[currentSongPosition].albumId)
+        if (albumArtBitmap != null)
+            changeBackground(albumArtBitmap)
+        else
+            changeBackground(0xFF616261)
+    }
+
+    private fun attachListeners() {
+        viewModel.songsForIds.observe(viewLifecycleOwner) {
+            queuedSongs = it
+        }
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, i: Int, b: Boolean) {
+                if (playbackService != null && b) {
+                    playbackService?.seek(i * 100)
+                }
+                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), (i * 100).toLong())
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                playbackService?.pauseSong()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                playbackService?.playSong()
+            }
+        })
     }
 
     private val songConnection = object : ServiceConnection {
@@ -104,7 +142,7 @@ class NowPlayingFragment : Fragment() {
                 }
 
                 override fun onSongChanged(newPosition: Int) {
-                    currentPlayingPosition = newPosition
+                    currentSongPosition = newPosition
                 }
 
                 override fun onSongProgress(position: Int) {
@@ -118,27 +156,14 @@ class NowPlayingFragment : Fragment() {
         }
     }
 
-    private fun attachListeners() {
-        viewModel.songsForIds.observe(viewLifecycleOwner) {
-            queuedSongs = it
-        }
+    private fun changeBackground(bitmap: Bitmap) {
+        val getColorPaletteFromSongImage = Palette.from(bitmap).generate()
+        changeBackground(SongUtils.getBackgroundColorFromPalette(getColorPaletteFromSongImage))
+    }
 
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, i: Int, b: Boolean) {
-                if (playbackService != null && b) {
-                    playbackService?.seek(i * 100)
-                }
-                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), (i * 100).toLong())
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                playbackService?.pauseSong()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                playbackService?.playSong()
-            }
-        })
+    private fun changeBackground(color: Int) {
+        gradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(color, ContextCompat.getColor(requireContext(), R.color.bottom_gradient)))
+        binding.clNowPlayingRoot.background = gradientDrawable
     }
 
     override fun onDestroy() {
