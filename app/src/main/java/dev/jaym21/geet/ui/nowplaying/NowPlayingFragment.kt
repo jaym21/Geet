@@ -60,12 +60,14 @@ class NowPlayingFragment : Fragment() {
                             binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), 0)
                             binding.seekBar.progress = 0
                             binding.seekBar.isEnabled = false
-                            binding.seekBar.isClickable = false
+                            binding.ivPlay.isClickable = false
                             binding.seekBar.max = (song.duration / 100).toInt()
                             binding.ivPlay.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pause))
                         }
                         Constants.SONG_STARTED -> {
-
+                            binding.ivPlay.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pause))
+                            binding.seekBar.isEnabled = true
+                            binding.ivPlay.isClickable = true
                         }
                         Constants.SONG_PLAYED -> {
 
