@@ -66,16 +66,15 @@ class NowPlayingFragment : Fragment() {
         viewModel.songsForIds.observe(viewLifecycleOwner) {
             Log.d("TAGYOYO", "queuedSongs: $it")
             queuedSongs = it
-        }
+            if(queuedSongs.isNotEmpty()) {
+                initialize()
+                attachListeners()
 
-        if(queuedSongs.isNotEmpty()) {
-            initialize()
-            attachListeners()
-
-            if (playIntent == null) {
-                playIntent = Intent(requireContext(), PlaybackService::class.java)
-                requireContext().bindService(playIntent, songConnection, Context.BIND_AUTO_CREATE)
-                requireContext().startService(playIntent)
+                if (playIntent == null) {
+                    playIntent = Intent(requireContext(), PlaybackService::class.java)
+                    requireContext().bindService(playIntent, songConnection, Context.BIND_AUTO_CREATE)
+                    requireContext().startService(playIntent)
+                }
             }
         }
     }

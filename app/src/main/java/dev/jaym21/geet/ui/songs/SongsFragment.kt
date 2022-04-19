@@ -61,7 +61,6 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
                 viewModel.loadSongs()
 
                 viewModel.songs.observe(viewLifecycleOwner) {
-                    Log.d("TAGYOYO", "onViewCreated: $it")
                     songs = it
                     if (!it.isNullOrEmpty()) {
                         songsAdapter.submitList(it)
@@ -102,11 +101,6 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
 
         viewModel.getSongForIds(reqArray)
 
-        viewModel.songsForIds.observe(viewLifecycleOwner) {
-            val bundle = Bundle()
-//            bundle.putParcelable("currentSong", it.toTypedArray())
-            findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment)
-        }
-
+        findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment)
     }
 }
