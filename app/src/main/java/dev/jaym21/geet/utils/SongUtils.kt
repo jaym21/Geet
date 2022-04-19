@@ -33,7 +33,7 @@ object SongUtils {
                 MediaStore.Images.Media.getBitmap(context.contentResolver, getAlbumArtUri(albumId))
             } else {
                 val source = ImageDecoder.createSource(context.contentResolver, getAlbumArtUri(albumId))
-                ImageDecoder.decodeBitmap(source)
+                ImageDecoder.decodeBitmap(source).copy(Bitmap.Config.RGBA_F16, true)
             }
         } catch (e: FileNotFoundException) {
             //TODO: set as app icon
