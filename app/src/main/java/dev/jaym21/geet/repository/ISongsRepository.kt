@@ -65,7 +65,6 @@ class SongsRepository(private val context: Context): ISongsRepository {
             } while (cursor.moveToNext())
         }
         cursor?.close()
-        Log.d("TAGYOYO", "songs: $songs")
         return songs
     }
 

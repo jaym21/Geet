@@ -32,7 +32,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
     MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnPreparedListener,
     MediaPlayer.OnSeekCompleteListener, AudioManager.OnAudioFocusChangeListener {
 
-    private val repository = SongsRepository(applicationContext)
+    private val repository = SongsRepository(this)
     private val playbackBind: IBinder = PlaybackBinder()
     private lateinit var audioManager: AudioManager
     private lateinit var mediaPlayer: MediaPlayer
@@ -69,7 +69,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
 
     private fun init() {
         audioManager = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        val queueIds = PreferencesHelper.getQueueIds(applicationContext)
+        val queueIds = PreferencesHelper.getQueueIds(this)
         serviceScope.launch {
             queuedSongs = repository.getSongsForIds(queueIds)
         }
