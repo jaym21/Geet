@@ -88,7 +88,7 @@ class NowPlayingFragment : Fragment() {
 
         binding.tvSongTitle.text = queuedSongs[currentSongPosition].title
         binding.tvSongArtist.text = queuedSongs[currentSongPosition].artist
-        binding.tvDuration.text = SongUtils.formatTimeStringShort(requireContext(), queuedSongs[currentSongPosition].duration)
+        binding.tvDuration.text = SongUtils.formatTimeStringShort(queuedSongs[currentSongPosition].duration)
 
         binding.seekBar.max = (queuedSongs[currentSongPosition].duration / 100).toInt()
 
@@ -105,7 +105,7 @@ class NowPlayingFragment : Fragment() {
                 if (playbackService != null && b) {
                     playbackService?.seek(i * 100)
                 }
-                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), (i * 100).toLong())
+                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort((i * 100).toLong())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -164,8 +164,8 @@ class NowPlayingFragment : Fragment() {
                         Constants.SONG_LOADED -> {
                             binding.tvSongTitle.text = song.title
                             binding.tvSongArtist.text = song.artist
-                            binding.tvDuration.text =  SongUtils.formatTimeStringShort(requireContext(), song.duration)
-                            binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(requireContext(), 0)
+                            binding.tvDuration.text =  SongUtils.formatTimeStringShort(song.duration)
+                            binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(0)
                             binding.seekBar.progress = 0
                             binding.seekBar.isEnabled = false
                             binding.ivPlay.isClickable = false

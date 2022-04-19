@@ -99,8 +99,6 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
 
         PreferencesHelper.setQueueIds(requireContext(), reqArray)
 
-        viewModel.getSongForIds(reqArray)
-
         findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment)
     }
 }

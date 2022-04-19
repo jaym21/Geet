@@ -41,21 +41,9 @@ object SongUtils {
         }
     }
 
-    fun formatTimeStringShort(context: Context, secs: Long): String {
-        var seconds = secs
-        val hours: Long = seconds / 3600
-        seconds %= 3600
-        val minutes: Long = seconds / 60
-        seconds %= 60
-
-        val formatString = if (hours == 0L) {
-            R.string.duration_format_short
-        } else {
-            R.string.duration_format_long
-        }
-
-        val durationFormat = context.resources.getString(formatString)
-        return String.format(durationFormat, hours, minutes, seconds)
+    fun formatTimeStringShort(secs: Long): String {
+        val s = secs / 1000
+        return String.format("%d:%02d", s/60, s % 60)
     }
 
     fun getBackgroundColorFromPalette(palette: Palette): Int {
