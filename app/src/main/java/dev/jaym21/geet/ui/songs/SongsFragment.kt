@@ -100,18 +100,13 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
 
         PreferencesHelper.setQueueIds(requireContext(), reqArray)
 
-        for (i in idArray) {
-            Log.d("TAGYOYO", "idArray: $i")
+        viewModel.getSongForIds(reqArray)
+
+        viewModel.songsForIds.observe(viewLifecycleOwner) {
+            val bundle = Bundle()
+//            bundle.putParcelable("currentSong", it.toTypedArray())
+            findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment)
         }
 
-        for (i in reqArray) {
-            Log.d("TAGYOYO", "reqArray: $i")
-        }
-
-        Log.d("TAGYOYO", "index $index")
-
-        val bundle = Bundle()
-        bundle.putParcelable("currentSong", song)
-        findNavController().navigate(R.id.action_songsFragment_to_nowPlayingFragment, bundle)
     }
 }

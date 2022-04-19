@@ -29,7 +29,7 @@
 
         <argument
             android:name="currentSong"
-            app:argType="dev.jaym21.geet.models.Song" />
+            app:argType="dev.jaym21.geet.models.Song[]" />
 
     </fragment>
 

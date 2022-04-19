@@ -4,6 +4,7 @@ package dev.jaym21.geet.repository
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
+import android.util.Log
 import dev.jaym21.geet.extensions.getInt
 import dev.jaym21.geet.extensions.getLong
 import dev.jaym21.geet.extensions.getString
@@ -35,16 +36,17 @@ class SongsRepository(private val context: Context): ISongsRepository {
     }
 
     override suspend fun getSongForId(id: Long): Song {
-        val cursor = makeSongCursor("${MediaStore.Audio.AudioColumns._ID} = $id", null)
+        val cursor = makeSongCursor("_id = $id", null)
         var song = Song()
         if (cursor!= null && cursor.moveToFirst()) {
             song = getSongFromCursor(cursor)
         }
+        cursor?.close()
         return song
     }
 
     override suspend fun getSongsForIds(ids: LongArray): List<Song> {
-        var selection = "${MediaStore.Audio.AudioColumns._ID} IN ("
+        var selection = "_id IN ("
         for (id in ids) {
             selection += "$id,"
         }
@@ -63,6 +65,7 @@ class SongsRepository(private val context: Context): ISongsRepository {
             } while (cursor.moveToNext())
         }
         cursor?.close()
+        Log.d("TAGYOYO", "songs: $songs")
         return songs
     }
 
@@ -95,7 +98,7 @@ class SongsRepository(private val context: Context): ISongsRepository {
         return context.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             projection,
-            null,
+            selection,
             null,
             MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
         )

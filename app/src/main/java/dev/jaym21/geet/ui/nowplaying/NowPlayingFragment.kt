@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -54,16 +55,22 @@ class NowPlayingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        currentSong = arguments?.getParcelable("currentSong")
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        if (currentSong != null) {
+        val queueIds = PreferencesHelper.getQueueIds(requireContext())
+        for (i in queueIds) {
+            Log.d("TAGYOYO", "queueIds: $i")
+        }
+        viewModel.getSongForIds(queueIds)
+
+        viewModel.songsForIds.observe(viewLifecycleOwner) {
+            Log.d("TAGYOYO", "queuedSongs: $it")
+            queuedSongs = it
+        }
+
+        if(queuedSongs.isNotEmpty()) {
             initialize()
             attachListeners()
-
-            val queueIds = PreferencesHelper.getQueueIds(requireContext())
-            viewModel.getSongForIds(queueIds)
 
             if (playIntent == null) {
                 playIntent = Intent(requireContext(), PlaybackService::class.java)
@@ -78,13 +85,21 @@ class NowPlayingFragment : Fragment() {
         if (albumArtBitmap != null)
             changeBackground(albumArtBitmap)
         else
-            changeBackground(0xFF616261)
+            changeBackground((0xFF616261).toInt())
+
+        binding.tvSongTitle.text = queuedSongs[currentSongPosition].title
+        binding.tvSongArtist.text = queuedSongs[currentSongPosition].artist
+        binding.tvDuration.text = SongUtils.formatTimeStringShort(requireContext(), queuedSongs[currentSongPosition].duration)
+
+        binding.seekBar.max = (queuedSongs[currentSongPosition].duration / 100).toInt()
+
+        if (PreferencesHelper.getIsRepeatOn(requireContext())) {
+            binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        }
+
     }
 
     private fun attachListeners() {
-        viewModel.songsForIds.observe(viewLifecycleOwner) {
-            queuedSongs = it
-        }
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, i: Int, b: Boolean) {
@@ -102,6 +117,40 @@ class NowPlayingFragment : Fragment() {
                 playbackService?.playSong()
             }
         })
+
+        binding.ivPlay.setOnClickListener {
+            if (playbackService?.songState != Constants.SONG_LOADED) {
+                if (playbackService?.isPlaying() == true) {
+                    playbackService?.pauseSong()
+                } else {
+                    playbackService?.playSong()
+                }
+            }
+        }
+
+        binding.ivPrevious.setOnClickListener {
+            if (currentSongPosition - 1 >= 0) {
+                currentSongPosition--
+            }
+            playbackService?.playPreviousSong()
+        }
+
+        binding.ivNext.setOnClickListener {
+            if (currentSongPosition + 1 < queuedSongs.size) {
+                currentSongPosition++
+            }
+            playbackService?.playNextSong()
+        }
+
+        binding.ivRepeat.setOnClickListener {
+            if (PreferencesHelper.getIsRepeatOn(requireContext())) {
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
+                PreferencesHelper.setIsRepeatOn(requireContext(), false)
+            } else {
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                PreferencesHelper.setIsRepeatOn(requireContext(), true)
+            }
+        }
     }
 
     private val songConnection = object : ServiceConnection {
@@ -168,9 +217,11 @@ class NowPlayingFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireContext().stopService(playIntent)
-        requireContext().unbindService(songConnection)
-        playbackService = null
+        if (playIntent != null) {
+            requireContext().stopService(playIntent)
+            requireContext().unbindService(songConnection)
+            playbackService = null
+        }
         _binding = null
     }
 }

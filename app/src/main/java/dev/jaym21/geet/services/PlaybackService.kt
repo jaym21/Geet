@@ -253,6 +253,9 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
             })
     }
 
+    fun isPlaying(): Boolean {
+        return mediaPlayer.isPlaying
+    }
 
     private fun setSource(path: String): Boolean {
         try {
