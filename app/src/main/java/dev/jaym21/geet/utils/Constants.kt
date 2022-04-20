@@ -2,6 +2,8 @@ package dev.jaym21.geet.utils
 
 object Constants {
 
+    const val MAIN_VIEW_PAGER_SIZE = 5
+
     //shared preferences
     const val PREFERENCES_HELPER = "preferences_helper"
     const val SONG_SORT_ORDER = "song_sort_order"
