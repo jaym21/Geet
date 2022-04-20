@@ -68,6 +68,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
     }
 
     private fun init() {
+        songState = ""
         audioManager = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val queueIds = PreferencesHelper.getQueueIds(this)
         serviceScope.launch {
@@ -126,7 +127,7 @@ class PlaybackService: Service(), MediaPlayer.OnCompletionListener, MediaPlayer.
             if (songPosition < queuedSongs.size)
                 playbackServiceInterface?.onSongProgress(((current * 10000) / queuedSongs[songPosition].duration).toInt())
 
-            handler.postDelayed({}, 100)
+            handler.postDelayed({ }, 100)
         }, 100)
     }
 

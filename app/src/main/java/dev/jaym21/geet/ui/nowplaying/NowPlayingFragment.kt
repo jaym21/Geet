@@ -36,7 +36,6 @@ class NowPlayingFragment : Fragment() {
         get() = _binding!!
     private lateinit var viewModel: MainViewModel
     private var currentSongPosition: Int = 0
-    private var currentSong: Song? = null
     private var playbackService: PlaybackService? = null
     private var playIntent: Intent? = null
     private var queuedSongs = listOf<Song>()
