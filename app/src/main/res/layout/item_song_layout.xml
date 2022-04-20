@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    android:id="@+id/clSongRoot"
-    android:background="@color/colorDark">
+    android:id="@+id/clSongRoot">
 
     <ImageView
         android:id="@+id/ivSongArtwork"
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         tools:text="Abcd"
         android:textSize="16sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:singleLine="true"
         android:ellipsize="end"
         android:fontFamily="@font/inter_medium"
@@ -39,7 +38,7 @@
         android:layout_height="wrap_content"
         tools:text="xyz"
         android:textSize="12sp"
-        android:textColor="@color/white_alpha_70"
+        android:textColor="@color/black_alpha_85"
         android:singleLine="true"
         android:ellipsize="end"
         android:fontFamily="@font/inter_regular"
