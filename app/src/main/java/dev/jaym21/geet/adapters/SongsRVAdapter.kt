@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui.songs
+package dev.jaym21.geet.adapters
 
 import android.content.ContentUris
 import android.net.Uri
