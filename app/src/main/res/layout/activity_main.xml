@@ -31,6 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
