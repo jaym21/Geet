@@ -1,8 +1,12 @@
 package dev.jaym21.geet.playback.player
 
 import android.app.Application
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import dev.jaym21.geet.R
 import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.models.QueueEntity
 import dev.jaym21.geet.models.Song
@@ -53,6 +57,17 @@ class ISongPlayer(
     private var completionCallback: OnCompletion<SongPlayer> = {}
     private var errorCallback: OnError<SongPlayer> = {}
 
+    private var metadataBuilder = MediaMetadataCompat.Builder()
+    private var stateBuilder = createDefaultPlaybackState()
+
+    private lateinit var audioManager: AudioManager
+    private lateinit var focusRequest: AudioFocusRequest
+
+    private var mediaSession = MediaSessionCompat(context, context.getString(R.string.app_name)).apply {
+        setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
+        setCallback(MediaSessionCallback(this, this@ISongPlayer, songsRepository, queueDao))
+        setPlaybackState(stateBuilder.build())
+    }
     override fun playSong() {
 
     }
@@ -144,5 +159,19 @@ class ISongPlayer(
     override fun updatePlaybackState(applier: PlaybackStateCompat.Builder.() -> Unit) {
         TODO("Not yet implemented")
     }
+}
 
+private fun createDefaultPlaybackState(): PlaybackStateCompat.Builder {
+    return PlaybackStateCompat.Builder().setActions(
+        PlaybackStateCompat.ACTION_PLAY
+                or PlaybackStateCompat.ACTION_PAUSE
+                or PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
+                or PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID
+                or PlaybackStateCompat.ACTION_PLAY_PAUSE
+                or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+                or PlaybackStateCompat.ACTION_SET_SHUFFLE_MODE
+                or PlaybackStateCompat.ACTION_SET_REPEAT_MODE
+    )
+        .setState(PlaybackStateCompat.STATE_NONE, 0, 1f)
 }
