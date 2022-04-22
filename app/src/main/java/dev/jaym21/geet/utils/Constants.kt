@@ -36,7 +36,14 @@ object Constants {
     const val MAX_SHUFFLE__BUFFER_SIZE = 16
 
     //playback modes
-    const val ALL_SONGS = "all_songs"
-    const val IN_ALBUM = "in_album"
-    const val IN_ARTIST = "in_artist"
+    const val ALL_SONGS_MODE = "all_songs_mode"
+    const val ALL_ALBUMS_MODE = "all_albums_mode"
+    const val ALL_ARTISTS_MODE = "all_artists_mode"
+    const val ALL_PLAYLISTS_MODE = "all_playlists_mode"
+    const val ALL_GENRES_MODE = "all_genres_mode"
+    const val SONG_MODE = "song_mode"
+    const val ARTIST_MODE = "artist_mode"
+    const val ALBUM_MODE = "album_mode"
+    const val PLAYLIST_MODE = "playlist_mode"
+    const val GENRE_MODE = "genre_mode"
 }
