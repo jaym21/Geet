@@ -183,35 +183,54 @@ class ISongPlayer(
     }
 
     override fun stop() {
-
+        musicPlayer.stop()
+        updatePlaybackState {
+            setState(PlaybackStateCompat.STATE_NONE, 0, 1F)
+        }
     }
 
     override fun release() {
-
+        mediaSession.isActive = false
+        mediaSession.release()
+        musicPlayer.release()
+        queue.reset()
     }
 
     override fun nextSong() {
-
+        queue.nextSongId?.let {
+            playSong(it)
+        }?: pause()
     }
 
     override fun previousSong() {
-
+        queue.previousSongId?.let {
+            playSong(it)
+        }
     }
 
     override fun repeatSong() {
-
+        updatePlaybackState {
+            setState(PlaybackStateCompat.STATE_STOPPED, 0, 1F)
+        }
+        playSong(queue.currentSong())
     }
 
     override fun playNext(id: Long) {
-
+        queue.moveToNext(id)
     }
 
     override fun seekTo(position: Int) {
-
+        if (isInitialized) {
+            musicPlayer.seekTo(position)
+            updatePlaybackState {
+                setState(mediaSession.controller.playbackState.state, position.toLong(), 1F)
+            }
+        }
     }
 
     override fun setQueue(ids: LongArray, title: String) {
-
+        this.queue.ids = ids
+        this.queue.title = title
     }
 
     override fun repeatQueue() {
