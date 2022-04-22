@@ -2,6 +2,7 @@ package dev.jaym21.geet.extensions
 
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
+import dev.jaym21.geet.models.QueuedSongsEntity
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.SongUtils
 
@@ -19,3 +20,7 @@ fun Song.toDescription(): MediaDescriptionCompat {
         .setDescription(album)
         .setIconUri(SongUtils.getAlbumArtUri(albumId)).build()
 }
+
+fun List<QueuedSongsEntity>.toSongIDs() = map { it.songId }.toLongArray()
+
+fun List<Song>.toSongIds() = map { it.id }.toLongArray()

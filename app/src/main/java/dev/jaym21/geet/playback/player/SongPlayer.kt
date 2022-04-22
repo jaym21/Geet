@@ -7,6 +7,7 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.media.MediaMetadataCompat
@@ -15,7 +16,9 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
 import dev.jaym21.geet.R
 import dev.jaym21.geet.db.QueueDAO
+import dev.jaym21.geet.extensions.isPlaying
 import dev.jaym21.geet.extensions.position
+import dev.jaym21.geet.extensions.toSongIDs
 import dev.jaym21.geet.models.QueueEntity
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
@@ -41,7 +44,7 @@ interface SongPlayer {
     fun setQueue(ids: LongArray = LongArray(0), title: String = "")
     fun repeatQueue()
     fun removeFromQueue(id: Long)
-    fun restoreFromQueue(queue: QueueEntity)
+    fun restoreFromQueue(queueData: QueueEntity)
     fun swapQueueSongs(from: Int, to: Int)
     fun onPlayingState(playing: OnIsPlaying)
     fun getSession(): MediaSessionCompat
@@ -70,7 +73,7 @@ class ISongPlayer(
     private var metadataBuilder = MediaMetadataCompat.Builder()
     private var stateBuilder = createDefaultPlaybackState()
 
-    private lateinit var audioManager: AudioManager
+    private var audioManager: AudioManager
     private lateinit var focusRequest: AudioFocusRequest
 
     private var mediaSession = MediaSessionCompat(context, context.getString(R.string.app_name)).apply {
@@ -234,45 +237,84 @@ class ISongPlayer(
     }
 
     override fun repeatQueue() {
-
+        //if at last position in current queue then again playing the first song or else playing the nextSong
+        if (queue.currentSongId == queue.lastId()){
+            playSong(queue.firstId())
+        } else {
+            nextSong()
+        }
     }
 
     override fun removeFromQueue(id: Long) {
-
+        queue.remove(id)
     }
 
-    override fun restoreFromQueue(queue: QueueEntity) {
+    override fun restoreFromQueue(queueData: QueueEntity) {
+        queue.currentSongId = queueData.currentId ?: -1
+        val currentPosition = queueData.currentSeekPosition ?: 0
+        val repeatMode = queueData.repeatMode ?: PlaybackStateCompat.REPEAT_MODE_NONE
+        val shuffleMode = queueData.shuffleMode ?: PlaybackStateCompat.SHUFFLE_MODE_NONE
+        val playBackState = queueData.playState ?: PlaybackStateCompat.STATE_NONE
 
+        val queueIds = queueDao.getQueuedSongs().toSongIDs()
+        setQueue(queueIds, queueData.queueTitle)
+        setMetaData(queue.currentSong())
+
+        val extras = Bundle().apply {
+            putInt(Constants.SHUFFLE_MODE, shuffleMode)
+            putInt(Constants.REPEAT_MODE, repeatMode)
+        }
+
+        updatePlaybackState {
+            setState(playBackState, currentPosition, 1F)
+            setExtras(extras)
+        }
     }
 
     override fun swapQueueSongs(from: Int, to: Int) {
-
+        queue.swap(from, to)
     }
 
     override fun onPlayingState(playing: OnIsPlaying) {
-
+        this.isPlayingCallback = playing
     }
 
     override fun getSession(): MediaSessionCompat = mediaSession
 
     override fun onPrepared(prepared: OnPrepared<SongPlayer>) {
-
+        this.preparedCallback = prepared
     }
 
     override fun onCompletion(completion: OnCompletion<SongPlayer>) {
-
+        this.completionCallback = completion
     }
 
     override fun onError(error: OnError<SongPlayer>) {
-
+        this.errorCallback = error
+        musicPlayer.onError { throwable ->
+            errorCallback(this@ISongPlayer, throwable)
+        }
     }
 
     override fun setPlaybackState(state: PlaybackStateCompat) {
+        mediaSession.setPlaybackState(state)
 
+        //setting the repeat and shuffle modes present in this state to current session
+        state.extras?.let { bundle ->
+            mediaSession.setRepeatMode(bundle.getInt(Constants.REPEAT_MODE))
+            mediaSession.setShuffleMode(bundle.getInt(Constants.SHUFFLE_MODE))
+        }
+
+        //updating the is playing through callback
+        if (state.isPlaying)
+            isPlayingCallback(this, true)
+        else
+            isPlayingCallback(this, false)
     }
 
     override fun updatePlaybackState(applier: PlaybackStateCompat.Builder.() -> Unit) {
-
+        applier(stateBuilder)
+        setPlaybackState(stateBuilder.build())
     }
 
     override fun onAudioFocusChange(focusChange: Int) {

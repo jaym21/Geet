@@ -5,24 +5,27 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
 import android.util.Log
+import dev.jaym21.geet.extensions.*
 import dev.jaym21.geet.extensions.getInt
 import dev.jaym21.geet.extensions.getLong
 import dev.jaym21.geet.extensions.getString
 import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.Song
 
-interface ISongsRepository {
+interface SongsRepository {
 
-    suspend fun getSongs(): List<Song>
+    fun getSongs(): List<Song>
 
-    suspend fun getSongForId(id: Long): Song
+    fun getSongForId(id: Long): Song
 
-    suspend fun getSongsForIds(ids: LongArray): List<Song>
+    fun getSongsForIds(ids: LongArray): List<Song>
+
+    fun searchSongs(searchQuery: String, limit: Int): List<Song>
 }
 
-class SongsRepository(private val context: Context): ISongsRepository {
+class ISongsRepository(private val context: Context): SongsRepository {
 
-    override suspend fun getSongs(): List<Song> {
+    override fun getSongs(): List<Song> {
         val cursor = makeSongCursor(null, null)
         val songs = arrayListOf<Song>()
 
@@ -35,7 +38,7 @@ class SongsRepository(private val context: Context): ISongsRepository {
         return songs
     }
 
-    override suspend fun getSongForId(id: Long): Song {
+    override fun getSongForId(id: Long): Song {
         val cursor = makeSongCursor("_id = $id", null)
         var song = Song()
         if (cursor!= null && cursor.moveToFirst()) {
@@ -45,7 +48,7 @@ class SongsRepository(private val context: Context): ISongsRepository {
         return song
     }
 
-    override suspend fun getSongsForIds(ids: LongArray): List<Song> {
+    override fun getSongsForIds(ids: LongArray): List<Song> {
         var selection = "_id IN ("
         for (id in ids) {
             selection += "$id,"
@@ -68,6 +71,33 @@ class SongsRepository(private val context: Context): ISongsRepository {
         return songs
     }
 
+    override fun searchSongs(searchQuery: String, limit: Int): List<Song> {
+        val cursor = makeSongCursor("title LIKE ?", arrayOf("$searchQuery%"))
+        val songs = arrayListOf<Song>()
+        if (cursor!= null && cursor.moveToFirst()) {
+            do {
+                songs.add(getSongFromCursor(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+
+        if (songs.size < limit) {
+            val moreCursor = makeSongCursor("title LIKE ?", arrayOf("%_$searchQuery%"))
+            val moreSongs = arrayListOf<Song>()
+            if (moreCursor!= null && moreCursor.moveToFirst()) {
+                do {
+                    moreSongs.add(getSongFromCursor(moreCursor))
+                } while (moreCursor.moveToNext())
+            }
+            cursor?.close()
+            songs += moreSongs
+        }
+        return if (songs.size < limit) {
+            songs
+        }  else {
+            songs.subList(0, limit)
+        }
+    }
 
     private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
         return makeSongCursor(selection, paramArrayOfString, MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
@@ -111,7 +141,7 @@ class SongsRepository(private val context: Context): ISongsRepository {
         val duration = cursor.getLong(MediaStore.Audio.AudioColumns.DURATION)
         val albumId = cursor.getLong(MediaStore.Audio.AudioColumns.ALBUM_ID)
         val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
-        val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK)
+        val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK).normalizeTrackNumber()
 
         return Song(
             id,
