@@ -1,6 +1,5 @@
 package dev.jaym21.geet.models
 
-import android.os.Parcelable
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import androidx.annotation.Keep
