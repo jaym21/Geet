@@ -27,7 +27,7 @@ data class QueueData(
         return result
     }
 
-     fun findFromMediaController(mediaControllerCompat: MediaControllerCompat?): QueueData {
+     fun fromMediaController(mediaControllerCompat: MediaControllerCompat?): QueueData {
         mediaControllerCompat?.let {
             return QueueData(
                 mediaControllerCompat.queueTitle?.toString().orEmpty().let {
