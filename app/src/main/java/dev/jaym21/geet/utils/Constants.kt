@@ -30,4 +30,13 @@ object Constants {
     const val NEXT_CLICKED = "next_clicked"
     const val PREVIOUS_CLICKED = "previous_clicked"
     const val PLAY_PAUSE_CLICKED = "play_pause_clicked"
+
+    //player
+    const val NO_SONG_ID =  -1L
+    const val MAX_SHUFFLE__BUFFER_SIZE = 16
+
+    //playback modes
+    const val ALL_SONGS = "all_songs"
+    const val IN_ALBUM = "in_album"
+    const val IN_ARTIST = "in_artist"
 }

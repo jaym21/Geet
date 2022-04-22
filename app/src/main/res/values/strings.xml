@@ -4,4 +4,5 @@
     <string name="search">Search</string>
     <string name="library">Library</string>
     <string name="songs">Songs</string>
+    <string name="all_songs">All Songs</string>
 </resources>
