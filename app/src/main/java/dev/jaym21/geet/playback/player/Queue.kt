@@ -5,6 +5,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_ALL
 import dev.jaym21.geet.R
 import dev.jaym21.geet.db.QueueDAO
+import dev.jaym21.geet.extensions.moveElement
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.utils.Constants
@@ -49,6 +50,7 @@ class IQueue(
                 session.setQueue(queueItems())
             }
         }
+
     override var title: String = context.getString(R.string.all_songs)
         set(value) {
             val previousValue = field
@@ -63,30 +65,61 @@ class IQueue(
             }
         }
     override var currentSongId: Long = Constants.NO_SONG_ID
+
     override val currentSongIndex: Int
         get() = ids.indexOf(currentSongId)
+
     override val nextSongIndex: Int?
         get() {
             val nextIndex = currentSongIndex + 1
             val controller = session.controller
             return when {
                 controller.shuffleMode == SHUFFLE_MODE_ALL -> getShuffleIndex()
+                nextIndex < ids.size -> nextIndex
+                else -> null
             }
         }
-    override val nextSongId: Long?,
-    override val previousSongId: Long?
 
+    override val nextSongId: Long?
+        get() {
+            val nextIndex = nextSongIndex
+            return if (nextIndex != null) {
+                ids[nextIndex]
+            } else {
+                null
+            }
+        }
+
+    override val previousSongId: Long?
+        get() {
+            val previousIndex = currentSongIndex - 1
+            return if (previousIndex >= 0) {
+                ids[previousIndex]
+            } else {
+                null
+            }
+        }
 
     override fun swap(from: Int, to: Int) {
-
+        ids = ids.toMutableList()
+            .moveElement(from, to)
+            .toLongArray()
     }
 
     override fun moveToNext(id: Long) {
-        TODO("Not yet implemented")
+        val nextIndex = currentSongIndex + 1
+        val list = ids.toMutableList().apply {
+            remove(id)
+            add(nextIndex, id)
+        }
+        ids = list.toLongArray()
     }
 
     override fun remove(id: Long) {
-        TODO("Not yet implemented")
+        val list = ids.toMutableList().apply {
+            remove(id)
+        }
+        ids = list.toLongArray()
     }
 
     override fun reset() {
@@ -114,7 +147,7 @@ class IQueue(
     }
 
     override fun setMediaSession(session: MediaSessionCompat) {
-        TODO("Not yet implemented")
+        this.session = session
     }
 
     private fun getShuffleIndex(): Int {
