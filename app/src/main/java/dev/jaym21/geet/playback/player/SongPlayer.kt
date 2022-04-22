@@ -31,7 +31,7 @@ interface SongPlayer {
     fun setQueue(ids: LongArray = LongArray(0), title: String = "")
     fun repeatQueue()
     fun removeFromQueue(id: Long)
-    fun restoreFromQueueData(queue: QueueEntity)
+    fun restoreFromQueue(queue: QueueEntity)
     fun swapQueueSongs(from: Int, to: Int)
     fun onPlayingState(playing: OnIsPlaying)
     fun getSession(): MediaSessionCompat
@@ -124,7 +124,7 @@ class ISongPlayer(
         TODO("Not yet implemented")
     }
 
-    override fun restoreFromQueueData(queue: QueueEntity) {
+    override fun restoreFromQueue(queue: QueueEntity) {
         TODO("Not yet implemented")
     }
 
