@@ -1,7 +1,11 @@
 package dev.jaym21.geet.models
 
 import android.os.Parcelable
+import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaDescriptionCompat
 import androidx.annotation.Keep
+import dev.jaym21.geet.utils.Constants
+import dev.jaym21.geet.utils.SongUtils
 import kotlinx.parcelize.Parcelize
 
 @Keep
@@ -15,4 +19,11 @@ data class Song(
     var albumId: Long = 0,
     var artistId: Long = 0,
     var trackNumber: Int = 0
-): Parcelable
+):MediaBrowserCompat.MediaItem(
+    MediaDescriptionCompat.Builder()
+        .setMediaId(MediaID(Constants.SONG_MODE, "$id").asString())
+        .setTitle(title)
+        .setIconUri(SongUtils.getAlbumArtUri(albumId))
+        .setSubtitle(artist)
+        .build(), FLAG_PLAYABLE)
+
