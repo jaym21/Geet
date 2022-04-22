@@ -6,6 +6,7 @@ import android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_ALL
 import dev.jaym21.geet.R
 import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.extensions.moveElement
+import dev.jaym21.geet.extensions.toQueue
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.utils.Constants
@@ -13,7 +14,6 @@ import java.util.*
 
 //manage functions related to queue
 interface Queue {
-
     var ids: LongArray
     var title: String
     var currentSongId: Long
@@ -123,27 +123,32 @@ class IQueue(
     }
 
     override fun reset() {
-        TODO("Not yet implemented")
+        previousShuffles.clear()
+        ids = LongArray(0)
+        currentSongId = Constants.NO_SONG_ID
     }
 
     override fun firstId(): Long {
-        TODO("Not yet implemented")
+        return ids.first()
     }
 
     override fun lastId(): Long {
-        TODO("Not yet implemented")
+        return ids.last()
     }
 
     override fun currentSong(): Song {
-        TODO("Not yet implemented")
+        return songsRepository.getSongForId(currentSongId)
     }
 
     override fun confirmCurrentId() {
-        TODO("Not yet implemented")
+        if (currentSongId == Constants.NO_SONG_ID) {
+            val queue = queueDao.getQueue()
+            currentSongId = queue?.currentId ?: Constants.NO_SONG_ID
+        }
     }
 
     override fun queueItems(): List<MediaSessionCompat.QueueItem> {
-        TODO("Not yet implemented")
+        return ids.toQueue(songsRepository)
     }
 
     override fun setMediaSession(session: MediaSessionCompat) {
