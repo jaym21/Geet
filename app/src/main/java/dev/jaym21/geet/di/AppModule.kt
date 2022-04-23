@@ -11,6 +11,7 @@ import dev.jaym21.geet.db.GeetDatabase
 import dev.jaym21.geet.playback.player.MusicPlayer
 import dev.jaym21.geet.playback.player.Queue
 import dev.jaym21.geet.playback.player.SongPlayer
+import dev.jaym21.geet.repository.AlbumRepository
 import dev.jaym21.geet.repository.QueueRepository
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.utils.NotificationGenerator
@@ -34,6 +35,11 @@ class AppModule {
     @Singleton
     fun provideQueueRepository(geetDatabase: GeetDatabase, songsRepository: SongsRepository) =
         QueueRepository(geetDatabase.queueDao(), songsRepository)
+
+    @Provides
+    @Singleton
+    fun provideAlbumRepository(application: Application) =
+        AlbumRepository(application)
 
     @Provides
     @Singleton
