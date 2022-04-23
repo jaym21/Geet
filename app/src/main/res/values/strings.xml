@@ -5,4 +5,6 @@
     <string name="library">Library</string>
     <string name="songs">Songs</string>
     <string name="all_songs">All Songs</string>
+    <string name="song_playback">Song Playback</string>
+    <string name="song_playback_controls">Song playback controls</string>
 </resources>
