@@ -4,6 +4,7 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import dev.jaym21.geet.models.QueuedSongsEntity
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.utils.SongUtils
 
 fun List<Song?>.toQueue(): List<MediaSessionCompat.QueueItem> {
@@ -27,4 +28,12 @@ fun List<Song>.toSongIds() = map { it.id }.toLongArray()
 
 fun List<MediaSessionCompat.QueueItem>?.toIDList(): LongArray {
     return this?.map { it.queueId }?.toLongArray() ?: LongArray(0)
+}
+
+fun Song.toSongEntity() = QueuedSongsEntity(null, this.id)
+
+fun List<Song>.toQueuedSongsList() = map { it.toSongEntity() }
+
+fun LongArray.toQueuedSongsList(songsRepository: SongsRepository): List<QueuedSongsEntity> {
+    return songsRepository.getSongsForIds(this).toQueuedSongsList()
 }
