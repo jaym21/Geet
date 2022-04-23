@@ -21,7 +21,7 @@ interface QueueDAO {
     @Query("SELECT * FROM queue_table where id = 0")
     fun getQueue(): QueueEntity?
 
-    @Query("SELECT * FROM queue_songs")
+    @Query("SELECT * FROM queued_songs")
     fun getQueuedSongs(): List<QueuedSongsEntity>
 
     @Query("UPDATE queue_table SET currentId  = :currentId where id = 0")
