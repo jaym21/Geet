@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.jaym21.geet.db.GeetDatabase
+import dev.jaym21.geet.repository.QueueRepository
 import dev.jaym21.geet.repository.SongsRepository
 import javax.inject.Singleton
 
@@ -23,4 +24,9 @@ class AppModule {
     @Singleton
     fun provideSongRepository(application: Application): SongsRepository =
         SongsRepository(application.applicationContext)
+
+    @Provides
+    @Singleton
+    fun provideQueueRepository(geetDatabase: GeetDatabase, songsRepository: SongsRepository) =
+        QueueRepository(geetDatabase.queueDao(), songsRepository)
 }
