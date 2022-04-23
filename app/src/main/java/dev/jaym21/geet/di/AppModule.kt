@@ -48,11 +48,16 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideQueue(application: Application, songsRepository: SongsRepository, geetDatabase: GeetDatabase) =
+        Queue(application, songsRepository, geetDatabase.queueDao())
+
+        @Provides
+    @Singleton
     fun provideSongPlayer(application: Application, musicPlayer: MusicPlayer, songsRepository: SongsRepository, geetDatabase: GeetDatabase, queue: Queue) =
         SongPlayer(application, musicPlayer, songsRepository, geetDatabase.queueDao(), queue)
 
     @Provides
     @Singleton
-    fun provideNotificationGenerator(application: Application, notificationManager: NotificationManager) =
-        NotificationGenerator(application, notificationManager)
+    fun provideNotificationGenerator(application: Application) =
+        NotificationGenerator(application)
 }

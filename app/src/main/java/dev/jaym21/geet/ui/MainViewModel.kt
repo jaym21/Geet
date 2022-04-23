@@ -24,7 +24,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     val songForId: LiveData<Song> = _songForId
 
     fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
-        _songs.postValue(repository.getSongs())
+//        _songs.postValue(repository.getSongs())
     }
 
     fun getSongForIds(ids: LongArray) = viewModelScope.launch {

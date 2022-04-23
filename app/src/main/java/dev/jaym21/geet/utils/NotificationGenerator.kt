@@ -18,9 +18,10 @@ import dev.jaym21.geet.ui.MainActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class NotificationGenerator(private val context: Application, private val notificationManager: NotificationManager) {
+class NotificationGenerator(private val context: Application) {
 
     private var whenTime = -1L
+    private lateinit var notificationManager: NotificationManager
 
     fun updateNotification(mediaSession: MediaSessionCompat) {
         GlobalScope.launch {
