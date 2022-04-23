@@ -12,20 +12,10 @@ import dev.jaym21.geet.extensions.getString
 import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.Song
 
-interface SongsRepository {
 
-    fun getSongs(): List<Song>
+class SongsRepository(private val context: Context) {
 
-    fun getSongForId(id: Long): Song
-
-    fun getSongsForIds(ids: LongArray): List<Song>
-
-    fun searchSongs(searchQuery: String, limit: Int): List<Song>
-}
-
-class ISongsRepository(private val context: Context): SongsRepository {
-
-    override fun getSongs(): List<Song> {
+    fun getSongs(): List<Song> {
         val cursor = makeSongCursor(null, null)
         val songs = arrayListOf<Song>()
 
@@ -38,7 +28,7 @@ class ISongsRepository(private val context: Context): SongsRepository {
         return songs
     }
 
-    override fun getSongForId(id: Long): Song {
+    fun getSongForId(id: Long): Song {
         val cursor = makeSongCursor("_id = $id", null)
         var song = Song()
         if (cursor!= null && cursor.moveToFirst()) {
@@ -48,7 +38,7 @@ class ISongsRepository(private val context: Context): SongsRepository {
         return song
     }
 
-    override fun getSongsForIds(ids: LongArray): List<Song> {
+    fun getSongsForIds(ids: LongArray): List<Song> {
         var selection = "_id IN ("
         for (id in ids) {
             selection += "$id,"
@@ -71,7 +61,7 @@ class ISongsRepository(private val context: Context): SongsRepository {
         return songs
     }
 
-    override fun searchSongs(searchQuery: String, limit: Int): List<Song> {
+    fun searchSongs(searchQuery: String, limit: Int): List<Song> {
         val cursor = makeSongCursor("title LIKE ?", arrayOf("$searchQuery%"))
         val songs = arrayListOf<Song>()
         if (cursor!= null && cursor.moveToFirst()) {

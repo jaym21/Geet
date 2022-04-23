@@ -13,37 +13,17 @@ import dev.jaym21.geet.utils.Constants
 import java.util.*
 
 //manage functions related to queue
-interface Queue {
-    var ids: LongArray
-    var title: String
-    var currentSongId: Long
-    val currentSongIndex: Int
-    val nextSongIndex: Int?
-    val nextSongId: Long?
-    val previousSongId: Long?
-    fun swap(from: Int, to: Int)
-    fun moveToNext(id: Long)
-    fun remove(id: Long)
-    fun reset()
-    fun firstId(): Long
-    fun lastId(): Long
-    fun currentSong(): Song
-    fun confirmCurrentId()
-    fun queueItems(): List<MediaSessionCompat.QueueItem>
-    fun setMediaSession(session: MediaSessionCompat)
-}
-
-class IQueue(
+class Queue(
     private val context: Application,
     private val songsRepository: SongsRepository,
     private val queueDao: QueueDAO
-): Queue {
+) {
 
     private lateinit var session: MediaSessionCompat
     private val shuffleRandom = Random()
     private val previousShuffles = mutableListOf<Int>()
 
-    override var ids = LongArray(0)
+     var ids = LongArray(0)
         set(value) {
             field = value
             if (value.isNotEmpty()) {
@@ -51,7 +31,7 @@ class IQueue(
             }
         }
 
-    override var title: String = context.getString(R.string.all_songs)
+     var title: String = context.getString(R.string.all_songs)
         set(value) {
             val previousValue = field
             field = if(value.isNotEmpty()) {
@@ -64,12 +44,12 @@ class IQueue(
                 session.setQueueTitle(value)
             }
         }
-    override var currentSongId: Long = Constants.NO_SONG_ID
+    var currentSongId: Long = Constants.NO_SONG_ID
 
-    override val currentSongIndex: Int
+    val currentSongIndex: Int
         get() = ids.indexOf(currentSongId)
 
-    override val nextSongIndex: Int?
+    val nextSongIndex: Int?
         get() {
             val nextIndex = currentSongIndex + 1
             val controller = session.controller
@@ -80,7 +60,7 @@ class IQueue(
             }
         }
 
-    override val nextSongId: Long?
+    val nextSongId: Long?
         get() {
             val nextIndex = nextSongIndex
             return if (nextIndex != null) {
@@ -90,7 +70,7 @@ class IQueue(
             }
         }
 
-    override val previousSongId: Long?
+    val previousSongId: Long?
         get() {
             val previousIndex = currentSongIndex - 1
             return if (previousIndex >= 0) {
@@ -100,13 +80,13 @@ class IQueue(
             }
         }
 
-    override fun swap(from: Int, to: Int) {
+    fun swap(from: Int, to: Int) {
         ids = ids.toMutableList()
             .moveElement(from, to)
             .toLongArray()
     }
 
-    override fun moveToNext(id: Long) {
+    fun moveToNext(id: Long) {
         val nextIndex = currentSongIndex + 1
         val list = ids.toMutableList().apply {
             remove(id)
@@ -115,43 +95,43 @@ class IQueue(
         ids = list.toLongArray()
     }
 
-    override fun remove(id: Long) {
+    fun remove(id: Long) {
         val list = ids.toMutableList().apply {
             remove(id)
         }
         ids = list.toLongArray()
     }
 
-    override fun reset() {
+    fun reset() {
         previousShuffles.clear()
         ids = LongArray(0)
         currentSongId = Constants.NO_SONG_ID
     }
 
-    override fun firstId(): Long {
+    fun firstId(): Long {
         return ids.first()
     }
 
-    override fun lastId(): Long {
+    fun lastId(): Long {
         return ids.last()
     }
 
-    override fun currentSong(): Song {
+    fun currentSong(): Song {
         return songsRepository.getSongForId(currentSongId)
     }
 
-    override fun confirmCurrentId() {
+    fun confirmCurrentId() {
         if (currentSongId == Constants.NO_SONG_ID) {
             val queue = queueDao.getQueue()
             currentSongId = queue?.currentId ?: Constants.NO_SONG_ID
         }
     }
 
-    override fun queueItems(): List<MediaSessionCompat.QueueItem> {
+    fun queueItems(): List<MediaSessionCompat.QueueItem> {
         return ids.toQueue(songsRepository)
     }
 
-    override fun setMediaSession(session: MediaSessionCompat) {
+    fun setMediaSession(session: MediaSessionCompat) {
         this.session = session
     }
 
