@@ -35,32 +35,32 @@ object Constants {
     const val SONG_PLAYED = "song_played"
     const val SONG_PAUSED = "song_paused"
     const val SONG_ENDED = "song_ended"
-    const val IS_PLAYING = "is_playing"
+    const val MEDIA_ID_ROOT = -1
 
     //notification
     const val NOTIFICATION_SONG_ID = 1
     const val NOTIFICATION_SONG_CHANNEL_ID = "notification_song_channel_id"
     const val FROM_NOTIFICATION = "from_notification"
     const val CURRENT_PLAYING_SONG_POSITION = "current_playing_song_position"
-    const val ACTION_NEXT = "action_next"
-    const val ACTION_PREVIOUS= "action_previous"
-    const val ACTION_PLAY_PAUSE = "action_play_pause"
+    const val ACTION_NOTIFICATION_NEXT = "action_next"
+    const val ACTION_NOTIFICATION_PREVIOUS= "action_previous"
+    const val ACTION_NOTIFICATION_PLAY_PAUSE = "action_play_pause"
 
     //player
     const val NO_SONG_ID =  -1L
     const val MAX_SHUFFLE__BUFFER_SIZE = 16
 
     //playback modes
-    const val ALL_SONGS_MODE = "all_songs_mode"
-    const val ALL_ALBUMS_MODE = "all_albums_mode"
-    const val ALL_ARTISTS_MODE = "all_artists_mode"
-    const val ALL_PLAYLISTS_MODE = "all_playlists_mode"
-    const val ALL_GENRES_MODE = "all_genres_mode"
+    const val ALL_SONGS_MODE = 10
+    const val ALL_ALBUMS_MODE = 11
+    const val ALL_ARTISTS_MODE = 12
+    const val ALL_PLAYLISTS_MODE = 13
+    const val ALL_GENRES_MODE = 14
     const val SONG_MODE = "song_mode"
-    const val ARTIST_MODE = "artist_mode"
-    const val ALBUM_MODE = "album_mode"
-    const val PLAYLIST_MODE = "playlist_mode"
-    const val GENRE_MODE = "genre_mode"
+    const val ARTIST_MODE = 15
+    const val ALBUM_MODE = 16
+    const val PLAYLIST_MODE = 17
+    const val GENRE_MODE = 18
     const val REPEAT_MODE = "repeat_mode"
     const val SHUFFLE_MODE = "shuffle_mode"
 }

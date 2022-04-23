@@ -10,7 +10,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColorInt
 import androidx.media.session.MediaButtonReceiver
 import androidx.palette.graphics.Palette
 import dev.jaym21.geet.R
@@ -29,7 +28,7 @@ class NotificationGenerator(private val context: Application, private val notifi
         }
     }
 
-    private fun generateNotification(mediaSession: MediaSessionCompat): Notification {
+    fun generateNotification(mediaSession: MediaSessionCompat): Notification {
         if (mediaSession.controller.metadata == null || mediaSession.controller.playbackState == null) {
             return emptyNotification()
         }
@@ -91,7 +90,7 @@ class NotificationGenerator(private val context: Application, private val notifi
 
     private fun previousAction(context: Context): NotificationCompat.Action {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
-            action = Constants.ACTION_PREVIOUS
+            action = Constants.ACTION_NOTIFICATION_PREVIOUS
         }
         val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
         return NotificationCompat.Action(R.drawable.ic_skip_previous, "", pendingIntent)
@@ -99,7 +98,7 @@ class NotificationGenerator(private val context: Application, private val notifi
 
     private fun playPauseAction(context: Context, @IdRes playPauseButton: Int): NotificationCompat.Action {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
-            action = Constants.ACTION_PLAY_PAUSE
+            action = Constants.ACTION_NOTIFICATION_PLAY_PAUSE
         }
         val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
         return NotificationCompat.Action(playPauseButton, "", pendingIntent)
@@ -107,7 +106,7 @@ class NotificationGenerator(private val context: Application, private val notifi
 
     private fun nextAction(context: Context): NotificationCompat.Action {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
-            action = Constants.ACTION_NEXT
+            action = Constants.ACTION_NOTIFICATION_NEXT
         }
         val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
         return NotificationCompat.Action(R.drawable.ic_skip_next, "", pendingIntent)
