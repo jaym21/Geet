@@ -25,6 +25,8 @@ class AlbumRepository(private val context: Context) {
             } while (cursor.moveToNext())
         }
         cursor?.close()
+
+        return albums
     }
 
     private fun makeAlbumCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
@@ -39,7 +41,7 @@ class AlbumRepository(private val context: Context) {
 
     private fun getAlbumFromCursor(cursor: Cursor): Album {
         val id = cursor.getLong(MediaStore.Audio.AudioColumns._ID)
-        val title = cursor.getString(MediaStore.Audio.AudioColumns.TITLE)
+        val albumTitle = cursor.getString(MediaStore.Audio.AudioColumns.ALBUM)
         val artistName = cursor.getStringOrNull(MediaStore.Audio.AlbumColumns.ARTIST)
         val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
         val noOfSongs = cursor.getInt(MediaStore.Audio.AlbumColumns.NUMBER_OF_SONGS)
@@ -47,7 +49,7 @@ class AlbumRepository(private val context: Context) {
 
         return Album(
             id,
-            title,
+            albumTitle,
             artistName ?: "",
             artistId,
             noOfSongs,

@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Album(
     var id: Long = 0,
-    var title: String = "",
+    var albumTitle: String = "",
     var artist: String = "",
     var artistId: Long = 0,
     var noOfSongs: Int = 0,
@@ -17,7 +17,7 @@ data class Album(
 ) : MediaBrowserCompat.MediaItem(
     MediaDescriptionCompat.Builder()
         .setMediaId(MediaID(Constants.ALBUM_MODE.toString(), id.toString()).asString())
-        .setTitle(title)
+        .setTitle(albumTitle)
         .setIconUri(SongUtils.getAlbumArtUri(id))
         .setSubtitle(artist)
         .build(), FLAG_BROWSABLE
