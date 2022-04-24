@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
 import dev.jaym21.geet.extensions.*
-import dev.jaym21.geet.models.Album
 import dev.jaym21.geet.models.Artist
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Song
