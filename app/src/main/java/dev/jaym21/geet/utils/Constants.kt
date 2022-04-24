@@ -4,6 +4,7 @@ object Constants {
 
     const val SONG = "song"
     const val MAIN_VIEW_PAGER_SIZE = 5
+    const val YIELD_FREQUENCY = 165
 
     //media session callback
     const val QUEUED_SONGS_LIST = "queued_songs_list"
