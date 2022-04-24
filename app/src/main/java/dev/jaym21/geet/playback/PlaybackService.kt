@@ -1,10 +1,13 @@
 package dev.jaym21.geet.playback
 
 import android.content.Intent
+import android.media.MediaDescription
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -179,7 +182,46 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
     }
 
     private fun addMediaRoots(mMediaRoot: MutableList<MediaBrowserCompat.MediaItem>, caller: String) {
-
+        mMediaRoot.add(MediaBrowserCompat.MediaItem(
+            MediaDescriptionCompat.Builder().apply {
+                setTitle(getString(R.string.songs))
+                setSubtitle(getString(R.string.songs))
+                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
+                setMediaId(MediaID(Constants.ALL_SONGS_MODE.toString(), null, caller).asString())
+            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
+        ))
+        mMediaRoot.add(MediaBrowserCompat.MediaItem(
+            MediaDescriptionCompat.Builder().apply {
+                setTitle(getString(R.string.albums))
+                setSubtitle(getString(R.string.albums))
+                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
+                setMediaId(MediaID(Constants.ALL_ALBUMS_MODE.toString(), null, caller).asString())
+            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
+        ))
+        mMediaRoot.add(MediaBrowserCompat.MediaItem(
+            MediaDescriptionCompat.Builder().apply {
+                setTitle(getString(R.string.artists))
+                setSubtitle(getString(R.string.artists))
+                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
+                setMediaId(MediaID(Constants.ALL_ARTISTS_MODE.toString(), null, caller).asString())
+            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
+        ))
+        mMediaRoot.add(MediaBrowserCompat.MediaItem(
+            MediaDescriptionCompat.Builder().apply {
+                setTitle(getString(R.string.genres))
+                setSubtitle(getString(R.string.genres))
+                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
+                setMediaId(MediaID(Constants.ALL_GENRES_MODE.toString(), null, caller).asString())
+            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
+        ))
+        mMediaRoot.add(MediaBrowserCompat.MediaItem(
+            MediaDescriptionCompat.Builder().apply {
+                setTitle(getString(R.string.playlists))
+                setSubtitle(getString(R.string.playlists))
+                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
+                setMediaId(MediaID(Constants.ALL_PLAYLISTS_MODE.toString(), null, caller).asString())
+            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
+        ))
     }
 
     override fun onDestroy() {
