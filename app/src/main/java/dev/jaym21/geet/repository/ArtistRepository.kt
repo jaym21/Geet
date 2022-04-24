@@ -4,46 +4,34 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
 import dev.jaym21.geet.extensions.*
-import dev.jaym21.geet.extensions.getInt
-import dev.jaym21.geet.extensions.getLong
-import dev.jaym21.geet.extensions.getString
-import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.Album
+import dev.jaym21.geet.models.Artist
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Song
 
-class AlbumRepository(private val context: Context) {
+class ArtistRepository(private val context: Context) {
 
-    fun getAllAlbums(caller: String?): List<Album> {
+    fun getAllArtists(caller: String?): List<Artist> {
         if (caller != null)
             MediaID.currentCaller = caller
 
-        val cursor = makeAlbumCursor(null, null)
-        val albums = arrayListOf<Album>()
+        val cursor = makeArtistCursor(null, null)
+        val artists = arrayListOf<Artist>()
 
         if (cursor!= null && cursor.moveToFirst()) {
             do {
-                albums.add(getAlbumFromCursor(cursor))
+                artists.add(getArtistFromCursor(cursor))
             } while (cursor.moveToNext())
         }
         cursor?.close()
 
-        return albums
+        return artists
     }
 
-    fun getAlbum(id: Long): Album {
-        val cursor= makeAlbumCursor("_id=?", arrayOf(id.toString()))
-        var album = Album()
-        if (cursor!= null && cursor.moveToFirst()) {
-            album = getAlbumFromCursor(cursor)
-        }
-        cursor?.close()
-        return album
-    }
 
-    fun getSongsForAlbum(caller: String?, albumId: Long): List<Song> {
+    fun getSongsForArtist(caller: String?, artistId: Long): List<Song> {
         MediaID.currentCaller = caller
-        val cursor = makeAlbumSongCursor(albumId)
+        val cursor = makeArtistSongCursor(artistId)
         val songs = arrayListOf<Song>()
 
         if (cursor!= null && cursor.moveToFirst()) {
@@ -55,42 +43,39 @@ class AlbumRepository(private val context: Context) {
         return songs
     }
 
-    private fun makeAlbumCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
+    private fun makeArtistCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
         return context.contentResolver.query(
-            MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-            arrayOf("_id", "album", "artist", "artist_id", "numsongs", "minyear"),
+            MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
+            arrayOf("_id", "artist", "number_of_albums", "number_of_tracks"),
             selection,
             paramArrayOfString,
             MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
         )
     }
 
-    private fun makeAlbumSongCursor(albumID: Long): Cursor? {
-        val selection = "is_music=1 AND title != '' AND album_id=$albumID"
+    private fun makeArtistSongCursor(artistId: Long): Cursor? {
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val selection = "is_music=1 AND title != '' AND artist_id=$artistId"
         return context.contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            arrayOf("_id", "title", "artist", "album", "duration", "track", "artist_id"),
+            uri,
+            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id"),
             selection,
             null,
-            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
+            MediaStore.Audio.Media.DEFAULT_SORT_ORDER
         )
     }
 
-    private fun getAlbumFromCursor(cursor: Cursor): Album {
+    private fun getArtistFromCursor(cursor: Cursor): Artist {
         val id = cursor.getLong(MediaStore.Audio.AudioColumns._ID)
-        val albumTitle = cursor.getString(MediaStore.Audio.AudioColumns.ALBUM)
         val artistName = cursor.getStringOrNull(MediaStore.Audio.AlbumColumns.ARTIST)
-        val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
-        val noOfSongs = cursor.getInt(MediaStore.Audio.AlbumColumns.NUMBER_OF_SONGS)
-        val year = cursor.getInt(MediaStore.Audio.AlbumColumns.FIRST_YEAR)
+        val noOfSongs = cursor.getInt(MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS)
+        val noOfAlbums = cursor.getInt(MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS)
 
-        return Album(
+        return Artist(
             id,
-            albumTitle,
             artistName ?: "",
-            artistId,
             noOfSongs,
-            year
+            noOfAlbums
         )
     }
 
