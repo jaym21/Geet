@@ -30,7 +30,7 @@ class GenreRepository(private val context: Context) {
         return genres
     }
 
-    fun getSongsForGenre(genreId: Long, caller: String?): List<Song> {
+    fun getSongsForGenre(caller: String?, genreId: Long): List<Song> {
         MediaID.currentCaller = caller
         val cursor = makeGenreSongCursor(genreId)
         val songs = arrayListOf<Song>()
