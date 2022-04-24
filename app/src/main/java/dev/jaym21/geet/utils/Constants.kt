@@ -2,6 +2,7 @@ package dev.jaym21.geet.utils
 
 object Constants {
 
+    const val APP_PACKAGE_NAME = "dev.jaym21.geet"
     const val SONG = "song"
     const val MAIN_VIEW_PAGER_SIZE = 5
     const val YIELD_FREQUENCY = 165
