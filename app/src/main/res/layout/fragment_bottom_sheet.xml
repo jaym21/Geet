@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.BottomSheetFragment">
 
@@ -57,5 +57,15 @@
         android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/playbackProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:progress="70"
+        app:indicatorColor="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivArtworkBottomSheet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
