@@ -83,12 +83,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/playbackProgressBar" />
     
-    <com.google.android.material.progressindicator.LinearProgressIndicator
+    <dev.jaym21.geet.widgets.MediaProgressBar
         android:id="@+id/playbackProgressBar"
+        style="@style/SongProgressBarHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:progress="70"
-        app:indicatorColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivArtworkBottomSheet"
