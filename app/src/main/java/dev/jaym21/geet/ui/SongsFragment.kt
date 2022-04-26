@@ -1,22 +1,18 @@
-package dev.jaym21.geet.ui.songs
+package dev.jaym21.geet.ui
 
 import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.adapters.ISongsRVAdapter
 import dev.jaym21.geet.adapters.SongsRVAdapter
 import dev.jaym21.geet.databinding.FragmentSongsBinding
 import dev.jaym21.geet.models.Song
-import dev.jaym21.geet.ui.MainViewModel
 import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.PreferencesHelper
 
@@ -44,12 +40,6 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isReadPermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        val isWritePermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        val minSDK29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-        readPermissionGranted = isReadPermissionAvailable
-        writePermissionGranted = isWritePermissionAvailable || minSDK29
 
         setUpRecyclerView()
 
