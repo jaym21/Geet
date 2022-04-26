@@ -66,7 +66,6 @@
         
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/llSongProgress"
         android:layout_width="match_parent"

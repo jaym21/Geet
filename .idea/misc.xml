@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/artwork_rounded_corners.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/bottom_nav_foreground.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_home.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_play.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_albums.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_artists.xml" value="0.36666666666666664" />
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_genres.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_library.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_now_playing.xml" value="0.36666666666666664" />
