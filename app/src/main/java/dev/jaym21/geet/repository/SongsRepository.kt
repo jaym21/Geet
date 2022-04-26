@@ -1,6 +1,7 @@
 package dev.jaym21.geet.repository
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
@@ -89,6 +90,29 @@ class SongsRepository(private val context: Context) {
         }  else {
             songs.subList(0, limit)
         }
+    }
+
+    @SuppressLint("Recycle")
+    fun getSongFromPath(path: String): Song {
+        val selection = MediaStore.Audio.Media.DATA
+        val selectionArgs = arrayOf(path)
+        val projection = arrayOf("_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id")
+        val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
+
+        val cursor =  context.contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            "$selection=?",
+            selectionArgs,
+            sortOrder
+        )
+
+        var song = Song()
+        if (cursor!= null && cursor.moveToFirst()) {
+            song = getSongFromCursor(cursor)
+        }
+        cursor?.close()
+        return song
     }
 
     private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
