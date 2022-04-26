@@ -4,64 +4,47 @@ import android.content.ComponentName
 import android.content.Context
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.IMediaControllerCallback
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.MutableLiveData
 import dev.jaym21.geet.models.QueueData
 
-interface PlaybackSessionConnector {
-
-    val isConnected: MutableLiveData<Boolean>
-    val rootMediaId: String
-    val nowPlaying: MutableLiveData<MediaMetadataCompat>
-    val queueData: MutableLiveData<QueueData>
-    val playbackState: MutableLiveData<PlaybackStateCompat>
-    val transportControls: MediaControllerCompat.TransportControls
-    var mediaController: MediaControllerCompat
-
-    fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback)
-    fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback)
-}
-
-class IPlaybackSessionConnector(
-    context: Context,
-    serviceComponent: ComponentName,
-): PlaybackSessionConnector {
+class PlaybackSessionConnector(context: Context, serviceComponent: ComponentName) {
 
     private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
+
     private val mediaBrowser = MediaBrowserCompat(context, serviceComponent, mediaBrowserConnectionCallback, null).apply {
         connect()
     }
 
-    override val isConnected = MutableLiveData<Boolean>().apply {
+    val isConnected = MutableLiveData<Boolean>().apply {
         postValue(false)
     }
 
-    override val rootMediaId: String
+    val rootMediaId: String
         get() = mediaBrowser.root
 
-    override val nowPlaying = MutableLiveData<MediaMetadataCompat>().apply {
+    val nowPlaying = MutableLiveData<MediaMetadataCompat>().apply {
         postValue(NOTHING_PLAYING)
     }
 
-    override val queueData = MutableLiveData<QueueData>()
+    val queueData = MutableLiveData<QueueData>()
 
-    override val playbackState = MutableLiveData<PlaybackStateCompat>().apply {
+    val playbackState = MutableLiveData<PlaybackStateCompat>().apply {
         postValue(EMPTY_PLAYBACK_STATE)
     }
 
-    override val transportControls: MediaControllerCompat.TransportControls
+    val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
 
-    override lateinit var mediaController: MediaControllerCompat
+    lateinit var mediaController: MediaControllerCompat
 
-    override fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
+    fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.subscribe(parentId, callback)
     }
 
-    override fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
+    fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.unsubscribe(parentId, callback)
     }
 
