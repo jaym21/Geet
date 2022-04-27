@@ -1,40 +1,48 @@
 package dev.jaym21.geet.adapters
 
-import android.content.ContentUris
-import android.net.Uri
-import android.util.Log
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.jaym21.geet.R
-import dev.jaym21.geet.databinding.ItemSongLayoutBinding
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.SongUtils
+import dev.jaym21.geet.viewmodels.NowPlayingViewModel
 
-class SongsRVAdapter(private val listener: ISongsRVAdapter): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
+private const val INVALID_POSITION = -1
 
-    class SongsDiffUtil: DiffUtil.ItemCallback<Song>() {
-        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem == newItem
+class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycleOwner: LifecycleOwner, private val nowPlayingViewModel: NowPlayingViewModel): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
+
+    private var nowPlayingPosition = INVALID_POSITION
+
+    init {
+        //attach observer for updating now playing indicator on songs
+        nowPlayingViewModel.currentData.observe(lifecycleOwner) {
+            val previousPlayingPosition = nowPlayingPosition
+
+            if (!it.mediaId.isNullOrEmpty() && it.state == PlaybackStateCompat.STATE_PLAYING) {
+                nowPlayingPosition = getPositionForSong(it.mediaId!!.toLong())
+            } else {
+                nowPlayingPosition = INVALID_POSITION
+            }
+
+            //removing playing indicator from previous playing song position
+            if (previousPlayingPosition != INVALID_POSITION)
+                notifyItemChanged(previousPlayingPosition)
+
+            //adding playing indicator on now playing position
+            if (nowPlayingPosition != INVALID_POSITION)
+                notifyItemChanged(nowPlayingPosition)
         }
-
-        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem.id == newItem.id
-        }
-    }
-
-    inner class SongsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.tvSongTitle)
-        val artist: TextView = itemView.findViewById(R.id.tvArtistName)
-        val artwork: ImageView = itemView.findViewById(R.id.ivSongArtwork)
-        val root: ConstraintLayout = itemView.findViewById(R.id.clSongRoot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsViewHolder {
@@ -50,9 +58,43 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter): ListAdapter<Song, S
 
         Glide.with(holder.itemView.context).load(albumArtUri).into(holder.artwork)
 
+        if (position == nowPlayingPosition) {
+            holder.title.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorAccent))
+        } else {
+            holder.title.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+        }
+
+        if (position == nowPlayingPosition) {
+            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorAccent))
+        } else {
+            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+        }
+
         holder.root.setOnClickListener {
             listener.onSongClicked(currentItem)
         }
+    }
+
+    inner class SongsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val title: TextView = itemView.findViewById(R.id.tvSongTitle)
+        val artist: TextView = itemView.findViewById(R.id.tvArtistName)
+        val artwork: ImageView = itemView.findViewById(R.id.ivSongArtwork)
+        val root: ConstraintLayout = itemView.findViewById(R.id.clSongRoot)
+    }
+
+    class SongsDiffUtil: DiffUtil.ItemCallback<Song>() {
+        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+
+    private fun getPositionForSong(songId: Long): Int {
+        val songs = currentList
+        return songs.indexOf(songs.find { it.id == songId })
     }
 }
 

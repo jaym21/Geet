@@ -17,13 +17,12 @@ import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.PreferencesHelper
 import dev.jaym21.geet.viewmodels.MainViewModel
 
-class SongsFragment : Fragment(), ISongsRVAdapter {
+class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
-    private lateinit var viewModel: MainViewModel
-    private val songsAdapter = SongsRVAdapter(this)
+    private val songsAdapter: SongsRVAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
     private var songs = listOf<Song>()
 
     private var readPermissionGranted = false
@@ -41,16 +40,13 @@ class SongsFragment : Fragment(), ISongsRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         setUpRecyclerView()
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         if (readPermissionGranted) {
             if (writePermissionGranted) {
-                viewModel.loadSongs()
+                mainViewModel.loadSongs()
 
-                viewModel.songs.observe(viewLifecycleOwner) {
+                mainViewModel.songs.observe(viewLifecycleOwner) {
                     songs = it
                     if (!it.isNullOrEmpty()) {
                         songsAdapter.submitList(it)
