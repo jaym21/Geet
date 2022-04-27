@@ -24,7 +24,7 @@ fun Song.toDescription(): MediaDescriptionCompat {
 
 fun List<QueuedSongsEntity>.toSongIDs() = map { it.songId }.toLongArray()
 
-fun List<Song>.toSongIds() = map { it.id }.toLongArray()
+fun List<Song>.toSongIds() = map { it.id }.toLongArray() ?: LongArray(0)
 
 fun List<MediaSessionCompat.QueueItem>?.toIDList(): LongArray {
     return this?.map { it.queueId }?.toLongArray() ?: LongArray(0)

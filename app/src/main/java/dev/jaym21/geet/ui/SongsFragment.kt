@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.ISongsRVAdapter
 import dev.jaym21.geet.adapters.SongsRVAdapter
 import dev.jaym21.geet.databinding.FragmentSongsBinding
+import dev.jaym21.geet.extensions.getExtraBundle
+import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.PreferencesHelper
@@ -73,17 +76,19 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     override fun onSongClicked(song: Song) {
-        val idList = mutableListOf<Long>()
-        for (i in songs) {
-            idList.add(i.id)
-        }
+//        val idList = mutableListOf<Long>()
+//        for (i in songs) {
+//            idList.add(i.id)
+//        }
+//
+//        val idArray = idList.toLongArray()
+//        val index = idArray.indexOf(song.id)
+//
+//        val reqArray = idArray.copyOfRange(index, idArray.size)
+//
+//        PreferencesHelper.setQueueIds(requireContext(), reqArray)
 
-        val idArray = idList.toLongArray()
-        val index = idArray.indexOf(song.id)
-
-        val reqArray = idArray.copyOfRange(index, idArray.size)
-
-        PreferencesHelper.setQueueIds(requireContext(), reqArray)
-
+        val extras = getExtraBundle(songs.toSongIds(), getString(R.string.all_songs))
+        mainViewModel.mediaItemClicked(song, extras)
     }
 }

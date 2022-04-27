@@ -26,7 +26,6 @@ class MainViewModel @Inject constructor(
     private val playbackSessionConnector: PlaybackSessionConnector
 ): ViewModel() {
 
-
     val rootMediaId: LiveData<MediaID> = playbackSessionConnector.isConnected.map { isConnected ->
         if (isConnected) {
             MediaID().fromString(playbackSessionConnector.rootMediaId)
@@ -92,7 +91,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
-//        _songs.postValue(songsRepository.getSongs())
+        _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF))
     }
 
     fun getSongForIds(ids: LongArray) = viewModelScope.launch {
