@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.viewmodels
 
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
