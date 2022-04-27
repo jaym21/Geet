@@ -12,11 +12,11 @@
         android:layout_height="match_parent">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/explore_nav_host"
+            android:id="@+id/home_nav_host"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:navGraph="@navigation/nav_explore"
+            app:navGraph="@navigation/nav_home"
             tools:layout="@layout/fragment_home" />
 
         <androidx.fragment.app.FragmentContainerView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/playback_panel_fragment"
+            android:id="@+id/nowPlayingFragment"
             android:name="dev.jaym21.geet.ui.NowPlayingFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
