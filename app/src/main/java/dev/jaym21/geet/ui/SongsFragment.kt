@@ -76,18 +76,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     override fun onSongClicked(song: Song) {
-//        val idList = mutableListOf<Long>()
-//        for (i in songs) {
-//            idList.add(i.id)
-//        }
-//
-//        val idArray = idList.toLongArray()
-//        val index = idArray.indexOf(song.id)
-//
-//        val reqArray = idArray.copyOfRange(index, idArray.size)
-//
-//        PreferencesHelper.setQueueIds(requireContext(), reqArray)
-
         val extras = getExtraBundle(songs.toSongIds(), getString(R.string.all_songs))
         mainViewModel.mediaItemClicked(song, extras)
     }

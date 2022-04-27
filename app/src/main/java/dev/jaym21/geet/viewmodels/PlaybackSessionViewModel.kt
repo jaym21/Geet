@@ -1,6 +1,5 @@
 package dev.jaym21.geet.viewmodels
 
-import android.media.browse.MediaBrowser
 import android.support.v4.media.MediaBrowserCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,7 @@ import dev.jaym21.geet.playback.player.PlaybackSessionConnector
 import javax.inject.Inject
 
 @HiltViewModel
-class PlaybackSessionViewModel @Inject constructor(private val mediaID: MediaID, playbackSessionConnector: PlaybackSessionConnector): ViewModel() {
+class PlaybackSessionViewModel(private val mediaID: MediaID, playbackSessionConnector: PlaybackSessionConnector): ViewModel() {
 
     private val _mediaItems = MutableLiveData<List<MediaBrowserCompat.MediaItem>>()
     val mediaItems: LiveData<List<MediaBrowserCompat.MediaItem>> = _mediaItems
@@ -20,5 +19,19 @@ class PlaybackSessionViewModel @Inject constructor(private val mediaID: MediaID,
         override fun onChildrenLoaded(parentId: String, children: MutableList<MediaBrowserCompat.MediaItem>) {
             _mediaItems.postValue(children)
         }
+    }
+
+    private val playbackSessionConnection = playbackSessionConnector.apply {
+        subscribe(mediaID.asString(), subscriptionCallback)
+    }
+
+    fun reloadMediaItems() {
+        playbackSessionConnection.unsubscribe(mediaID.asString(), subscriptionCallback)
+        playbackSessionConnection.subscribe(mediaID.asString(), subscriptionCallback)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        playbackSessionConnection.unsubscribe(mediaID.asString(), subscriptionCallback)
     }
 }
