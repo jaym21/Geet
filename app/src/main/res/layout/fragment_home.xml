@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.HomeFragment">
+    tools:context=".ui.HomeFragment"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/tvAppName"
@@ -13,7 +14,7 @@
         android:text="@string/app_name"
         android:textSize="18sp"
         android:fontFamily="@font/inter_bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="10dp"
@@ -21,10 +22,10 @@
 
     <ImageView
         android:id="@+id/ivSort"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@drawable/ic_sort"
-        app:tint="@color/black"
+        app:tint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
@@ -32,14 +33,14 @@
 
     <ImageView
         android:id="@+id/ivSearch"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:src="@drawable/ic_search"
-        app:tint="@color/black"
+        app:tint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ivSort"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="20dp"/>
 
 
     <com.google.android.material.tabs.TabLayout
@@ -54,7 +55,7 @@
         app:tabIndicatorHeight="3dp"
         app:tabIndicatorFullWidth="false"
         app:tabContentStart="16dp"
-        app:tabTextColor="@color/black_alpha_85"
+        app:tabTextColor="@color/white_alpha_85"
         app:tabTextAppearance="@style/MainTabTextAppearance"
         app:tabSelectedTextColor="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@id/ivSearch"

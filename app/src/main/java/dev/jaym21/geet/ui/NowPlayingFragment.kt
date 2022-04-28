@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.MainNavigationAction
@@ -34,7 +35,7 @@ class NowPlayingFragment : BaseFragment() {
         nowPlayingViewModel.currentData.observe(this) {
             binding.tvSongTitle.text = it.title
             binding.tvSongArtist.text = it.artist
-            Glide.with(requireContext()).load(it.artwork).into(binding.ivSongArtwork)
+            Glide.with(requireContext()).load(it.artwork).transform(RoundedCorners(12)).into(binding.ivSongArtwork)
 
             if (it.position != null)
                 binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(it.position!!.toLong())
@@ -71,6 +72,10 @@ class NowPlayingFragment : BaseFragment() {
                     binding.ivShuffle.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
                 }
             }
+        }
+
+        nowPlayingViewModel.queueData.observe(this){
+            binding.tvQueueTitle.text = it.queueTitle
         }
 
         attachOnClickListeners()

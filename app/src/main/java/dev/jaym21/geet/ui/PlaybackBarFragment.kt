@@ -2,11 +2,11 @@ package dev.jaym21.geet.ui
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentPlaybackBarBinding
 import dev.jaym21.geet.models.MainNavigationAction
@@ -34,7 +34,7 @@ class PlaybackBarFragment : BaseFragment() {
         nowPlayingViewModel.currentData.observe(this) {
             binding.tvSongNameBar.text = it.title
             binding.tvSongArtistBar.text = it.artist
-            Glide.with(requireContext()).load(it.artwork).into(binding.ivArtworkBar)
+            Glide.with(requireContext()).load(it.artwork).transform(RoundedCorners(12)).into(binding.ivArtworkBar)
             if (it.state == PlaybackStateCompat.STATE_PLAYING) {
                 binding.ivPlayPauseBar.setImageResource(R.drawable.ic_pause)
             } else {

@@ -3,6 +3,7 @@ package dev.jaym21.geet.adapters
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.SongUtils
@@ -58,18 +60,18 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
         val albumArtUri = SongUtils.getAlbumArtUri(currentItem.albumId)
 
         Log.d("TAGYOYO", "onBindViewHolder: $currentItem")
-        Glide.with(holder.itemView.context).load(albumArtUri).into(holder.artwork)
+        Glide.with(holder.itemView.context).load(albumArtUri).transform(RoundedCorners(12)).into(holder.artwork)
 
         if (position == nowPlayingPosition) {
             holder.title.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorAccent))
         } else {
-            holder.title.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+            holder.title.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
         }
 
         if (position == nowPlayingPosition) {
             holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorAccent))
         } else {
-            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white_alpha_85))
         }
 
         holder.root.setOnClickListener {
