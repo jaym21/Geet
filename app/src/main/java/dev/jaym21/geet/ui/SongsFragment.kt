@@ -13,6 +13,7 @@ import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.ISongsRVAdapter
 import dev.jaym21.geet.adapters.SongsRVAdapter
 import dev.jaym21.geet.databinding.FragmentSongsBinding
+import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.extensions.getExtraBundle
 import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Song
@@ -61,6 +62,13 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
         } else {
             ActivityCompat.requestPermissions(requireActivity(),  arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), Constants.READ_EXTERNAL_STORAGE_REQUEST_CODE)
         }
+
+        playbackSessionViewModel?.mediaItems
+            ?.filter { it.isNotEmpty() }
+            ?.observe(this) {
+                songsAdapter.submitList(it as List<Song>)
+            }
+
     }
 
     private fun setUpRecyclerView() {
