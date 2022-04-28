@@ -9,7 +9,7 @@ import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.playback.player.PlaybackSessionConnector
 import javax.inject.Inject
 
-@HiltViewModel
+
 class PlaybackSessionViewModel(private val mediaID: MediaID, playbackSessionConnector: PlaybackSessionConnector): ViewModel() {
 
     private val _mediaItems = MutableLiveData<List<MediaBrowserCompat.MediaItem>>()

@@ -22,7 +22,7 @@ open class BaseFragment: Fragment() {
     protected val nowPlayingViewModel by activityViewModels<NowPlayingViewModel>()
     @Inject lateinit var playbackSessionConnector: PlaybackSessionConnector
     protected var playbackSessionViewModel: PlaybackSessionViewModel? = null
-    protected var mediaID: MediaID? = null
+    private var mediaID: MediaID? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
