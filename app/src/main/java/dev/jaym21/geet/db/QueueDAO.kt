@@ -7,16 +7,16 @@ import dev.jaym21.geet.models.QueuedSongsEntity
 @Dao
 interface QueueDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQueue(queue: QueueEntity)
+    suspend fun insertQueue(queue: QueueEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllSongs(songs: List<QueuedSongsEntity>)
+    suspend fun insertAllSongs(songs: List<QueuedSongsEntity>)
 
     @Query("DELETE from queued_songs")
-    fun clearQueueSongs()
+    suspend fun clearQueueSongs()
 
     @Delete
-    fun deleteSongFromQueue(song: QueuedSongsEntity)
+    suspend fun deleteSongFromQueue(song: QueuedSongsEntity)
 
     @Query("SELECT * FROM queue_table where id = 0")
     fun getQueue(): QueueEntity?
@@ -25,5 +25,5 @@ interface QueueDAO {
     fun getQueuedSongs(): List<QueuedSongsEntity>
 
     @Query("UPDATE queue_table SET currentId  = :currentId where id = 0")
-    fun setCurrentId(currentId: Long)
+    suspend fun setCurrentId(currentId: Long)
 }

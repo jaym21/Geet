@@ -3,23 +3,22 @@ package dev.jaym21.geet.ui
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentMainBinding
-import dev.jaym21.geet.extensions.filter
-import dev.jaym21.geet.extensions.map
 import dev.jaym21.geet.models.MainNavigationAction
 import dev.jaym21.geet.models.MetaData
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.widgets.BottomSheetLayout
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : BaseFragment() {
 
     private var _binding: FragmentMainBinding? = null
@@ -32,9 +31,10 @@ class MainFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

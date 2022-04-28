@@ -26,7 +26,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
-    private val songsAdapter: SongsRVAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
+    private var songsAdapter: SongsRVAdapter? = null
     private var songs = listOf<Song>()
 
     private var readPermissionGranted = false
@@ -48,12 +48,15 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
         if (readPermissionGranted) {
             if (writePermissionGranted) {
+
+                songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
+
                 mainViewModel.loadSongs()
 
                 mainViewModel.songs.observe(viewLifecycleOwner) {
                     songs = it
                     if (!it.isNullOrEmpty()) {
-                        songsAdapter.submitList(it)
+                        songsAdapter?.submitList(it)
                     }
                 }
             } else {
@@ -66,7 +69,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
         playbackSessionViewModel?.mediaItems
             ?.filter { it.isNotEmpty() }
             ?.observe(this) {
-                songsAdapter.submitList(it as List<Song>)
+                songsAdapter?.submitList(it as List<Song>)
             }
 
     }
