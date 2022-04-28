@@ -61,7 +61,7 @@ class MediaTextView : AppCompatTextView {
 
             val progress = state.position.toInt()
 
-            text = SongUtils.formatTimeStringShort((progress / 1000).toLong())
+            text = SongUtils.formatTimeStringShort((progress).toLong())
 
             if (state.state == PlaybackStateCompat.STATE_PLAYING) {
                 val timeToEnd = ((duration - progress) / state.playbackSpeed).toInt()
@@ -76,7 +76,7 @@ class MediaTextView : AppCompatTextView {
                 }
             } else {
 
-                text = SongUtils.formatTimeStringShort(state.position / 1000)
+                text = SongUtils.formatTimeStringShort(state.position)
             }
         }
 
@@ -90,7 +90,7 @@ class MediaTextView : AppCompatTextView {
 
         override fun onAnimationUpdate(valueAnimator: ValueAnimator) {
             val animatedIntValue = valueAnimator.animatedValue as Int
-            text = SongUtils.formatTimeStringShort((animatedIntValue / 1000).toLong())
+            text = SongUtils.formatTimeStringShort((animatedIntValue).toLong())
         }
     }
 }

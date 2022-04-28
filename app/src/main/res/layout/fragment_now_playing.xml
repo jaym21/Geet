@@ -19,6 +19,50 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivBackButton"
+        app:layout_constraintEnd_toStartOf="@id/ivOpenQueue"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/now_playing"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:fontFamily="@font/inter_medium"
+            android:ellipsize="marquee"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="All Songs"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:fontFamily="@font/inter_regular"
+            android:ellipsize="marquee"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivOpenQueue"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_queue_music"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp" />
+
     <ImageView
         android:id="@+id/ivSongArtwork"
         android:layout_width="match_parent"
@@ -37,32 +81,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/seekBar"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="16dp">
         
         <TextView
             android:id="@+id/tvSongTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Abcd"
+            tools:text="Song Name"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_semibold"
             android:ellipsize="marquee"
-            android:singleLine="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"/>
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/tvSongArtist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Xyz"
+            tools:text="Artist Name"
             android:textSize="14sp"
             android:textColor="@color/white_alpha_70"
             android:fontFamily="@font/inter_regular"
             android:ellipsize="marquee"
-            android:singleLine="true"
-            android:layout_gravity="center"/>
+            android:singleLine="true"/>
         
     </LinearLayout>
 
@@ -71,11 +113,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="50"
         android:padding="3dp"
         android:theme="@style/SeekBarStyle"
         android:layout_marginBottom="35dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toTopOf="@id/llControls"/>
 
     <dev.jaym21.geet.widgets.MediaTextView
