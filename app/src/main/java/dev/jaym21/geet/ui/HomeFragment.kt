@@ -49,53 +49,5 @@ class HomeFragment : BaseFragment() {
         TabLayoutMediator(binding.tlMain, binding.vpMain) { tab, position ->
             tab.text = tabs[position]
         }.attach()
-
-//        mainViewModel.navigateToMediaItem
-//            .map { it.getContentIfNotHandled() }
-//            .filter { it != null }
-//            .observe(this) {
-//                mediaID = it
-//                if (mediaID != null) {
-//                    initializePlaybackSession(mediaID!!)
-//                    navigateToMediaItem(mediaID!!)
-//                }
-//            }
     }
-
-//    private fun initializePlaybackSession(mediaId: MediaID) {
-//        playbackSessionViewModel = ViewModelProvider(this, PlaybackSessionProviderFactory(mediaId, playbackSessionConnector)).get(PlaybackSessionViewModel::class.java)
-//    }
-//
-//    private fun navigateToMediaItem(mediaId: MediaID) {
-//        when (mediaId.type?.toInt()) {
-//            Constants.ALL_SONGS_MODE -> {
-//
-//            }
-//            Constants.ALL_ALBUMS_MODE -> {
-//
-//            }
-//            Constants.ALL_ARTISTS_MODE -> {
-//
-//            }
-//            Constants.ALL_PLAYLISTS_MODE -> {
-//
-//            }
-//            Constants.ALL_GENRES_MODE -> {
-//
-//            }
-//            Constants.ARTIST_MODE -> {
-//
-//            }
-//            Constants.ALBUM_MODE -> {
-//
-//            }
-//            Constants.PLAYLIST_MODE -> {
-//
-//            }
-//            Constants.GENRE_MODE -> {
-//
-//            }
-//            else -> {}
-//        }
-//    }
 }

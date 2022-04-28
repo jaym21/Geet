@@ -60,9 +60,8 @@ class MainFragment : BaseFragment() {
         nowPlayingViewModel.currentData.value?.let {
             if (!it.title.isNullOrEmpty()) {
                 when (binding.bottomSheetLayout.getPanelState()) {
-                    BottomSheetLayout.PanelState.EXPANDED -> binding.bottomSheetLayout.hide()
                     BottomSheetLayout.PanelState.HIDDEN -> binding.bottomSheetLayout.show()
-                    else -> binding.bottomSheetLayout.show()
+                    else -> {}
                 }
             } else {
                 binding.bottomSheetLayout.hide()
