@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
+import dev.jaym21.geet.models.MainNavigationAction
 import dev.jaym21.geet.utils.SongUtils
 
 class NowPlayingFragment : BaseFragment() {
@@ -34,6 +35,12 @@ class NowPlayingFragment : BaseFragment() {
             binding.tvSongTitle.text = it.title
             binding.tvSongArtist.text = it.artist
             Glide.with(requireContext()).load(it.artwork).into(binding.ivSongArtwork)
+
+            if (it.position != null)
+                binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(it.position!!.toLong())
+
+            if (it.duration != null)
+                binding.tvDuration.text = SongUtils.formatTimeStringShort(it.duration!!.toLong())
 
             if (it.state == PlaybackStateCompat.STATE_PLAYING) {
                 binding.ivPlayPause.setImageResource(R.drawable.ic_pause)
@@ -116,6 +123,10 @@ class NowPlayingFragment : BaseFragment() {
 
                 PlaybackStateCompat.SHUFFLE_MODE_ALL -> mainViewModel.transportControls().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_NONE)
             }
+        }
+
+        binding.ivBackButton.setOnClickListener {
+            navigationViewModel.mainNavigateTo(MainNavigationAction.COLLAPSE)
         }
     }
 

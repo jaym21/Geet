@@ -82,7 +82,7 @@
         android:id="@+id/tvCurrentTime"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="0:00"
+        tools:text="0:00"
         android:textColor="@color/white_alpha_60"
         android:textSize="11sp"
         android:fontFamily="@font/inter_regular"
