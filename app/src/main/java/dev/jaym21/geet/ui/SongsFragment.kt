@@ -30,7 +30,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
-    private var songsAdapter: SongsRVAdapter? = null
+    private var songsAdapter: SongsRVAdapter = SongsRVAdapter(this, this)
     private var songs = listOf<Song>()
 
     private var readPermissionGranted = false
@@ -69,14 +69,13 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     private fun initialize() {
-        songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
 
         mainViewModel.loadSongs()
 
         mainViewModel.songs.observe(viewLifecycleOwner) {
-            Log.d("TAGYOYO", "songs: $it")
             songs = it
             if (!it.isNullOrEmpty()) {
+                Log.d("TAGYOYO", "songs: $it")
                 songsAdapter?.submitList(it)
             }
         }

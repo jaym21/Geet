@@ -2,10 +2,15 @@ package dev.jaym21.geet.ui
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
+import dev.jaym21.geet.utils.SongUtils
 
 class NowPlayingFragment : BaseFragment() {
 
@@ -24,6 +29,42 @@ class NowPlayingFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        nowPlayingViewModel.currentData.observe(this) {
+            binding.tvSongTitle.text = it.title
+            binding.tvSongArtist.text = it.artist
+            Glide.with(requireContext()).load(it.artwork).into(binding.ivSongArtwork)
+
+            if (it.state == PlaybackStateCompat.STATE_PLAYING) {
+                binding.ivPlayPause.setImageResource(R.drawable.ic_pause)
+            } else {
+                binding.ivPlayPause.setImageResource(R.drawable.ic_play)
+            }
+
+            when (it.repeatMode) {
+                PlaybackStateCompat.REPEAT_MODE_NONE -> {
+                    binding.ivRepeat.setImageResource(R.drawable.ic_repeat)
+                    binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white_alpha_60))
+                }
+                PlaybackStateCompat.REPEAT_MODE_ONE -> {
+                    binding.ivRepeat.setImageResource(R.drawable.ic_repeat_one)
+                    binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                }
+                PlaybackStateCompat.REPEAT_MODE_ALL -> {
+                    binding.ivRepeat.setImageResource(R.drawable.ic_repeat)
+                    binding.ivRepeat.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                }
+            }
+
+            when (it.shuffleMode) {
+                PlaybackStateCompat.SHUFFLE_MODE_NONE -> {
+                    binding.ivShuffle.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white_alpha_60))
+                }
+                PlaybackStateCompat.SHUFFLE_MODE_ALL -> {
+                    binding.ivShuffle.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+                }
+            }
+        }
 
         attachOnClickListeners()
     }

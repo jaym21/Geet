@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class NotificationGenerator(private val context: Application) {
 
     private var whenTime = -1L
-    private lateinit var notificationManager: NotificationManager
+    private var notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     fun updateNotification(mediaSession: MediaSessionCompat) {
         GlobalScope.launch {
@@ -78,6 +78,8 @@ class NotificationGenerator(private val context: Application) {
             .addAction(previousAction(context))
             .addAction(playPauseAction(context, playPauseButton))
             .addAction(nextAction(context))
+            .setAutoCancel(false)
+            .setOngoing(true)
 
         //getting color palette using artwork
         if (artwork != null) {

@@ -21,30 +21,30 @@ import dev.jaym21.geet.viewmodels.NowPlayingViewModel
 
 private const val INVALID_POSITION = -1
 
-class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycleOwner: LifecycleOwner, private val nowPlayingViewModel: NowPlayingViewModel): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
+class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycleOwner: LifecycleOwner): ListAdapter<Song, SongsRVAdapter.SongsViewHolder>(SongsDiffUtil()) {
 
     private var nowPlayingPosition = INVALID_POSITION
 
-    init {
-        //attach observer for updating now playing indicator on songs
-        nowPlayingViewModel.currentData.observe(lifecycleOwner) {
-            val previousPlayingPosition = nowPlayingPosition
-
-            if (!it.mediaId.isNullOrEmpty() && it.state == PlaybackStateCompat.STATE_PLAYING) {
-                nowPlayingPosition = getPositionForSong(it.mediaId!!.toLong())
-            } else {
-                nowPlayingPosition = INVALID_POSITION
-            }
-
-            //removing playing indicator from previous playing song position
-            if (previousPlayingPosition != INVALID_POSITION)
-                notifyItemChanged(previousPlayingPosition)
-
-            //adding playing indicator on now playing position
-            if (nowPlayingPosition != INVALID_POSITION)
-                notifyItemChanged(nowPlayingPosition)
-        }
-    }
+//    init {
+//        //attach observer for updating now playing indicator on songs
+//        nowPlayingViewModel.currentData.observe(lifecycleOwner) {
+//            val previousPlayingPosition = nowPlayingPosition
+//
+//            if (!it.mediaId.isNullOrEmpty() && it.state == PlaybackStateCompat.STATE_PLAYING) {
+//                nowPlayingPosition = getPositionForSong(it.mediaId!!.toLong())
+//            } else {
+//                nowPlayingPosition = INVALID_POSITION
+//            }
+//
+//            //removing playing indicator from previous playing song position
+//            if (previousPlayingPosition != INVALID_POSITION)
+//                notifyItemChanged(previousPlayingPosition)
+//
+//            //adding playing indicator on now playing position
+//            if (nowPlayingPosition != INVALID_POSITION)
+//                notifyItemChanged(nowPlayingPosition)
+//        }
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsViewHolder {
         return SongsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_song_layout, parent, false))
