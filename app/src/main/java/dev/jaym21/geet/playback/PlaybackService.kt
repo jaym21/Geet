@@ -1,7 +1,6 @@
 package dev.jaym21.geet.playback
 
 import android.content.Intent
-import android.media.MediaDescription
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
@@ -11,6 +10,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.lifecycleScope
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.session.MediaButtonReceiver
 import dagger.hilt.android.AndroidEntryPoint
@@ -243,7 +243,7 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
             //updating current queued songs details
             val queue = controller.queue
             val currentId = controller.metadata?.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID)
-            queueRepository.updateQueuedSongs(queue?.toIDList(), currentId?.toLong())
+            queueRepository.updateQueuedSongs(queue?.toIDList(), currentId?.toLong(), lifecycleScope)
 
             //updating current queue details
             val queueEntity = QueueEntity(

@@ -6,7 +6,7 @@ object Constants {
     //TODO: Add app icon
     const val EMPTY_ARTWORK_URI = "android.resource://dev.jaym21.geet/drawable/ic_launcher_foreground"
     const val SONG = "song"
-    const val MAIN_VIEW_PAGER_SIZE = 4
+    const val MAIN_VIEW_PAGER_SIZE = 5
     const val YIELD_FREQUENCY = 165
 
     //media session callback

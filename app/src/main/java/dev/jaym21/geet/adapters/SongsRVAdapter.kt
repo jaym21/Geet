@@ -1,6 +1,7 @@
 package dev.jaym21.geet.adapters
 
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
 
         val albumArtUri = SongUtils.getAlbumArtUri(currentItem.albumId)
 
+        Log.d("TAGYOYO", "onBindViewHolder: $currentItem")
         Glide.with(holder.itemView.context).load(albumArtUri).into(holder.artwork)
 
         if (position == nowPlayingPosition) {

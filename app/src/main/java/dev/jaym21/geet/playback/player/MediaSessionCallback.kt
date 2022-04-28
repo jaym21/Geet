@@ -3,6 +3,7 @@ package dev.jaym21.geet.playback.player
 import android.os.Bundle
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.lifecycle.Lifecycle
 import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.repository.SongsRepository
@@ -103,7 +104,7 @@ class MediaSessionCallback(
         // Only set saved session from db if we know there is not any active media session
         val controller = mediaSession.controller ?: return
         if (controller.playbackState == null || controller.playbackState.state == PlaybackStateCompat.STATE_NONE) {
-            val queue = queueDAO.getQueue() ?: return
+            val queue = queueDAO.getQueue().value ?: return
             songPlayer.restoreFromQueue(queue)
         } else {
             // Force update the playback state and metadata from the media session so that the

@@ -27,7 +27,7 @@ class HomeFragment : BaseFragment() {
         get() = _binding!!
     @Inject lateinit var songsRepository: SongsRepository
     private lateinit var mainViewPagerAdapter: MainViewPagerAdapter
-    private var tabs = arrayOf("Songs", "Albums", "Artists", "Playlists")
+    private var tabs = arrayOf("Songs", "Albums", "Artists", "Playlists", "Genres")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

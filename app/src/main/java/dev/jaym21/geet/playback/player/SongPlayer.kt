@@ -229,8 +229,10 @@ class SongPlayer(
         val shuffleMode = queueData.shuffleMode ?: PlaybackStateCompat.SHUFFLE_MODE_NONE
         val playBackState = queueData.playState ?: PlaybackStateCompat.STATE_NONE
 
-        val queueIds = queueDao.getQueuedSongs().toSongIDs()
-        setQueue(queueIds, queueData.queueTitle)
+        val queueIds = queueDao.getQueuedSongs().value?.toSongIDs()
+        if (queueIds != null) {
+            setQueue(queueIds, queueData.queueTitle)
+        }
         setMetaData(queue.currentSong())
 
         val extras = Bundle().apply {

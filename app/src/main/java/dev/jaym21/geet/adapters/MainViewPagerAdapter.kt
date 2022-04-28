@@ -21,9 +21,9 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
             0 -> return SongsFragment()
             1 -> return AlbumsFragment()
             2 -> return ArtistsFragment()
-            3 -> return GenresFragment()
+            3 -> return PlaylistsFragment()
         }
-        return PlaylistsFragment()
+        return GenresFragment()
     }
 
 }

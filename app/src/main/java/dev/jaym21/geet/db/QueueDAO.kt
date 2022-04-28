@@ -1,5 +1,6 @@
 package dev.jaym21.geet.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import dev.jaym21.geet.models.QueueEntity
 import dev.jaym21.geet.models.QueuedSongsEntity
@@ -19,10 +20,10 @@ interface QueueDAO {
     suspend fun deleteSongFromQueue(song: QueuedSongsEntity)
 
     @Query("SELECT * FROM queue_table where id = 0")
-    fun getQueue(): QueueEntity?
+    fun getQueue(): LiveData<QueueEntity?>
 
     @Query("SELECT * FROM queued_songs")
-    fun getQueuedSongs(): List<QueuedSongsEntity>
+    fun getQueuedSongs(): LiveData<List<QueuedSongsEntity>>
 
     @Query("UPDATE queue_table SET currentId  = :currentId where id = 0")
     suspend fun setCurrentId(currentId: Long)

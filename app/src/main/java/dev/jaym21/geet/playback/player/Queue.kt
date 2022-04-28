@@ -122,7 +122,7 @@ class Queue(
 
     fun confirmCurrentId() {
         if (currentSongId == Constants.NO_SONG_ID) {
-            val queue = queueDao.getQueue()
+            val queue = queueDao.getQueue().value
             currentSongId = queue?.currentId ?: Constants.NO_SONG_ID
         }
     }

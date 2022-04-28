@@ -1,12 +1,16 @@
 package dev.jaym21.geet.ui
 
 import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
@@ -46,24 +50,35 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
         setUpRecyclerView()
 
+        val isReadPermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        val isWritePermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        val minSDK29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+
+        readPermissionGranted = isReadPermissionAvailable
+        writePermissionGranted = isWritePermissionAvailable || minSDK29
+
         if (readPermissionGranted) {
             if (writePermissionGranted) {
-
-                songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
-
-                mainViewModel.loadSongs()
-
-                mainViewModel.songs.observe(viewLifecycleOwner) {
-                    songs = it
-                    if (!it.isNullOrEmpty()) {
-                        songsAdapter?.submitList(it)
-                    }
-                }
+                initialize()
             } else {
                 ActivityCompat.requestPermissions(requireActivity(),  arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), Constants.WRITE_EXTERNAL_STORAGE_REQUEST_CODE)
             }
         } else {
             ActivityCompat.requestPermissions(requireActivity(),  arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), Constants.READ_EXTERNAL_STORAGE_REQUEST_CODE)
+        }
+    }
+
+    private fun initialize() {
+        songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
+
+        mainViewModel.loadSongs()
+
+        mainViewModel.songs.observe(viewLifecycleOwner) {
+            Log.d("TAGYOYO", "songs: $it")
+            songs = it
+            if (!it.isNullOrEmpty()) {
+                songsAdapter?.submitList(it)
+            }
         }
 
         playbackSessionViewModel?.mediaItems
@@ -71,7 +86,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
             ?.observe(this) {
                 songsAdapter?.submitList(it as List<Song>)
             }
-
     }
 
     private fun setUpRecyclerView() {
@@ -89,5 +103,29 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     override fun onSongClicked(song: Song) {
         val extras = getExtraBundle(songs.toSongIds(), getString(R.string.all_songs))
         mainViewModel.mediaItemClicked(song, extras)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            Constants.WRITE_EXTERNAL_STORAGE_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
+                }else {
+                    initialize()
+                }
+            }
+            Constants.READ_EXTERNAL_STORAGE_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
+                }else {
+                    initialize()
+                }
+            }
+        }
     }
 }
