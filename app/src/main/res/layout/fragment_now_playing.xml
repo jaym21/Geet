@@ -119,7 +119,7 @@
         tools:progress="70"
         android:layout_marginBottom="35dp"
         android:layout_marginHorizontal="10dp"
-        app:layout_constraintBottom_toTopOf="@id/llControls"/>
+        app:layout_constraintBottom_toTopOf="@id/ivPlayPause"/>
 
     <dev.jaym21.geet.widgets.MediaTextView
         android:id="@+id/tvCurrentTime"
@@ -148,64 +148,71 @@
         android:layout_marginTop="8dp"
         android:gravity="end"/>
 
-    <LinearLayout
-        android:id="@+id/llControls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+
+    <ImageButton
+        android:id="@+id/ivShuffle"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:padding="12dp"
+        app:tint="@color/white_alpha_60"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_shuffle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivPrevious"
+        app:layout_constraintBottom_toBottomOf="@id/ivPrevious"
+        android:layout_marginStart="20dp"/>
 
 
-        <ImageButton
-            android:id="@+id/ivShuffle"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:padding="12dp"
-            app:tint="@color/white_alpha_60"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_shuffle" />
+    <ImageView
+        android:id="@+id/ivPrevious"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        app:tint="@color/white"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_skip_previous"
+        app:layout_constraintTop_toTopOf="@id/ivPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/ivPlayPause"
+        app:layout_constraintStart_toEndOf="@id/ivShuffle"
+        app:layout_constraintEnd_toStartOf="@id/ivPlayPause"/>
 
+    <ImageView
+        android:id="@+id/ivPlayPause"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:padding="12dp"
+        app:tint="@color/white"
+        android:background="@drawable/play_pause_btn_bg"
+        app:srcCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"/>
 
-        <ImageView
-            android:id="@+id/ivPrevious"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            app:tint="@color/white"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_skip_previous" />
+    <ImageView
+        android:id="@+id/ivNext"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
+        app:tint="@color/white"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_skip_next"
+        app:layout_constraintTop_toTopOf="@id/ivPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/ivPlayPause"
+        app:layout_constraintStart_toEndOf="@id/ivPlayPause"
+        app:layout_constraintEnd_toStartOf="@id/ivRepeat" />
 
-        <ImageView
-            android:id="@+id/ivPlayPause"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:padding="12dp"
-            app:tint="@color/white"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_play" />
-
-        <ImageView
-            android:id="@+id/ivNext"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            app:tint="@color/white"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_skip_next" />
-
-        <ImageView
-            android:id="@+id/ivRepeat"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:padding="12dp"
-            app:tint="@color/white_alpha_60"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_repeat" />
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/ivRepeat"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:padding="12dp"
+        app:tint="@color/white_alpha_60"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_repeat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivNext"
+        app:layout_constraintBottom_toBottomOf="@id/ivNext"
+        android:layout_marginEnd="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
