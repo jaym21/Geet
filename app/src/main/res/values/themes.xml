@@ -15,7 +15,7 @@
     </style>
 
     <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="SongProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">

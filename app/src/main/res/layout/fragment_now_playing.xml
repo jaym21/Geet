@@ -65,11 +65,10 @@
 
     <ImageView
         android:id="@+id/ivSongArtwork"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         tools:src="@drawable/ic_launcher_foreground"
-        android:layout_marginHorizontal="90dp"
-        android:layout_marginVertical="90dp"
+        android:layout_margin="30dp"
         app:layout_constraintTop_toBottomOf="@id/ivBackButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,8 +112,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="3dp"
         android:theme="@style/SeekBarStyle"
+        android:progressDrawable="@drawable/seek_bar_now_playing"
+        android:thumb="@drawable/seek_bar_thumb_now_playing"
+        tools:progress="70"
         android:layout_marginBottom="35dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toTopOf="@id/llControls"/>
