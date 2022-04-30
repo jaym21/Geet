@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivArtistArtworkMatrix"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="matrix"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    
+    <TextView
+        android:id="@+id/tvArtistName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Artist Name"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivArtistArtworkMatrix"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"/>
+
+    <TextView
+        android:id="@+id/tvNoOfSongs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="10 songs"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toBottomOf="@id/tvArtistName"
+        app:layout_constraintStart_toEndOf="@id/ivArtistArtworkMatrix"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
