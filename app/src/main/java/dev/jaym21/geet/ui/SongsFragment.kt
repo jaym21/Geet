@@ -30,7 +30,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     private var _binding: FragmentSongsBinding? = null
     private val binding: FragmentSongsBinding
         get() = _binding!!
-    private var songsAdapter: SongsRVAdapter = SongsRVAdapter(this, this)
+    private var songsAdapter: SongsRVAdapter? = null
     private var songs = listOf<Song>()
 
     private var readPermissionGranted = false
@@ -47,8 +47,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setUpRecyclerView()
 
         val isReadPermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         val isWritePermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
@@ -69,6 +67,10 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     private fun initialize() {
+
+        songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
+
+        setUpRecyclerView()
 
         mainViewModel.loadSongs()
 
