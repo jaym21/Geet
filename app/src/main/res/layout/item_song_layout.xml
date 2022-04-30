@@ -26,30 +26,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivSongArtwork"
         app:layout_constraintBottom_toBottomOf="@id/ivSongArtwork"
-        android:layout_marginEnd="5dp"
         android:layout_marginStart="12dp">
     
-    <TextView
-        android:id="@+id/tvSongTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Abcd"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:fontFamily="@font/inter_medium"/>
+        <TextView
+            android:id="@+id/tvSongTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Abcd"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_medium"/>
 
-    <TextView
-        android:id="@+id/tvArtistName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="xyz"
-        android:textSize="11sp"
-        android:textColor="@color/white_alpha_85"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:fontFamily="@font/inter_regular"/>
+        <TextView
+            android:id="@+id/tvArtistName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="xyz"
+            android:textSize="12sp"
+            android:textColor="@color/white_alpha_85"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_regular"/>
 
     </LinearLayout>
 
