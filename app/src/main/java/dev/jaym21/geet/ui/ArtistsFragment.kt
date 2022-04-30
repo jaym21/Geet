@@ -6,14 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.jaym21.geet.R
+import dev.jaym21.geet.databinding.FragmentArtistsBinding
 
 class ArtistsFragment : Fragment() {
+
+    private var _binding: FragmentArtistsBinding? = null
+    private val binding: FragmentArtistsBinding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artists, container, false)
+        _binding = FragmentArtistsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
