@@ -35,10 +35,10 @@
             android:fontFamily="@font/inter_medium"/>
 
         <TextView
-            android:id="@+id/tvNoOfSongs"
+            android:id="@+id/tvNoOfSongsAndAlbums"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="10 songs"
+            tools:text="10 songs, 2 Albums"
             android:textSize="12sp"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"/>
