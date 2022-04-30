@@ -10,45 +10,48 @@
 
     <ImageView
         android:id="@+id/ivSongArtwork"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/ic_launcher_foreground"
         android:background="@drawable/artwork_rounded_corners"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivSongArtwork"
+        app:layout_constraintBottom_toBottomOf="@id/ivSongArtwork"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="12dp">
+    
     <TextView
         android:id="@+id/tvSongTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Abcd"
         android:textSize="15sp"
         android:textColor="@color/white"
         android:singleLine="true"
         android:ellipsize="end"
-        android:fontFamily="@font/inter_medium"
-        app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="12dp"/>
+        android:fontFamily="@font/inter_medium"/>
 
     <TextView
         android:id="@+id/tvArtistName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="xyz"
         android:textSize="11sp"
         android:textColor="@color/white_alpha_85"
         android:singleLine="true"
         android:ellipsize="end"
-        android:fontFamily="@font/inter_regular"
-        app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSongTitle"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="12dp"/>
+        android:fontFamily="@font/inter_regular"/>
+
+    </LinearLayout>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/ivMoreMenu"-->
