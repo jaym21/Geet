@@ -11,10 +11,12 @@ import dev.jaym21.geet.extensions.isPlayEnabled
 import dev.jaym21.geet.extensions.isPlaying
 import dev.jaym21.geet.extensions.isPrepared
 import dev.jaym21.geet.extensions.map
+import dev.jaym21.geet.models.Album
 import dev.jaym21.geet.models.Event
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.playback.player.PlaybackSessionConnector
+import dev.jaym21.geet.repository.AlbumRepository
 import dev.jaym21.geet.repository.SongsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val songsRepository: SongsRepository,
+    private val albumsRepository: AlbumRepository,
     private val playbackSessionConnector: PlaybackSessionConnector
 ): ViewModel() {
 
@@ -44,6 +47,9 @@ class MainViewModel @Inject constructor(
 
     private val _songs: MutableLiveData<List<Song>> =  MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
+
+    private val _albums: MutableLiveData<List<Album>> = MutableLiveData()
+    val albums: LiveData<List<Album>> = _albums
 
     private val _songsForIds: MutableLiveData<List<Song>> =  MutableLiveData()
     val songsForIds: LiveData<List<Song>> = _songsForIds
@@ -92,6 +98,10 @@ class MainViewModel @Inject constructor(
 
     fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
         _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF))
+    }
+
+    fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
+        _albums.postValue(albumsRepository.getAllAlbums(MediaID.CALLER_SELF))
     }
 
     fun getSongForIds(ids: LongArray) = viewModelScope.launch {

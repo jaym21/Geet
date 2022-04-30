@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.AlbumsRVAdapter
 import dev.jaym21.geet.adapters.IAlbumsRVAdapter
 import dev.jaym21.geet.databinding.FragmentAlbumsBinding
+import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.models.Album
 
 class AlbumsFragment : BaseFragment(), IAlbumsRVAdapter {
@@ -30,11 +33,26 @@ class AlbumsFragment : BaseFragment(), IAlbumsRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpRecyclerView()
+
+        mainViewModel.loadAlbums()
+
+        mainViewModel.albums.observe(viewLifecycleOwner) {
+            albumsAdapter.submitList(it)
+        }
+
+        playbackSessionViewModel?.mediaItems
+            ?.filter { it.isNotEmpty() }
+            ?.observe(this) {
+                albumsAdapter.submitList(it as List<Album>)
+            }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setUpRecyclerView() {
+        binding.apply {
+            rvAllAlbums.adapter = albumsAdapter
+            rvAllAlbums.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+        }
     }
 
     override fun onDestroy() {
