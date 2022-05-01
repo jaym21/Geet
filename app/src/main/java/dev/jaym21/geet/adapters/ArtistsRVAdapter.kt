@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -28,7 +29,6 @@ class ArtistsRVAdapter(private val listener: IArtistsRVAdapter): ListAdapter<Art
         override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.id == newItem.id
         }
-
     }
 
     inner class ArtistsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -40,6 +40,7 @@ class ArtistsRVAdapter(private val listener: IArtistsRVAdapter): ListAdapter<Art
         val topLayer: LinearLayout = itemView.findViewById(R.id.llArtworkTopLayer)
         val bottomLayer: LinearLayout = itemView.findViewById(R.id.llArtworkBottomLayer)
         val noOfSongsAndAlbums: TextView = itemView.findViewById(R.id.tvNoOfSongsAndAlbums)
+        val root: ConstraintLayout = itemView.findViewById(R.id.clArtistItemRoot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistsViewHolder {
@@ -110,6 +111,10 @@ class ArtistsRVAdapter(private val listener: IArtistsRVAdapter): ListAdapter<Art
                 Glide.with(holder.itemView.context).load(images[2]).into(holder.artwork3)
                 Glide.with(holder.itemView.context).load(images[3]).into(holder.artwork4)
             }
+        }
+
+        holder.root.setOnClickListener {
+            listener.onArtistClick(currentItem)
         }
     }
 }
