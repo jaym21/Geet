@@ -12,7 +12,7 @@
         android:id="@+id/ivBackButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/ic_arrow_down"
+        android:src="@drawable/ic_down_arrow"
         app:tint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
