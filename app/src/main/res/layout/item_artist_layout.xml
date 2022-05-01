@@ -7,21 +7,69 @@
     android:padding="16dp"
     android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/ivArtistArtworkMatrix"
+    <LinearLayout
+        android:id="@+id/llArtistArtworkMatrix"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:scaleType="matrix"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llArtworkTopLayer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivAlbumsArtwork1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_album_disk"/>
+
+            <ImageView
+                android:id="@+id/ivAlbumsArtwork2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_album_disk"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llArtworkBottomLayer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivAlbumsArtwork3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_album_disk"/>
+
+            <ImageView
+                android:id="@+id/ivAlbumsArtwork4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_album_disk"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@id/ivArtistArtworkMatrix"
-        app:layout_constraintBottom_toBottomOf="@id/ivArtistArtworkMatrix"
-        app:layout_constraintStart_toEndOf="@id/ivArtistArtworkMatrix"
+        app:layout_constraintTop_toTopOf="@id/llArtistArtworkMatrix"
+        app:layout_constraintBottom_toBottomOf="@id/llArtistArtworkMatrix"
+        app:layout_constraintStart_toEndOf="@id/llArtistArtworkMatrix"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="12dp">
     
@@ -38,7 +86,7 @@
             android:id="@+id/tvNoOfSongsAndAlbums"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="10 songs, 2 Albums"
+            tools:text="10 Songs, 2 Albums"
             android:textSize="12sp"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"/>

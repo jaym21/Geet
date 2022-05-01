@@ -10,7 +10,8 @@ data class Artist (
     var id: Long = 0,
     var name: String = "",
     var noOfSongs: Int = 0,
-    var noOfAlbums: Int = 0
+    var noOfAlbums: Int = 0,
+    var albumIds: List<Long>
 ) : MediaBrowserCompat.MediaItem(
         MediaDescriptionCompat.Builder()
             .setMediaId(MediaID(Constants.ARTIST_MODE.toString(), id.toString()).asString())

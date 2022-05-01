@@ -70,11 +70,20 @@ class ArtistRepository(private val context: Context) {
         val noOfSongs = cursor.getInt(MediaStore.Audio.ArtistColumns.NUMBER_OF_TRACKS)
         val noOfAlbums = cursor.getInt(MediaStore.Audio.ArtistColumns.NUMBER_OF_ALBUMS)
 
+        val songs = getSongsForArtist(MediaID.CALLER_SELF, id)
+
+        val albumsIds = mutableListOf<Long>()
+
+        for (i in songs) {
+            albumsIds.add(i.albumId)
+        }
+
         return Artist(
             id,
             artistName ?: "",
             noOfSongs,
-            noOfAlbums
+            noOfAlbums,
+            albumsIds
         )
     }
 
