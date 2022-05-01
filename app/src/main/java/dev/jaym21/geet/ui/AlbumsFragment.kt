@@ -61,6 +61,6 @@ class AlbumsFragment : BaseFragment(), IAlbumsRVAdapter {
     }
 
     override fun onAlbumClick(album: Album) {
-
+        mainViewModel.mediaItemClicked(album, null)
     }
 }
