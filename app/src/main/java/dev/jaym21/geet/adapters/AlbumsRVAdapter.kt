@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class AlbumsRVAdapter(private val listener: IAlbumsRVAdapter): ListAdapter<Album
         val albumName: TextView = itemView.findViewById(R.id.tvAlbumName)
         val albumArtwork: ImageView = itemView.findViewById(R.id.ivAlbumArtwork)
         val artistName: TextView = itemView.findViewById(R.id.tvArtistName)
+        val root: ConstraintLayout = itemView.findViewById(R.id.clAlbumItemRoot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsViewHolder {
@@ -42,6 +44,10 @@ class AlbumsRVAdapter(private val listener: IAlbumsRVAdapter): ListAdapter<Album
         holder.albumName.text = currentItem.albumTitle
         holder.artistName.text = currentItem.artist
         Glide.with(holder.itemView.context).load(SongUtils.getAlbumArtBitmap(holder.itemView.context, currentItem.id)).transform(RoundedCorners(16)).into(holder.albumArtwork)
+
+        holder.root.setOnClickListener {
+            listener.onAlbumClick(currentItem)
+        }
     }
 }
 

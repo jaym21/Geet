@@ -77,7 +77,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
         mainViewModel.songs.observe(viewLifecycleOwner) {
             songs = it
             if (!it.isNullOrEmpty()) {
-                Log.d("TAGYOYO", "songs: $it")
                 songsAdapter?.submitList(it)
             }
         }

@@ -117,6 +117,7 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
+        result.detach()
         GlobalScope.launch(Dispatchers.Main) {
             val mediaItems = withContext(Dispatchers.IO) {
                 loadChildren(parentId)

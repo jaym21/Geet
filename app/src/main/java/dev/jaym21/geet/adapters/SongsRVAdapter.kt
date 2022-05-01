@@ -59,7 +59,6 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
 
         val albumArtUri = SongUtils.getAlbumArtUri(currentItem.albumId)
 
-        Log.d("TAGYOYO", "onBindViewHolder: $currentItem")
         Glide.with(holder.itemView.context).load(albumArtUri).transform(RoundedCorners(12)).into(holder.artwork)
 
         if (position == nowPlayingPosition) {
