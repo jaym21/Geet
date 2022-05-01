@@ -16,6 +16,7 @@ data class Song(
     var album: String = "",
     var duration: Long = 0,
     var albumId: Long = 0,
+    var artistId: Long = 0,
     var trackNumber: Int = 0
 ):MediaBrowserCompat.MediaItem(
     MediaDescriptionCompat.Builder()

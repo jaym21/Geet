@@ -57,7 +57,7 @@ class ArtistRepository(private val context: Context) {
         val selection = "is_music=1 AND title != '' AND artist_id=$artistId"
         return context.contentResolver.query(
             uri,
-            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id"),
+            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id", "artist_id"),
             selection,
             null,
             MediaStore.Audio.Media.DEFAULT_SORT_ORDER
@@ -94,6 +94,7 @@ class ArtistRepository(private val context: Context) {
         val albumName = cursor.getStringOrNull(MediaStore.Audio.AudioColumns.ALBUM)
         val duration = cursor.getLong(MediaStore.Audio.AudioColumns.DURATION)
         val albumId = cursor.getLong(MediaStore.Audio.AudioColumns.ALBUM_ID)
+        val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
         val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK).normalizeTrackNumber()
 
         return Song(
@@ -103,6 +104,7 @@ class ArtistRepository(private val context: Context) {
             albumName ?: "",
             duration,
             albumId,
+            artistId,
             trackNumber
         )
     }

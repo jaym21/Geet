@@ -52,7 +52,7 @@ class GenreRepository(private val context: Context) {
 
     private fun makeGenreSongCursor(genreID: Long): Cursor? {
         val uri = MediaStore.Audio.Genres.Members.getContentUri("external", genreID)
-        val projection = arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id")
+        val projection = arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id", "artist_id")
         return context.contentResolver.query(uri, projection, null, null,
             MediaStore.Audio.Media.DEFAULT_SORT_ORDER
         )
@@ -89,6 +89,7 @@ class GenreRepository(private val context: Context) {
         val albumName = cursor.getStringOrNull(MediaStore.Audio.AudioColumns.ALBUM)
         val duration = cursor.getLong(MediaStore.Audio.AudioColumns.DURATION)
         val albumId = cursor.getLong(MediaStore.Audio.AudioColumns.ALBUM_ID)
+        val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
         val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK).normalizeTrackNumber()
 
         return Song(
@@ -98,6 +99,7 @@ class GenreRepository(private val context: Context) {
             albumName ?: "",
             duration,
             albumId,
+            artistId,
             trackNumber
         )
     }

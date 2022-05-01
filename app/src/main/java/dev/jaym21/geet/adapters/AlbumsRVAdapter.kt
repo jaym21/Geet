@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.models.Album
+import dev.jaym21.geet.utils.SongUtils
 
 class AlbumsRVAdapter(private val listener: IAlbumsRVAdapter): ListAdapter<Album, AlbumsRVAdapter.AlbumsViewHolder>(AlbumsDiffUtil()) {
 
@@ -40,7 +41,7 @@ class AlbumsRVAdapter(private val listener: IAlbumsRVAdapter): ListAdapter<Album
         val currentItem = getItem(position)
         holder.albumName.text = currentItem.albumTitle
         holder.artistName.text = currentItem.artist
-        Glide.with(holder.itemView.context).load(currentItem.id).transform(RoundedCorners(12)).into(holder.albumArtwork)
+        Glide.with(holder.itemView.context).load(SongUtils.getAlbumArtBitmap(holder.itemView.context, currentItem.id)).transform(RoundedCorners(16)).into(holder.albumArtwork)
     }
 }
 

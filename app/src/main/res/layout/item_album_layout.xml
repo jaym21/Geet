@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/ivAlbumArtwork"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         tools:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -19,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Album Name"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textColor="@color/white"
         android:fontFamily="@font/inter_medium"
         app:layout_constraintTop_toBottomOf="@id/ivAlbumArtwork"
@@ -30,9 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Artist Name"
-        android:textSize="13sp"
+        android:textSize="11sp"
         android:textColor="@color/white_alpha_85"
         android:fontFamily="@font/inter_regular"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintTop_toBottomOf="@id/tvAlbumName"
         android:layout_marginTop="3dp" />
 
