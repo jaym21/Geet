@@ -4,9 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:id="@+id/clSongRoot"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/ivSongArtwork"
@@ -23,17 +22,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivReOrder"
         app:layout_constraintTop_toTopOf="@id/ivSongArtwork"
         app:layout_constraintBottom_toBottomOf="@id/ivSongArtwork"
-        android:layout_marginStart="12dp">
-    
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
+
         <TextView
             android:id="@+id/tvSongTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Song Name"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:singleLine="true"
             android:ellipsize="end"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Artist Name"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textColor="@color/white_alpha_85"
             android:singleLine="true"
             android:ellipsize="end"
@@ -52,13 +52,16 @@
 
     </LinearLayout>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivMoreMenu"-->
-<!--        android:layout_width="25dp"-->
-<!--        android:layout_height="25dp"-->
-<!--        android:src="@drawable/ic_more"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-    
+    <ImageView
+        android:id="@+id/ivReOrder"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_drag_handle"
+        app:tint="@color/white"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
