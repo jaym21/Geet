@@ -94,7 +94,6 @@ class ArtistRepository(private val context: Context) {
         val albumName = cursor.getStringOrNull(MediaStore.Audio.AudioColumns.ALBUM)
         val duration = cursor.getLong(MediaStore.Audio.AudioColumns.DURATION)
         val albumId = cursor.getLong(MediaStore.Audio.AudioColumns.ALBUM_ID)
-        val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
         val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK).normalizeTrackNumber()
 
         return Song(
@@ -104,7 +103,6 @@ class ArtistRepository(private val context: Context) {
             albumName ?: "",
             duration,
             albumId,
-            artistId,
             trackNumber
         )
     }

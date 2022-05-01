@@ -96,7 +96,7 @@ class SongsRepository(private val context: Context) {
     fun getSongFromPath(path: String): Song {
         val selection = MediaStore.Audio.Media.DATA
         val selectionArgs = arrayOf(path)
-        val projection = arrayOf("_id", "title", "artist", "album", "duration", "track", "artist_id", "album_id")
+        val projection = arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id")
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
         val cursor =  context.contentResolver.query(
@@ -137,7 +137,6 @@ class SongsRepository(private val context: Context) {
             MediaStore.Audio.AudioColumns.ALBUM,
             MediaStore.Audio.AudioColumns.DURATION,
             MediaStore.Audio.AudioColumns.TRACK,
-            MediaStore.Audio.AudioColumns.ARTIST_ID,
             MediaStore.Audio.AudioColumns.ALBUM_ID,)
 
         return context.contentResolver.query(
@@ -156,7 +155,6 @@ class SongsRepository(private val context: Context) {
         val albumName = cursor.getStringOrNull(MediaStore.Audio.AudioColumns.ALBUM)
         val duration = cursor.getLong(MediaStore.Audio.AudioColumns.DURATION)
         val albumId = cursor.getLong(MediaStore.Audio.AudioColumns.ALBUM_ID)
-        val artistId = cursor.getLong(MediaStore.Audio.AudioColumns.ARTIST_ID)
         val trackNumber = cursor.getInt(MediaStore.Audio.AudioColumns.TRACK).normalizeTrackNumber()
 
         return Song(
@@ -166,7 +164,6 @@ class SongsRepository(private val context: Context) {
             albumName ?: "",
             duration,
             albumId,
-            artistId,
             trackNumber
         )
     }
