@@ -18,7 +18,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sign
 
-class QueueDragCallback(private val mainViewModel: MainViewModel, private val nowPlayingViewModel: NowPlayingViewModel, private val lifecycleOwner: LifecycleOwner): ItemTouchHelper.Callback() {
+class QueueDragCallback(private val mainViewModel: MainViewModel, private val nowPlayingViewModel: NowPlayingViewModel, private val lifecycleOwner: LifecycleOwner, private val queueAdapter: QueueRVAdapter): ItemTouchHelper.Callback() {
 
     private var shouldElevate = true
 
@@ -49,10 +49,9 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val no
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val extras = Bundle()
-        nowPlayingViewModel.queueData.observe(lifecycleOwner) { queueData ->
-            val id = queueData.queue[viewHolder.adapterPosition]
-            extras.putLong(Constants.SONG, id)
-        }
+        val songId = queueAdapter.getSongIdForPosition(viewHolder.adapterPosition)
+        extras.putLong(Constants.SONG, songId)
+        mainViewModel.transportControls().sendCustomAction(Constants.ACTION_SONG_DELETED, extras)
     }
 
 
@@ -66,62 +65,11 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val no
     ): Int {
 
         val standardSpeed = super.interpolateOutOfBoundsScroll(recyclerView, viewSize, viewSizeOutOfBounds, totalSize, msSinceStartScroll)
-
         val holdAbsVelocity = max(Constants.MINIMUM_INITIAL_DRAG_VELOCITY, min(abs(standardSpeed), Constants.MAXIMUM_INITIAL_DRAG_VELOCITY))
 
         return holdAbsVelocity * sign(viewSizeOutOfBounds.toDouble()).toInt()
     }
 
-    override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-    ) {
-        val holder = viewHolder as QueueRVAdapter.QueueViewHolder
-
-        if (isCurrentlyActive && shouldElevate && actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-            val bg = holder.body.background as MaterialShapeDrawable
-            val elevation = recyclerView.context.getDimensionSafely(2)
-            holder.itemView.animate()
-                .translationZ(elevation)
-                .setDuration(100)
-                .setUpdateListener { bg.elevation = holder.itemView.translationZ }
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .start()
-
-            shouldElevate = false
-        }
-
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            holder.background.isInvisible = dX == 0f
-        }
-
-        holder.body.translationX = dX
-        holder.itemView.translationY = dY
-    }
-
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        val holder = viewHolder as QueueRVAdapter.QueueViewHolder
-        val bg = holder.body.background as MaterialShapeDrawable
-
-        if (holder.itemView.translationZ != 0f) {
-            holder.itemView.animate()
-                .translationZ(0.0f)
-                .setDuration(100)
-                .setUpdateListener { bg.elevation = holder.itemView.translationZ }
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .start()
-        }
-
-        shouldElevate = true
-
-        holder.body.translationX = 0f
-        holder.itemView.translationY = 0f
-    }
     override fun isLongPressDragEnabled(): Boolean {
         return false
     }

@@ -55,17 +55,13 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
     private fun setUpRecyclerView() {
         binding.apply {
             rvQueue.adapter = queueAdapter
+            getTouchHelper().attachToRecyclerView(rvQueue)
             rvQueue.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onPickUp(viewHolder: RecyclerView.ViewHolder) {
-
+        getTouchHelper().startDrag(viewHolder)
     }
 
     private fun getTouchHelper(): ItemTouchHelper {
@@ -74,10 +70,17 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         if (instance != null) {
             return instance
         }
-        val newCallback = QueueDragCallback(mainViewModel, nowPlayingViewModel, viewLifecycleOwner)
+        val newCallback = QueueDragCallback(mainViewModel, nowPlayingViewModel, viewLifecycleOwner, queueAdapter)
         val newInstance = ItemTouchHelper(newCallback)
         callback = newCallback
         touchHelper = newInstance
         return newInstance
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        callback = null
+        touchHelper = null
+        _binding = null
     }
 }
