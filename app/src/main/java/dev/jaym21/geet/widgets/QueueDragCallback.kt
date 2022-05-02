@@ -3,22 +3,26 @@ package dev.jaym21.geet.widgets
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.MaterialShapeDrawable
+import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.QueueRVAdapter
 import dev.jaym21.geet.extensions.getDimensionSafely
 import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.viewmodels.MainViewModel
 import dev.jaym21.geet.viewmodels.NowPlayingViewModel
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sign
 
-class QueueDragCallback(private val mainViewModel: MainViewModel, private val nowPlayingViewModel: NowPlayingViewModel, private val lifecycleOwner: LifecycleOwner, private val queueAdapter: QueueRVAdapter): ItemTouchHelper.Callback() {
+class QueueDragCallback(private val mainViewModel: MainViewModel, private val queueAdapter: QueueRVAdapter): ItemTouchHelper.Callback() {
 
     private var shouldElevate = true
 
@@ -35,8 +39,8 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val no
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        val from = viewHolder.adapterPosition
-        val to = target.adapterPosition
+        val from = viewHolder.absoluteAdapterPosition
+        val to = target.absoluteAdapterPosition
 
         val extras = Bundle().apply {
             putInt(Constants.QUEUE_FROM, from)
@@ -49,9 +53,26 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val no
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val extras = Bundle()
-        val songId = queueAdapter.getSongIdForPosition(viewHolder.adapterPosition)
+        val songId = queueAdapter.getSongIdForPosition(viewHolder.absoluteAdapterPosition)
         extras.putLong(Constants.SONG, songId)
         mainViewModel.transportControls().sendCustomAction(Constants.ACTION_SONG_DELETED, extras)
+    }
+
+    override fun onChildDraw(
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            .addBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.swipe_red_bg))
+            .addActionIcon(R.drawable.ic_delete)
+            .create()
+            .decorate()
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
 

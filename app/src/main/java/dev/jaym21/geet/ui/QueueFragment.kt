@@ -70,7 +70,7 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         if (instance != null) {
             return instance
         }
-        val newCallback = QueueDragCallback(mainViewModel, nowPlayingViewModel, viewLifecycleOwner, queueAdapter)
+        val newCallback = QueueDragCallback(mainViewModel, queueAdapter)
         val newInstance = ItemTouchHelper(newCallback)
         callback = newCallback
         touchHelper = newInstance

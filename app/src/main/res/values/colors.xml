@@ -16,4 +16,5 @@
     <color name="bottom_gradient">#e6000000</color>
     <color name="notification_vibrant">#41514B</color>
     <color name="seek_bar_background">#ababab</color>
+    <color name="swipe_red_bg">#E44D4D</color>
 </resources>
