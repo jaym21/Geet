@@ -130,6 +130,10 @@ class NowPlayingFragment : BaseFragment() {
             }
         }
 
+        binding.ivOpenQueue.setOnClickListener {
+            navigationViewModel.mainNavigateTo(MainNavigationAction.QUEUE)
+        }
+
         binding.ivBackButton.setOnClickListener {
             navigationViewModel.mainNavigateTo(MainNavigationAction.COLLAPSE)
         }
