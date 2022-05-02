@@ -1,10 +1,13 @@
 package dev.jaym21.geet.extensions
 
+import android.content.Context
 import android.graphics.Insets
 import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
+import androidx.annotation.DimenRes
+import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 
 fun View.disableDropShadowCompat() {
@@ -15,10 +18,7 @@ fun View.disableDropShadowCompat() {
     }
 }
 
-/**
- * Resolve system bar insets in a version-aware manner. This can be used to apply padding to a view
- * that properly follows all the frustrating changes that were made between 8-11.
- */
+
 val WindowInsets.systemBarInsetsCompat: Rect
     get() {
         return when {
@@ -37,10 +37,7 @@ val WindowInsets.systemBarInsetsCompat: Rect
         }
     }
 
-/**
- * Replaces the system bar insets in a version-aware manner. This can be used to modify the insets
- * for child views in a way that follows all of the frustrating changes that were made between 8-11.
- */
+
 fun WindowInsets.replaceSystemBarInsetsCompat(
     left: Int,
     top: Int,
@@ -61,7 +58,7 @@ fun WindowInsets.replaceSystemBarInsetsCompat(
 
 /**
  * Determines if the point given by [x] and [y] falls within this view.
- * @param minTouchTargetSize The minimum touch size, independent of the view's size (Optional)
+ * @param minTouchTargetSize The minimum touch size, independent of the view's size
  */
 fun View.isUnder(x: Float, y: Float, minTouchTargetSize: Int = 0): Boolean {
     return isUnderImpl(x, left, right, (parent as View).width, minTouchTargetSize) &&
@@ -97,4 +94,13 @@ private fun isUnderImpl(
     }
 
     return position >= touchTargetStart && position < touchTargetEnd
+}
+
+@Dimension
+fun Context.getDimensionSafely(dimen: Int): Float {
+    return try {
+        resources.getDimension(dimen)
+    } catch (e: Exception) {
+        return 0f
+    }
 }

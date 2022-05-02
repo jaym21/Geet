@@ -8,6 +8,8 @@ object Constants {
     const val SONG = "song"
     const val MAIN_VIEW_PAGER_SIZE = 5
     const val YIELD_FREQUENCY = 165
+    const val MINIMUM_INITIAL_DRAG_VELOCITY = 10
+    const val MAXIMUM_INITIAL_DRAG_VELOCITY = 25
 
     //media session callback
     const val QUEUED_SONGS_LIST = "queued_songs_list"
