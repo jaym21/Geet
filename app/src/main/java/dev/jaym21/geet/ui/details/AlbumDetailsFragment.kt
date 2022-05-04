@@ -1,7 +1,6 @@
 package dev.jaym21.geet.ui.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import dev.jaym21.geet.adapters.ISongsRVAdapter
 import dev.jaym21.geet.adapters.SongsRVAdapter
 import dev.jaym21.geet.databinding.FragmentAlbumDetailsBinding
 import dev.jaym21.geet.extensions.filter
+import dev.jaym21.geet.extensions.getExtraBundle
+import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Album
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.ui.BaseFragment
@@ -26,6 +27,8 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
     private val binding: FragmentAlbumDetailsBinding
         get() = _binding!!
     private var album: Album? = null
+    private var caller: String? = null
+    private var songs = listOf<Song>()
     private var songsAdapter: SongsRVAdapter? = null
 
     override fun onCreateView(
@@ -41,23 +44,47 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
         super.onViewCreated(view, savedInstanceState)
 
         album = arguments?.getParcelable(Constants.ALBUM)
+        caller = arguments?.getString(Constants.MEDIA_CALLER)
 
-        if (album != null) {
+        if (album != null && caller != null) {
             binding.tvAlbumName.text = album?.albumTitle
             binding.tvArtistName.text = album?.artist
             Glide.with(requireContext()).load(SongUtils.getAlbumArtBitmap(requireContext(), album?.id)).into(binding.ivBackButton)
-            binding.tvAlbumInfo.text = context?.getString(R.string.format_two, album?.year?.toString() ?: getString(R.string.no_year), album?.noOfSongs.toString())
 
+            if (album!!.noOfSongs > 1) {
+                binding.tvAlbumInfo.text = context?.getString(
+                    R.string.format_two,
+                    album?.year?.toString() ?: getString(R.string.no_year),
+                    "${album?.noOfSongs} songs"
+                )
+            } else {
+                binding.tvAlbumInfo.text = context?.getString(
+                    R.string.format_two,
+                    album?.year?.toString() ?: getString(R.string.no_year),
+                    "${album?.noOfSongs} song"
+                )
+            }
 
             songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
 
             setUpRecyclerView()
+
+            mainViewModel.getSongsAlbum(caller!!, album!!.id)
+
+            mainViewModel.albumSongs.observe(viewLifecycleOwner) {
+                songs = it
+                songsAdapter?.submitList(it)
+            }
 
             playbackSessionViewModel?.mediaItems
                 ?.filter { it.isNotEmpty() }
                 ?.observe(this) {
                     songsAdapter?.submitList(it as List<Song>)
                 }
+
+            binding.ivBackButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
         } else {
             findNavController().popBackStack()
@@ -72,7 +99,8 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     override fun onSongClicked(song: Song) {
-
+        val extras = getExtraBundle(songs.toSongIds(), album?.albumTitle!!)
+        mainViewModel.mediaItemClicked(song, extras)
     }
 
     override fun onDestroy() {
