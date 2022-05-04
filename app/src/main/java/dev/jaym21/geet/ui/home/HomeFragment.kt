@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.MainViewPagerAdapter
 import dev.jaym21.geet.databinding.FragmentHomeBinding
 import dev.jaym21.geet.extensions.filter
@@ -63,7 +64,7 @@ class HomeFragment : BaseFragment() {
     private fun navigateToMediaItem(mediaId: MediaID) {
         when (mediaId.type?.toInt()) {
             Constants.ALL_SONGS_MODE -> {
-                findNavController().navigate()
+
             }
             Constants.ALL_ALBUMS_MODE -> {
 
@@ -81,7 +82,7 @@ class HomeFragment : BaseFragment() {
 
             }
             Constants.ALBUM_MODE -> {
-
+                findNavController().navigate(R.id.action_homeFragment_to_albumDetailsFragment)
             }
             Constants.PLAYLIST_MODE -> {
 

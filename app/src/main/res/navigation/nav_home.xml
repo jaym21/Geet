@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_albumDetailsFragment"
+            app:destination="@id/albumDetailsFragment" />
     </fragment>
 
     <fragment
@@ -20,5 +23,10 @@
         android:name="dev.jaym21.geet.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/albumDetailsFragment"
+        android:name="dev.jaym21.geet.ui.details.AlbumDetailsFragment"
+        android:label="fragment_album_details"
+        tools:layout="@layout/fragment_album_details" />
 
 </navigation>
