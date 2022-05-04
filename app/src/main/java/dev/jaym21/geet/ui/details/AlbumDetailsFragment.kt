@@ -69,7 +69,7 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
 
             setUpRecyclerView()
 
-            mainViewModel.getSongsAlbum(caller!!, album!!.id)
+            mainViewModel.getAlbumSongs(caller!!, album?.id!!)
 
             mainViewModel.albumSongs.observe(viewLifecycleOwner) {
                 songs = it
