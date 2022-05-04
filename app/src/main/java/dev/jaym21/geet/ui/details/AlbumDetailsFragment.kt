@@ -49,7 +49,7 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
         if (album != null && caller != null) {
             binding.tvAlbumName.text = album?.albumTitle
             binding.tvArtistName.text = album?.artist
-            Glide.with(requireContext()).load(SongUtils.getAlbumArtBitmap(requireContext(), album?.id)).into(binding.ivBackButton)
+            Glide.with(requireContext()).load(SongUtils.getAlbumArtBitmap(requireContext(), album?.id)).into(binding.ivAlbumArtwork)
 
             if (album!!.noOfSongs > 1) {
                 binding.tvAlbumInfo.text = context?.getString(

@@ -47,6 +47,9 @@ class MainViewModel @Inject constructor(
     private val _songs: MutableLiveData<List<Song>> =  MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
 
+    private val _albumSongs: MutableLiveData<List<Song>> =  MutableLiveData()
+    val albumSongs: LiveData<List<Song>> = _albumSongs
+
     private val _albums: MutableLiveData<List<Album>> = MutableLiveData()
     val albums: LiveData<List<Album>> = _albums
 
@@ -62,6 +65,12 @@ class MainViewModel @Inject constructor(
     private val _navigateToMediaItem = MutableLiveData<Event<MediaID>>()
     val navigateToMediaItem: LiveData<Event<MediaID>> = _navigateToMediaItem
 
+    private val _currentMediaItem = MutableLiveData<Event<MediaID>>()
+    val currentMediaItem: LiveData<Event<MediaID>> = _currentMediaItem
+
+    private val _customAction = MutableLiveData<Event<String>>()
+    val customAction: LiveData<Event<String>> = _customAction
+
     fun transportControls() = playbackSessionConnector.transportControls
 
     fun mediaItemClicked(clickedItem: MediaBrowserCompat.MediaItem, extras: Bundle?) {
@@ -73,9 +82,13 @@ class MainViewModel @Inject constructor(
     }
 
     private fun browseToItem(clickedItem: MediaBrowserCompat.MediaItem) {
+        Log.d("TAGYOYO", "browseToItem: ${clickedItem.mediaId}")
         _navigateToMediaItem.value = Event(MediaID().fromString(clickedItem.mediaId!!).apply {
             this.mediaItem = clickedItem
         })
+        _currentMediaItem.postValue(Event(MediaID().fromString(clickedItem.mediaId!!).apply {
+            this.mediaItem = clickedItem
+        }))
     }
 
     private fun playMedia(mediaItem: MediaBrowserCompat.MediaItem, extras: Bundle?) {
@@ -100,6 +113,10 @@ class MainViewModel @Inject constructor(
 
     fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
         _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF))
+    }
+
+    fun getSongsAlbum(caller: String, albumId: Long) {
+        _albumSongs.postValue(albumsRepository.getSongsForAlbum(caller, albumId))
     }
 
     fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
