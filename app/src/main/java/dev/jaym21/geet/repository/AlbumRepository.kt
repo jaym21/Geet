@@ -55,6 +55,19 @@ class AlbumRepository(private val context: Context) {
         return songs
     }
 
+    fun getAlbumsForArtist(artistId: Long): List<Album> {
+        //getting all albums and then filtering using artistId
+        val allAlbums: List<Album> = getAllAlbums(null)
+        val artistAlbums = ArrayList<Album>()
+
+        for (album in allAlbums) {
+            if (album.artistId == artistId) {
+                artistAlbums.add(album)
+            }
+        }
+        return artistAlbums
+    }
+
     private fun makeAlbumCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
         return context.contentResolver.query(
             MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,

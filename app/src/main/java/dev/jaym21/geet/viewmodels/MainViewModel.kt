@@ -50,8 +50,14 @@ class MainViewModel @Inject constructor(
     private val _albumSongs: MutableLiveData<List<Song>> =  MutableLiveData()
     val albumSongs: LiveData<List<Song>> = _albumSongs
 
+    private val _artistSongs: MutableLiveData<List<Song>> =  MutableLiveData()
+    val artistSongs: LiveData<List<Song>> = _artistSongs
+
     private val _albums: MutableLiveData<List<Album>> = MutableLiveData()
     val albums: LiveData<List<Album>> = _albums
+
+    private val _artistAlbums: MutableLiveData<List<Album>> = MutableLiveData()
+    val artistAlbums: LiveData<List<Album>> = _artistAlbums
 
     private val _artists: MutableLiveData<List<Artist>> = MutableLiveData()
     val artists: LiveData<List<Artist>> = _artists
@@ -115,12 +121,20 @@ class MainViewModel @Inject constructor(
         _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF))
     }
 
-    fun getSongsAlbum(caller: String, albumId: Long) {
+    fun getAlbumSongs(caller: String, albumId: Long) {
         _albumSongs.postValue(albumsRepository.getSongsForAlbum(caller, albumId))
+    }
+
+    fun getArtistSongs(caller: String, artistId: Long) {
+        _artistSongs.postValue(artistsRepository.getSongsForArtist(caller, artistId))
     }
 
     fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
         _albums.postValue(albumsRepository.getAllAlbums(MediaID.CALLER_SELF))
+    }
+
+    fun getArtistAlbums(artistId: Long) {
+        _artistAlbums.postValue(albumsRepository.getAlbumsForArtist(artistId))
     }
 
     fun loadArtists() = viewModelScope.launch(Dispatchers.IO) {
