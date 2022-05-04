@@ -9,10 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black_alpha_50">#80000000</color>
     <color name="black_alpha_85">#d80a0a0a</color>
+    <color name="white_alpha_90">#E6FFFFFF</color>
     <color name="white_alpha_85">#D9FFFFFF</color>
     <color name="white_alpha_70">#B3FFFFFF</color>
     <color name="white_alpha_60">#99FFFFFF</color>
     <color name="white_alpha_50">#80FFFFFF</color>
+    <color name="white_alpha_15">#26FFFFFF</color>
     <color name="bottom_gradient">#e6000000</color>
     <color name="notification_vibrant">#41514B</color>
     <color name="seek_bar_background">#ababab</color>

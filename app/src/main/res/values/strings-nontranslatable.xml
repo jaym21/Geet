@@ -2,4 +2,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="duration_format_short" translatable="false"><xliff:g id="format">%2$d:%3$02d</xliff:g></string>
     <string name="duration_format_long" translatable="false"><xliff:g id="format">%1$d:%2$02d:%3$02d</xliff:g></string>
+    <string name="format_three" translatable="false">%1$s • %2$s • %3$s</string>
 </resources>
