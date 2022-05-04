@@ -43,7 +43,8 @@ class AlbumsRVAdapter(private val listener: IAlbumsRVAdapter): ListAdapter<Album
         val currentItem = getItem(position)
         holder.albumName.text = currentItem.albumTitle
         holder.artistName.text = currentItem.artist
-        Glide.with(holder.itemView.context).load(SongUtils.getAlbumArtBitmap(holder.itemView.context, currentItem.id)).transform(RoundedCorners(16)).into(holder.albumArtwork)
+        val albumArtwork = SongUtils.getAlbumArtBitmap(holder.itemView.context, currentItem.id)
+        Glide.with(holder.itemView.context).load(albumArtwork).transform(RoundedCorners(16)).into(holder.albumArtwork)
 
         holder.root.setOnClickListener {
             listener.onAlbumClick(currentItem)
