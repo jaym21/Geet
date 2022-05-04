@@ -1,17 +1,14 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.ui.home
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.ISongsRVAdapter
@@ -21,9 +18,8 @@ import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.extensions.getExtraBundle
 import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.ui.BaseFragment
 import dev.jaym21.geet.utils.Constants
-import dev.jaym21.geet.utils.PreferencesHelper
-import dev.jaym21.geet.viewmodels.MainViewModel
 
 class SongsFragment : BaseFragment(), ISongsRVAdapter {
 

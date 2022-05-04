@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

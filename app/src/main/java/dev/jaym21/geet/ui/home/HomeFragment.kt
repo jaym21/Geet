@@ -1,10 +1,10 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jaym21.geet.adapters.MainViewPagerAdapter
@@ -12,11 +12,9 @@ import dev.jaym21.geet.databinding.FragmentHomeBinding
 import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.extensions.map
 import dev.jaym21.geet.models.MediaID
-import dev.jaym21.geet.playback.player.PlaybackSessionConnector
 import dev.jaym21.geet.repository.SongsRepository
+import dev.jaym21.geet.ui.BaseFragment
 import dev.jaym21.geet.utils.Constants
-import dev.jaym21.geet.viewmodels.PlaybackSessionProviderFactory
-import dev.jaym21.geet.viewmodels.PlaybackSessionViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,5 +47,49 @@ class HomeFragment : BaseFragment() {
         TabLayoutMediator(binding.tlMain, binding.vpMain) { tab, position ->
             tab.text = tabs[position]
         }.attach()
+
+
+        mainViewModel.navigateToMediaItem
+            .map { it.getContentIfNotHandled() }
+            .filter { it != null }
+            .observe(this) {
+                val mediaID = it
+                if (mediaID != null) {
+                    navigateToMediaItem(mediaID)
+                }
+            }
+    }
+
+    private fun navigateToMediaItem(mediaId: MediaID) {
+        when (mediaId.type?.toInt()) {
+            Constants.ALL_SONGS_MODE -> {
+                findNavController().navigate()
+            }
+            Constants.ALL_ALBUMS_MODE -> {
+
+            }
+            Constants.ALL_ARTISTS_MODE -> {
+
+            }
+            Constants.ALL_PLAYLISTS_MODE -> {
+
+            }
+            Constants.ALL_GENRES_MODE -> {
+
+            }
+            Constants.ARTIST_MODE -> {
+
+            }
+            Constants.ALBUM_MODE -> {
+
+            }
+            Constants.PLAYLIST_MODE -> {
+
+            }
+            Constants.GENRE_MODE -> {
+
+            }
+            else -> {}
+        }
     }
 }
