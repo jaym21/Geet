@@ -10,7 +10,7 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.palette.graphics.Palette
 import dev.jaym21.geet.R
-import kotlinx.coroutines.CoroutineScope
+import dev.jaym21.geet.models.Song
 import java.io.FileNotFoundException
 
 object SongUtils {
@@ -44,6 +44,14 @@ object SongUtils {
     fun formatTimeStringShort(secs: Long): String {
         val s = secs / 1000
         return String.format("%d:%02d", s/60, s % 60)
+    }
+
+    fun getSongWithId(songs: List<Song>, id: Long): Song? {
+        for (i in songs) {
+            if (i.id == id)
+                return i
+        }
+        return null
     }
 
     fun getBackgroundColorFromPalette(palette: Palette): Int {
