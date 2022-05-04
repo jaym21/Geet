@@ -79,10 +79,22 @@ class HomeFragment : BaseFragment() {
 
             }
             Constants.ARTIST_MODE -> {
-
+                val bundle = Bundle().apply {
+                    putString(Constants.MEDIA_TYPE, mediaId.type)
+                    putString(Constants.MEDIA_ID, mediaId.mediaId)
+                    putString(Constants.MEDIA_CALLER, mediaId.caller)
+                    putParcelable(Constants.ARTIST, mediaId.mediaItem)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_artistDetailsFragment, bundle)
             }
             Constants.ALBUM_MODE -> {
-                findNavController().navigate(R.id.action_homeFragment_to_albumDetailsFragment)
+                val bundle = Bundle().apply {
+                    putString(Constants.MEDIA_TYPE, mediaId.type)
+                    putString(Constants.MEDIA_ID, mediaId.mediaId)
+                    putString(Constants.MEDIA_CALLER, mediaId.caller)
+                    putParcelable(Constants.ALBUM, mediaId.mediaItem)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_albumDetailsFragment, bundle)
             }
             Constants.PLAYLIST_MODE -> {
 
