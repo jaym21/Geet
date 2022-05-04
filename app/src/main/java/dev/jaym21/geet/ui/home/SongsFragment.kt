@@ -29,8 +29,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     private var songsAdapter: SongsRVAdapter? = null
     private var songs = listOf<Song>()
 
-    private var readPermissionGranted = false
-    private var writePermissionGranted = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,25 +43,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isReadPermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        val isWritePermissionAvailable = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        val minSDK29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-        readPermissionGranted = isReadPermissionAvailable
-        writePermissionGranted = isWritePermissionAvailable || minSDK29
-
-        if (readPermissionGranted) {
-            if (writePermissionGranted) {
-                initialize()
-            } else {
-                ActivityCompat.requestPermissions(requireActivity(),  arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), Constants.WRITE_EXTERNAL_STORAGE_REQUEST_CODE)
-            }
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(),  arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), Constants.READ_EXTERNAL_STORAGE_REQUEST_CODE)
-        }
-    }
-
-    private fun initialize() {
 
         songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
 
@@ -82,6 +62,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
             ?.observe(this) {
                 songsAdapter?.submitList(it as List<Song>)
             }
+
     }
 
     private fun setUpRecyclerView() {
@@ -99,29 +80,5 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     override fun onSongClicked(song: Song) {
         val extras = getExtraBundle(songs.toSongIds(), getString(R.string.all_songs))
         mainViewModel.mediaItemClicked(song, extras)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
-            Constants.WRITE_EXTERNAL_STORAGE_REQUEST_CODE -> {
-                if (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED) {
-
-                }else {
-                    initialize()
-                }
-            }
-            Constants.READ_EXTERNAL_STORAGE_REQUEST_CODE -> {
-                if (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED) {
-
-                }else {
-                    initialize()
-                }
-            }
-        }
     }
 }
