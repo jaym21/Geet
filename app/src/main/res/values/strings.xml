@@ -13,4 +13,5 @@
     <string name="song_playback_controls">Song playback controls</string>
     <string name="now_playing">Now Playing</string>
     <string name="queue">Queue</string>
+    <string name="no_year">No Year</string>
 </resources>
