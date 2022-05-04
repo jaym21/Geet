@@ -163,6 +163,7 @@ class ArtistDetailsFragment : BaseFragment(), IArtistAlbumsRVAdapter, ISongsRVAd
 
     override fun onArtistAlbumClick(album: Album) {
         mainViewModel.mediaItemClicked(album, null)
+        findNavController().popBackStack()
     }
 
     override fun onSongClicked(song: Song) {
