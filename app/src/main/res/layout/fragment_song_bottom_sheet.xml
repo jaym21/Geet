@@ -1,9 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SongBottomSheetFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SongBottomSheetFragment"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/llAddToPlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_add_to_playlist"
+            app:tint="@color/white_alpha_60" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/add_to_playlist"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_regular"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llAddToQueue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_add_to_queue"
+            app:tint="@color/white_alpha_60" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/add_to_queue"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_regular"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llGoToAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_album_disk"
+            app:tint="@color/white_alpha_60" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/go_to_album"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_regular"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llGoToArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_person"
+            app:tint="@color/white_alpha_60" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/go_to_artist"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_regular"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>
