@@ -1,8 +1,7 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.ui.nowplaying
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentNowPlayingBinding
 import dev.jaym21.geet.models.MainNavigationAction
+import dev.jaym21.geet.ui.BaseFragment
 import dev.jaym21.geet.utils.SongUtils
 
 class NowPlayingFragment : BaseFragment() {

@@ -21,13 +21,13 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/playbackBarFragment"
-            android:name="dev.jaym21.geet.ui.PlaybackBarFragment"
+            android:name="dev.jaym21.geet.ui.nowplaying.PlaybackBarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nowPlayingFragment"
-            android:name="dev.jaym21.geet.ui.NowPlayingFragment"
+            android:name="dev.jaym21.geet.ui.nowplaying.NowPlayingFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

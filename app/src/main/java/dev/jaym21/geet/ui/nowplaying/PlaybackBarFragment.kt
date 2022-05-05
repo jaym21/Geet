@@ -1,4 +1,4 @@
-package dev.jaym21.geet.ui
+package dev.jaym21.geet.ui.nowplaying
 
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentPlaybackBarBinding
 import dev.jaym21.geet.models.MainNavigationAction
+import dev.jaym21.geet.ui.BaseFragment
 
 
 class PlaybackBarFragment : BaseFragment() {
