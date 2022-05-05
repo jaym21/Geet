@@ -76,12 +76,17 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
         holder.root.setOnClickListener {
             listener.onSongClicked(currentItem)
         }
+
+        holder.moreMenu.setOnClickListener {
+            listener.onMoreMenuClicked(currentItem)
+        }
     }
 
     inner class SongsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tvSongTitle)
         val artist: TextView = itemView.findViewById(R.id.tvArtistName)
         val artwork: ImageView = itemView.findViewById(R.id.ivSongArtwork)
+        val moreMenu: ImageView = itemView.findViewById(R.id.ivMoreMenu)
         val root: ConstraintLayout = itemView.findViewById(R.id.clSongRoot)
     }
 
@@ -103,4 +108,5 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
 
 interface ISongsRVAdapter {
     fun onSongClicked(song: Song)
+    fun onMoreMenuClicked(song: Song)
 }
