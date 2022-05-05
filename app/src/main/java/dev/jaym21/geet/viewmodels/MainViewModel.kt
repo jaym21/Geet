@@ -148,4 +148,13 @@ class MainViewModel @Inject constructor(
     fun getSongForId(id: Long) = viewModelScope.launch {
         _songForId.postValue(songsRepository.getSongForId(id))
     }
+
+    //bottom sheet
+    fun goToAlbum(song: Song) {
+        browseToItem(albumsRepository.getAlbum(song.albumId))
+    }
+
+    fun goToArtist(song: Song) {
+        browseToItem(artistsRepository.getArtist(song.artistId))
+    }
 }
