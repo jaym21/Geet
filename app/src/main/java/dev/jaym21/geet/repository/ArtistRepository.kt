@@ -27,6 +27,15 @@ class ArtistRepository(private val context: Context) {
         return artists
     }
 
+    fun getArtist(id: Long): Artist {
+        val cursor = makeArtistCursor("_id=?", arrayOf(id.toString()))
+        var artist = Artist()
+        if (cursor!= null && cursor.moveToFirst()) {
+            artist = getArtistFromCursor(cursor)
+        }
+        cursor?.close()
+        return artist
+    }
 
     fun getSongsForArtist(caller: String?, artistId: Long): List<Song> {
         MediaID.currentCaller = caller
