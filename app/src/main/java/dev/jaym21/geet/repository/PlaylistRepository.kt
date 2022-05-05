@@ -11,6 +11,7 @@ import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Playlist
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.Constants
+import java.lang.StringBuilder
 
 class PlaylistRepository(private val context: Context) {
 
@@ -71,26 +72,14 @@ class PlaylistRepository(private val context: Context) {
         return songs
     }
 
-    private fun makePlaylistCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
-        return context.contentResolver.query(
-            MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
-            arrayOf("_id", "artist", "number_of_albums", "number_of_tracks"),
-            selection,
-            paramArrayOfString,
-            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
-        )
-    }
-
-    private fun makePlaylistSongCursor(artistId: Long): Cursor? {
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val selection = "is_music=1 AND title != '' AND artist_id=$artistId"
-        return context.contentResolver.query(
-            uri,
-            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id", "artist_id"),
-            selection,
-            null,
-            MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-        )
+    private fun deletePlaylist(playlistId: Long): Int {
+        val localUri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+        val localStringBuilder = StringBuilder().apply {
+            append("_id IN (")
+            append(playlistId)
+            append(")")
+        }
+        return context.contentResolver.delete(localUri, localStringBuilder.toString(), null)
     }
 
     private fun getPlaylistFromCursor(cursor: Cursor): Playlist {
@@ -119,6 +108,18 @@ class PlaylistRepository(private val context: Context) {
                 0
             }
         } ?: 0
+    }
+
+    private fun getSongsCountForPlaylist(playlistId: Long): Int {
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val selection = "${MediaStore.Audio.AudioColumns.IS_MUSIC}=1 AND ${MediaStore.Audio.AudioColumns.TITLE} != ''"
+        return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Playlists._ID), selection, null, null)?.use {
+            if (it.moveToFirst()) {
+                it.count
+            } else {
+                0
+            }
+        }?: 0
     }
 
     private fun cleanupPlaylist(
@@ -164,6 +165,28 @@ class PlaylistRepository(private val context: Context) {
                 0
             }
         } ?: 0
+    }
+
+    private fun makePlaylistCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
+        return context.contentResolver.query(
+            MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
+            arrayOf("_id", "artist", "number_of_albums", "number_of_tracks"),
+            selection,
+            paramArrayOfString,
+            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
+        )
+    }
+
+    private fun makePlaylistSongCursor(artistId: Long): Cursor? {
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val selection = "is_music=1 AND title != '' AND artist_id=$artistId"
+        return context.contentResolver.query(
+            uri,
+            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id", "artist_id"),
+            selection,
+            null,
+            MediaStore.Audio.Media.DEFAULT_SORT_ORDER
+        )
     }
 
     private fun getSongFromCursor(cursor: Cursor): Song {
