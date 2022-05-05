@@ -58,7 +58,6 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
         holder.artist.text = currentItem.artist
 
         val albumArtUri = SongUtils.getAlbumArtUri(currentItem.albumId)
-
         Glide.with(holder.itemView.context).load(albumArtUri).transform(RoundedCorners(12)).into(holder.artwork)
 
         if (position == nowPlayingPosition) {

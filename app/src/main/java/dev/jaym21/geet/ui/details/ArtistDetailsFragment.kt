@@ -26,7 +26,7 @@ import dev.jaym21.geet.ui.SongBottomSheetFragment
 import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.SongUtils
 
-
+//TODO: add collapsing toolbar
 class ArtistDetailsFragment : BaseFragment(), IArtistAlbumsRVAdapter, ISongsRVAdapter {
 
     private var _binding: FragmentArtistDetailsBinding? = null

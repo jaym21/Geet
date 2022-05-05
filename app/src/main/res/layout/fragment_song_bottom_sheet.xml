@@ -8,12 +8,57 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="60dp"
+        android:layout_height="3dp"
+        android:background="@drawable/bottom_sheet_handle"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:id="@+id/ivSongArtworkSheet"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        tools:src="@drawable/ic_launcher_foreground"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <TextView
+        android:id="@+id/tvSongNameSheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Song Name"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/inter_regular"
+        android:lines="1"
+        android:ellipsize="marquee"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp" />
+
+    <TextView
+        android:id="@+id/tvArtistNameSheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Artist Name"
+        android:textColor="@color/white_alpha_60"
+        android:textSize="12sp"
+        android:fontFamily="@font/inter_regular"
+        android:lines="1"
+        android:ellipsize="marquee"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="16dp"/>
+
     <LinearLayout
         android:id="@+id/llAddToPlaylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="16dp">
 
         <ImageView
             android:layout_width="27dp"
@@ -29,6 +74,9 @@
             android:text="@string/add_to_playlist"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -54,6 +102,9 @@
             android:text="@string/add_to_queue"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -79,6 +130,9 @@
             android:text="@string/go_to_album"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -104,6 +158,9 @@
             android:text="@string/go_to_artist"
             android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
