@@ -35,7 +35,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
 
         setUpRecyclerView()
@@ -54,7 +53,6 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
             ?.observe(this) {
                 songsAdapter?.submitList(it as List<Song>)
             }
-
     }
 
     private fun setUpRecyclerView() {

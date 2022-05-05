@@ -40,6 +40,7 @@
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_playlists.xml" value="0.35260416666666666" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_queue.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_search.xml" value="0.36666666666666664" />
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_song_bottom_sheet.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/fragment_songs.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/item_album_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/item_artist_album_layout.xml" value="0.36666666666666664" />
@@ -50,6 +51,7 @@
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/song_notification.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/song_notification_expand.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/menu/song_popup_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

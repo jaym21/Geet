@@ -13,4 +13,7 @@
     <string name="now_playing">Now Playing</string>
     <string name="queue">Queue</string>
     <string name="no_year">No Year</string>
+    <string name="play">Play</string>
+    <string name="go_to_album">Go to album</string>
+    <string name="go_to_artist">Go to artist</string>
 </resources>
