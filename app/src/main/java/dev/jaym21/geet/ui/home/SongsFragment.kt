@@ -14,6 +14,8 @@ import dev.jaym21.geet.extensions.getExtraBundle
 import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.ui.BaseFragment
+import dev.jaym21.geet.ui.SongBottomSheetFragment
+import dev.jaym21.geet.utils.Constants
 
 class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
@@ -62,13 +64,22 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onSongClicked(song: Song) {
         val extras = getExtraBundle(songs.toSongIds(), getString(R.string.all_songs))
         mainViewModel.mediaItemClicked(song, extras)
+    }
+
+    override fun onMoreMenuClicked(song: Song) {
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner)
+        val bundle = Bundle().apply {
+            putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
+        }
+        songBottomSheetFragment.arguments = bundle
+        songBottomSheetFragment.show(requireActivity().supportFragmentManager, "SongBottomSheetFragment")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
