@@ -27,7 +27,7 @@ class HomeFragment : BaseFragment() {
         get() = _binding!!
     @Inject lateinit var songsRepository: SongsRepository
     private lateinit var mainViewPagerAdapter: MainViewPagerAdapter
-    private var tabs = arrayOf("Songs", "Albums", "Artists", "Playlists", "Genres")
+    private var tabs = arrayOf("Songs", "Albums", "Artists", "Playlists")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,9 +75,6 @@ class HomeFragment : BaseFragment() {
             Constants.ALL_PLAYLISTS_MODE -> {
 
             }
-            Constants.ALL_GENRES_MODE -> {
-
-            }
             Constants.ARTIST_MODE -> {
                 val bundle = Bundle().apply {
                     putString(Constants.MEDIA_TYPE, mediaId.type)
@@ -97,9 +94,6 @@ class HomeFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_albumDetailsFragment, bundle)
             }
             Constants.PLAYLIST_MODE -> {
-
-            }
-            Constants.GENRE_MODE -> {
 
             }
             else -> {}

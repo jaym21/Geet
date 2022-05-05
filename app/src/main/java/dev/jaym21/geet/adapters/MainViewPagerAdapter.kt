@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.jaym21.geet.ui.home.AlbumsFragment
 import dev.jaym21.geet.ui.home.ArtistsFragment
-import dev.jaym21.geet.ui.home.GenresFragment
 import dev.jaym21.geet.ui.home.PlaylistsFragment
 import dev.jaym21.geet.ui.home.SongsFragment
 import dev.jaym21.geet.utils.Constants
@@ -21,9 +20,8 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
             0 -> return SongsFragment()
             1 -> return AlbumsFragment()
             2 -> return ArtistsFragment()
-            3 -> return PlaylistsFragment()
         }
-        return GenresFragment()
+        return PlaylistsFragment()
     }
 
 }

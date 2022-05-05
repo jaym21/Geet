@@ -66,12 +66,10 @@ object Constants {
     const val ALL_ALBUMS_MODE = 11
     const val ALL_ARTISTS_MODE = 12
     const val ALL_PLAYLISTS_MODE = 13
-    const val ALL_GENRES_MODE = 14
     const val SONG_MODE = "song_mode"
     const val ARTIST_MODE = 15
     const val ALBUM_MODE = 16
     const val PLAYLIST_MODE = 17
-    const val GENRE_MODE = 18
     const val REPEAT_MODE = "repeat_mode"
     const val SHUFFLE_MODE = "shuffle_mode"
 }

@@ -51,11 +51,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGenreRepository(application: Application) =
-        GenreRepository(application)
-
-    @Provides
-    @Singleton
     fun providePlaylistRepository(application: Application) =
         PlaylistRepository(application)
 

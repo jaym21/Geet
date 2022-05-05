@@ -37,7 +37,6 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
     @Inject lateinit var queueRepository: QueueRepository
     @Inject lateinit var albumRepository: AlbumRepository
     @Inject lateinit var artistRepository: ArtistRepository
-    @Inject lateinit var genreRepository: GenreRepository
     @Inject lateinit var playlistRepository: PlaylistRepository
     @Inject lateinit var songPlayer: SongPlayer
     @Inject lateinit var notificationGenerator: NotificationGenerator
@@ -146,9 +145,6 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
                 Constants.ALL_ARTISTS_MODE -> {
                     mediaItems.addAll(artistRepository.getAllArtists(caller))
                 }
-                Constants.ALL_GENRES_MODE -> {
-                    mediaItems.addAll(genreRepository.getAllGenres(caller))
-                }
                 Constants.ALL_PLAYLISTS_MODE -> {
                     mediaItems.addAll(playlistRepository.getPlaylists(caller))
                 }
@@ -160,11 +156,6 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
                 Constants.ARTIST_MODE -> {
                     mediaId?.let {
                         mediaItems.addAll(artistRepository.getSongsForArtist(caller, it.toLong()))
-                    }
-                }
-                Constants.GENRE_MODE -> {
-                    mediaId?.let {
-                        mediaItems.addAll(genreRepository.getSongsForGenre(caller, it.toLong()))
                     }
                 }
                 Constants.PLAYLIST_MODE -> {
@@ -205,14 +196,6 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
                 setSubtitle(getString(R.string.artists))
                 setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
                 setMediaId(MediaID(Constants.ALL_ARTISTS_MODE.toString(), null, caller).asString())
-            }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
-        ))
-        mMediaRoot.add(MediaBrowserCompat.MediaItem(
-            MediaDescriptionCompat.Builder().apply {
-                setTitle(getString(R.string.genres))
-                setSubtitle(getString(R.string.genres))
-                setIconUri(Constants.EMPTY_ARTWORK_URI.toUri())
-                setMediaId(MediaID(Constants.ALL_GENRES_MODE.toString(), null, caller).asString())
             }.build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
         ))
         mMediaRoot.add(MediaBrowserCompat.MediaItem(

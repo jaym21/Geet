@@ -23,10 +23,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@id/ivSongArtwork"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivMoreMenu"
         app:layout_constraintTop_toTopOf="@id/ivSongArtwork"
         app:layout_constraintBottom_toBottomOf="@id/ivSongArtwork"
-        android:layout_marginStart="12dp">
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="5dp">
     
         <TextView
             android:id="@+id/tvSongTitle"
@@ -52,13 +53,14 @@
 
     </LinearLayout>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivMoreMenu"-->
-<!--        android:layout_width="25dp"-->
-<!--        android:layout_height="25dp"-->
-<!--        android:src="@drawable/ic_more"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/ivMoreMenu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_more"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     
 </androidx.constraintlayout.widget.ConstraintLayout>
