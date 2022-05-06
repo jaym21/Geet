@@ -54,4 +54,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="16dp" />
 
+    <TextView
+        android:id="@+id/tvNoPlaylistAdded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_playlist_added"
+        android:textColor="@color/white_alpha_70"
+        android:textSize="15sp"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toBottomOf="@id/btnCreateNewPlaylist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="140dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
