@@ -24,6 +24,8 @@
         android:textSize="15sp"
         android:textColor="@color/white"
         android:fontFamily="@font/inter_medium"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintTop_toBottomOf="@id/ivAlbumArtwork"
         android:layout_marginTop="10dp"/>
 
