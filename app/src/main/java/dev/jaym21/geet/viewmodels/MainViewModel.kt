@@ -149,6 +149,10 @@ class MainViewModel @Inject constructor(
         _playlistSongs.postValue(playlistRepository.getSongsInPlaylist(caller, playlistId))
     }
 
+    fun addToPlaylist(playlistId: Long, ids: LongArray) {
+        playlistRepository.addToPlaylist(playlistId, ids)
+    }
+
     fun getArtistAlbums(artistId: Long) {
         _artistAlbums.postValue(albumsRepository.getAlbumsForArtist(artistId))
     }

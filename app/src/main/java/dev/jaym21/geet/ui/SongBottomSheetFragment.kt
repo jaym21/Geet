@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSongBottomSheetBinding
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.Constants
@@ -53,7 +55,10 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
             }
 
             binding.llAddToPlaylist.setOnClickListener {
-
+                val bundle = Bundle().apply {
+                    putLong(Constants.ADD_TO_PLAYLIST_SONG_ID_ARG, song?.id!!)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_addToPlaylistFragment, bundle)
             }
         } else {
             dismiss()
