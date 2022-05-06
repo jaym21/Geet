@@ -108,9 +108,13 @@ class PlaylistsRVAdapter(private val listener: IPlaylistsRVAdapter): ListAdapter
                 Glide.with(holder.itemView.context).load(images[3]).into(holder.artwork4)
             }
         }
+
+        holder.root.setOnClickListener {
+            listener.onPlaylistClicked(currentItem)
+        }
     }
 }
 
 interface IPlaylistsRVAdapter {
-
+    fun onPlaylistClicked(playlist: Playlist)
 }
