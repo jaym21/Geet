@@ -87,10 +87,17 @@ class PlaylistRepository(private val context: Context) {
         val playlistName = cursor.getStringOrNull("name")
         val noOfSongs = getSongCountForPlaylist(id)
 
+        val songs = getSongsInPlaylist(MediaID.CALLER_SELF, id)
+        val albumIds = mutableListOf<Long>()
+        for (i in songs) {
+            albumIds.add(i.albumId)
+        }
+
         return Playlist(
             id,
             playlistName ?: "",
-            noOfSongs
+            noOfSongs,
+            albumIds
         )
     }
 
@@ -108,18 +115,6 @@ class PlaylistRepository(private val context: Context) {
                 0
             }
         } ?: 0
-    }
-
-    private fun getSongsCountForPlaylist(playlistId: Long): Int {
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-        val selection = "${MediaStore.Audio.AudioColumns.IS_MUSIC}=1 AND ${MediaStore.Audio.AudioColumns.TITLE} != ''"
-        return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Playlists._ID), selection, null, null)?.use {
-            if (it.moveToFirst()) {
-                it.count
-            } else {
-                0
-            }
-        }?: 0
     }
 
     private fun cleanupPlaylist(
