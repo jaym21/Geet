@@ -15,6 +15,7 @@ import dev.jaym21.geet.models.*
 import dev.jaym21.geet.playback.player.PlaybackSessionConnector
 import dev.jaym21.geet.repository.AlbumRepository
 import dev.jaym21.geet.repository.ArtistRepository
+import dev.jaym21.geet.repository.PlaylistRepository
 import dev.jaym21.geet.repository.SongsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class MainViewModel @Inject constructor(
     private val songsRepository: SongsRepository,
     private val albumsRepository: AlbumRepository,
     private val artistsRepository: ArtistRepository,
+    private val playlistRepository: PlaylistRepository,
     private val playbackSessionConnector: PlaybackSessionConnector
 ): ViewModel() {
 
@@ -67,6 +69,12 @@ class MainViewModel @Inject constructor(
 
     private val _songForId: MutableLiveData<Song> = MutableLiveData()
     val songForId: LiveData<Song> = _songForId
+
+    private val _playlists: MutableLiveData<List<Playlist>> = MutableLiveData()
+    val playlists: LiveData<List<Playlist>> = _playlists
+
+    private val _playlistSongs: MutableLiveData<List<Song>> =  MutableLiveData()
+    val playlistSongs: LiveData<List<Song>> = _playlistSongs
 
     private val _navigateToMediaItem = MutableLiveData<Event<MediaID>>()
     val navigateToMediaItem: LiveData<Event<MediaID>> = _navigateToMediaItem
@@ -131,6 +139,14 @@ class MainViewModel @Inject constructor(
 
     fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
         _albums.postValue(albumsRepository.getAllAlbums(MediaID.CALLER_SELF))
+    }
+
+    fun loadPlaylists() = viewModelScope.launch(Dispatchers.IO) {
+        _playlists.postValue(playlistRepository.getPlaylists(MediaID.CALLER_SELF))
+    }
+
+    fun getPlaylistSongs(caller: String, playlistId: Long) {
+        _playlistSongs.postValue(playlistRepository.getSongsInPlaylist(caller, playlistId))
     }
 
     fun getArtistAlbums(artistId: Long) {
