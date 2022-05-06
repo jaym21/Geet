@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddToPlaylistFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.AddToPlaylistFragment"
+    android:background="@color/colorPrimary">
 
+    <ImageView
+        android:id="@+id/ivBackButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_back_arrow"
+        app:tint="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_playlist"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toTopOf="@id/ivBackButton"
+        app:layout_constraintBottom_toBottomOf="@id/ivBackButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateNewPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_playlist"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semibold"
+        android:backgroundTint="@color/colorAccent"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ivBackButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:paddingVertical="10dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAllPlaylistsAdd"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/btnCreateNewPlaylist"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
