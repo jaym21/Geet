@@ -17,5 +17,6 @@
     <string name="go_to_album">Go to Album</string>
     <string name="go_to_artist">Go to Artist</string>
     <string name="add_to_playlist">Add to Playlist</string>
+    <string name="create_new_playlist">Create New Playlist</string>
     <string name="add_to_queue">Add to Queue</string>
 </resources>

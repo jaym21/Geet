@@ -46,9 +46,14 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
                 mainViewModel.goToAlbum(song!!)
                 dismiss()
             }
+
             binding.llGoToArtist.setOnClickListener {
                 mainViewModel.goToArtist(song!!)
                 dismiss()
+            }
+
+            binding.llAddToPlaylist.setOnClickListener {
+
             }
         } else {
             dismiss()
