@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Artist Name"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textColor="@color/white_alpha_70"
             android:singleLine="true"
             android:ellipsize="end"

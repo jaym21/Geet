@@ -31,7 +31,7 @@
             android:paddingRight="4dp"
             android:paddingTop="4dp"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:fontFamily="@font/inter_medium"/>
 
         <TextView
