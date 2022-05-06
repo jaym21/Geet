@@ -1,6 +1,7 @@
 package dev.jaym21.geet.repository
 
 import android.content.ContentProviderOperation
+import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.database.Cursor
@@ -30,6 +31,28 @@ class PlaylistRepository(private val context: Context) {
         cursor?.close()
 
         return playlists
+    }
+
+    fun addToPlaylist(playlistId: Long, ids: LongArray): Int {
+        val projection = arrayOf("max(${MediaStore.Audio.Playlists.Members.PLAY_ORDER})")
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+
+        val base: Int = context.contentResolver.query(uri, projection, null, null, null)?.use {
+            if (it.moveToFirst()) {
+                it.getInt(0) + 1
+            } else {
+                0
+            }
+        }?: throw IllegalStateException("Unable to query $uri, system returned null")
+
+        var numInserted = 0
+        var offset = 0
+        while (offset < ids.size) {
+            val bulkValues = makeInsertItems(ids, offset, 1000, base)
+            numInserted += context.contentResolver.bulkInsert(uri, bulkValues)
+            offset += 1000
+        }
+        return numInserted
     }
 
     fun getSongsInPlaylist(caller: String?, playlistId: Long): List<Song> {
@@ -204,5 +227,26 @@ class PlaylistRepository(private val context: Context) {
             artistId,
             trackNumber
         )
+    }
+
+    private fun makeInsertItems(
+        ids: LongArray,
+        offset: Int,
+        len: Int,
+        base: Int
+    ): Array<ContentValues> {
+        var actualLen = len
+        if (offset + actualLen > ids.size) {
+            actualLen = ids.size - offset
+        }
+        val contentValuesList = mutableListOf<ContentValues>()
+        for (i in 0 until actualLen) {
+            val values = ContentValues().apply {
+                put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + offset + i)
+                put(MediaStore.Audio.Playlists.Members.AUDIO_ID, ids[offset + i])
+            }
+            contentValuesList.add(values)
+        }
+        return contentValuesList.toTypedArray()
     }
 }
