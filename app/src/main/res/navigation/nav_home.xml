@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_artistDetailsFragment"
             app:destination="@id/artistDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addToPlaylistFragment"
+            app:destination="@id/addToPlaylistFragment" />
     </fragment>
 
     <fragment
@@ -36,5 +39,10 @@
         android:name="dev.jaym21.geet.ui.details.ArtistDetailsFragment"
         android:label="fragment_artist_details"
         tools:layout="@layout/fragment_artist_details" />
+    <fragment
+        android:id="@+id/addToPlaylistFragment"
+        android:name="dev.jaym21.geet.ui.AddToPlaylistFragment"
+        android:label="fragment_add_to_playlist"
+        tools:layout="@layout/fragment_add_to_playlist" />
 
 </navigation>
