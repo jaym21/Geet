@@ -90,7 +90,8 @@
             tools:text="10 Songs"
             android:textSize="12sp"
             android:textColor="@color/white_alpha_70"
-            android:fontFamily="@font/inter_regular"/>
+            android:fontFamily="@font/inter_regular"
+            android:layout_marginTop="3dp"/>
 
     </LinearLayout>
 
