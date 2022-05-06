@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:background="@color/colorPrimary"
-    android:id="@+id/clArtistItemRoot">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/llArtistArtworkMatrix"
@@ -73,9 +70,9 @@
         app:layout_constraintStart_toEndOf="@id/llArtistArtworkMatrix"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="12dp">
-    
+
         <TextView
-            android:id="@+id/tvArtistName"
+            android:id="@+id/tvPlaylistName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Artist Name"
@@ -84,12 +81,12 @@
             android:fontFamily="@font/inter_medium"/>
 
         <TextView
-            android:id="@+id/tvNoOfSongsAndAlbums"
+            android:id="@+id/tvNoOfSongsPlaylist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="10 Songs, 2 Albums"
+            tools:text="10 Songs"
             android:textSize="12sp"
-            android:textColor="@color/white_alpha_70"
+            android:textColor="@color/white"
             android:fontFamily="@font/inter_regular"/>
 
     </LinearLayout>

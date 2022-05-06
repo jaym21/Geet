@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             tools:text="Artist Name"
             android:textSize="11sp"
-            android:textColor="@color/white_alpha_85"
+            android:textColor="@color/white_alpha_70"
             android:singleLine="true"
             android:ellipsize="end"
             android:fontFamily="@font/inter_regular"/>
