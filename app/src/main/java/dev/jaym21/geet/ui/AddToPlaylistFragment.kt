@@ -1,13 +1,17 @@
 package dev.jaym21.geet.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.IPlaylistsRVAdapter
 import dev.jaym21.geet.adapters.PlaylistsRVAdapter
 import dev.jaym21.geet.databinding.FragmentAddToPlaylistBinding
@@ -50,12 +54,38 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             }
 
             binding.btnCreateNewPlaylist.setOnClickListener {
-
+                showCreateNewPlaylistDialog()
             }
-
         } else {
             findNavController().popBackStack()
         }
+    }
+
+    private fun showCreateNewPlaylistDialog() {
+        val alertBuilder = AlertDialog.Builder(requireContext())
+        val dialogLayout = layoutInflater.inflate(R.layout.create_playlist_dialog_layout, binding.root)
+
+        val btnCreate: TextView = dialogLayout.findViewById(R.id.tvCreateDialog)
+        val btnCancel: TextView = dialogLayout.findViewById(R.id.tvCancelDialog)
+        val nameEditText: EditText = dialogLayout.findViewById(R.id.etPlaylistName)
+
+        alertBuilder.setView(dialogLayout)
+        val createPlaylistDialog = alertBuilder.create()
+        createPlaylistDialog.setCanceledOnTouchOutside(false)
+
+        btnCreate.setOnClickListener {
+            val playlistName = nameEditText.text.toString()
+            if (playlistName.isNotEmpty()) {
+                val playlistId = mainViewModel.createPlaylist(playlistName)
+
+            }
+        }
+
+        btnCancel.setOnClickListener {
+            createPlaylistDialog.dismiss()
+        }
+
+        createPlaylistDialog.show()
     }
 
     private fun setUpRecyclerView() {
@@ -73,8 +103,7 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             ids = LongArray(1)
             ids[0] = songId!!
         }
-        val inserted = mainViewModel.addToPlaylist(playlist.id, ids)
-        Log.d("TAGYOYO", "onPlaylistClicked: $inserted")
+        mainViewModel.addToPlaylist(playlist.id, ids)
     }
 
     override fun onDestroy() {
