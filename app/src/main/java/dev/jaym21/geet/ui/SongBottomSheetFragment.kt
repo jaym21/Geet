@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -16,7 +17,7 @@ import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.SongUtils
 import dev.jaym21.geet.viewmodels.MainViewModel
 
-class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private val lifecycleOwner: LifecycleOwner) : BottomSheetDialogFragment() {
+class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private val lifecycleOwner: LifecycleOwner, private val navController: NavController) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSongBottomSheetBinding? = null
     private val binding: FragmentSongBottomSheetBinding
@@ -58,7 +59,8 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
                 val bundle = Bundle().apply {
                     putLong(Constants.ADD_TO_PLAYLIST_SONG_ID_ARG, song?.id!!)
                 }
-                findNavController().navigate(R.id.action_homeFragment_to_addToPlaylistFragment, bundle)
+                navController.navigate(R.id.action_homeFragment_to_addToPlaylistFragment, bundle)
+                dismiss()
             }
         } else {
             dismiss()
