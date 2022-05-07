@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.ISongsRVAdapter
@@ -70,7 +71,7 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     override fun onMoreMenuClicked(song: Song) {
-        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner)
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
         }
