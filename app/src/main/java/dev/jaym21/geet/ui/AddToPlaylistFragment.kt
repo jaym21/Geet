@@ -43,8 +43,16 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             mainViewModel.loadPlaylists()
 
             mainViewModel.playlists.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    binding.tvNoPlaylistAdded.visibility = View.GONE
+                }
                 playlistAdapter.submitList(it)
             }
+
+            binding.btnCreateNewPlaylist.setOnClickListener {
+
+            }
+
         } else {
             findNavController().popBackStack()
         }
