@@ -142,7 +142,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun loadPlaylists() = viewModelScope.launch(Dispatchers.IO) {
-        _playlists.postValue(playlistRepository.getPlaylists(MediaID.CALLER_SELF))
+        _playlists.postValue(playlistRepository.getAllPlaylists(MediaID.CALLER_SELF))
     }
 
     fun getPlaylistSongs(caller: String, playlistId: Long) {
@@ -150,7 +150,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun addToPlaylist(playlistId: Long, ids: LongArray) {
-        playlistRepository.addToPlaylist(playlistId, ids)
+        val returned = playlistRepository.addToPlaylist(playlistId, ids)
+        Log.d("TAGYOYO", "addToPlaylist: $returned")
     }
 
     fun getArtistAlbums(artistId: Long) {

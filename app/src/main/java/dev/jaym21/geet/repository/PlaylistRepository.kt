@@ -6,24 +6,55 @@ import android.content.Context
 import android.content.OperationApplicationException
 import android.database.Cursor
 import android.os.RemoteException
+import android.provider.BaseColumns
 import android.provider.MediaStore
+import androidx.room.util.CursorUtil.getColumnIndexOrThrow
+import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.extensions.*
+import dev.jaym21.geet.extensions.getInt
+import dev.jaym21.geet.extensions.getLong
+import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Playlist
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.utils.Constants
-import java.lang.StringBuilder
 
 class PlaylistRepository(private val context: Context) {
 
-    fun getPlaylists(caller: String?): List<Playlist> {
+    fun createPlaylist(name: String?): Long {
+        if (name.isNullOrEmpty()) {
+            return -1
+        }
+        val projection = arrayOf(MediaStore.Audio.PlaylistsColumns.NAME)
+        val selection = "${MediaStore.Audio.PlaylistsColumns.NAME} = ?"
+        val selectionArgs = arrayOf(name)
+
+        return context.contentResolver.query(
+            MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI,
+            projection,
+            selection,
+            selectionArgs,
+            null
+        )?.use {
+            return if (it.count <= 0) {
+                val values = ContentValues(1).apply {
+                    put(MediaStore.Audio.PlaylistsColumns.NAME, name)
+                }
+                context.contentResolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, values)?.lastPathSegment?.toLong() ?: -1
+            } else {
+                -1
+            }
+        } ?: throw IllegalStateException("Unable to query ${MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI}, system returned null.")
+    }
+
+    fun getAllPlaylists(caller: String?): List<Playlist> {
         if (caller != null)
             MediaID.currentCaller = caller
 
-        val cursor = makePlaylistCursor(null, null)
+        val cursor = makePlaylistCursor()
         val playlists = arrayListOf<Playlist>()
 
-        if (cursor!= null && cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 playlists.add(getPlaylistFromCursor(cursor))
             } while (cursor.moveToNext())
@@ -43,7 +74,7 @@ class PlaylistRepository(private val context: Context) {
             } else {
                 0
             }
-        }?: throw IllegalStateException("Unable to query $uri, system returned null")
+        } ?: throw IllegalStateException("Unable to query $uri, system returned null.")
 
         var numInserted = 0
         var offset = 0
@@ -52,7 +83,32 @@ class PlaylistRepository(private val context: Context) {
             numInserted += context.contentResolver.bulkInsert(uri, bulkValues)
             offset += 1000
         }
+
         return numInserted
+    }
+
+    private fun makePlaylistCursor(): Cursor? {
+        return context.contentResolver.query(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI,
+            arrayOf(BaseColumns._ID, MediaStore.Audio.PlaylistsColumns.NAME), null, null, MediaStore.Audio.Playlists.DEFAULT_SORT_ORDER)
+    }
+
+    private fun getPlaylistFromCursor(cursor: Cursor): Playlist {
+        val id = cursor.getLong(MediaStore.Audio.Playlists._ID)
+        val name = cursor.getStringOrNull(MediaStore.Audio.Playlists.NAME)
+        val noOfSongs = getSongCountForPlaylist(id)
+
+        val songs = getSongsInPlaylist(MediaID.CALLER_SELF, id)
+        val albumsIds = mutableListOf<Long>()
+        for (i in songs) {
+            albumsIds.add(i.albumId)
+        }
+
+        return Playlist(
+            id,
+            name ?: "",
+            noOfSongs,
+            albumsIds
+        )
     }
 
     fun getSongsInPlaylist(caller: String?, playlistId: Long): List<Song> {
@@ -105,40 +161,6 @@ class PlaylistRepository(private val context: Context) {
         return context.contentResolver.delete(localUri, localStringBuilder.toString(), null)
     }
 
-    private fun getPlaylistFromCursor(cursor: Cursor): Playlist {
-        val id = cursor.getLong(MediaStore.Audio.AudioColumns._ID)
-        val playlistName = cursor.getStringOrNull("name")
-        val noOfSongs = getSongCountForPlaylist(id)
-
-        val songs = getSongsInPlaylist(MediaID.CALLER_SELF, id)
-        val albumIds = mutableListOf<Long>()
-        for (i in songs) {
-            albumIds.add(i.albumId)
-        }
-
-        return Playlist(
-            id,
-            playlistName ?: "",
-            noOfSongs,
-            albumIds
-        )
-    }
-
-    private fun countPlaylist(playlistId: Long): Int {
-        return context.contentResolver.query(
-            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId),
-            arrayOf(MediaStore.Audio.Playlists.Members.AUDIO_ID),
-            null,
-            null,
-            MediaStore.Audio.Playlists.Members.DEFAULT_SORT_ORDER
-        )?.use {
-            if (it.moveToFirst()) {
-                it.count
-            } else {
-                0
-            }
-        } ?: 0
-    }
 
     private fun cleanupPlaylist(
         playlistId: Long,
@@ -174,9 +196,35 @@ class PlaylistRepository(private val context: Context) {
         }
     }
 
+    private fun makePlaylistSongCursor(playlistId: Long): Cursor? {
+        val selection = StringBuilder().apply {
+            append("${MediaStore.Audio.AudioColumns.IS_MUSIC}=1")
+            append(" AND ${MediaStore.Audio.AudioColumns.TITLE} != ''")
+        }
+        val projection = arrayOf(
+            MediaStore.Audio.Playlists.Members._ID,
+            MediaStore.Audio.Playlists.Members.AUDIO_ID,
+            MediaStore.Audio.AudioColumns.TITLE,
+            MediaStore.Audio.AudioColumns.ARTIST,
+            MediaStore.Audio.AudioColumns.ALBUM_ID,
+            MediaStore.Audio.AudioColumns.ARTIST_ID,
+            MediaStore.Audio.AudioColumns.ALBUM,
+            MediaStore.Audio.AudioColumns.DURATION,
+            MediaStore.Audio.AudioColumns.TRACK,
+            MediaStore.Audio.Playlists.Members.PLAY_ORDER
+        )
+        return context.contentResolver.query(
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId),
+            projection,
+            selection.toString(),
+            null,
+            MediaStore.Audio.Playlists.Members.DEFAULT_SORT_ORDER
+        )
+    }
+
     private fun getSongCountForPlaylist(playlistId: Long): Int {
         val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-        return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.AudioColumns._ID), "${MediaStore.Audio.AudioColumns.IS_MUSIC}=1 AND ${MediaStore.Audio.AudioColumns.TITLE} != ''", null, null)?.use {
+        return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Playlists._ID), "${MediaStore.Audio.AudioColumns.IS_MUSIC}=1 AND ${MediaStore.Audio.AudioColumns.TITLE} != ''", null, null)?.use {
             if (it.moveToFirst()) {
                 it.count
             } else {
@@ -185,26 +233,20 @@ class PlaylistRepository(private val context: Context) {
         } ?: 0
     }
 
-    private fun makePlaylistCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
+    private fun countPlaylist(playlistId: Long): Int {
         return context.contentResolver.query(
-            MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
-            arrayOf("_id", "artist", "number_of_albums", "number_of_tracks"),
-            selection,
-            paramArrayOfString,
-            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
-        )
-    }
-
-    private fun makePlaylistSongCursor(artistId: Long): Cursor? {
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val selection = "is_music=1 AND title != '' AND artist_id=$artistId"
-        return context.contentResolver.query(
-            uri,
-            arrayOf("_id", "title", "artist", "album", "duration", "track", "album_id", "artist_id"),
-            selection,
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId),
+            arrayOf(MediaStore.Audio.Playlists.Members.AUDIO_ID),
             null,
-            MediaStore.Audio.Media.DEFAULT_SORT_ORDER
-        )
+            null,
+            MediaStore.Audio.Playlists.Members.DEFAULT_SORT_ORDER
+        )?.use {
+            if (it.moveToFirst()) {
+                it.count
+            } else {
+                0
+            }
+        } ?: 0
     }
 
     private fun getSongFromCursor(cursor: Cursor): Song {

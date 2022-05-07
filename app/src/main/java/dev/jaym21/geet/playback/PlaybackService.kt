@@ -146,7 +146,7 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
                     mediaItems.addAll(artistRepository.getAllArtists(caller))
                 }
                 Constants.ALL_PLAYLISTS_MODE -> {
-                    mediaItems.addAll(playlistRepository.getPlaylists(caller))
+                    mediaItems.addAll(playlistRepository.getAllPlaylists(caller))
                 }
                 Constants.ALBUM_MODE -> {
                     mediaId?.let {

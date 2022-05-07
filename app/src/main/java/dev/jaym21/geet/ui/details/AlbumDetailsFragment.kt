@@ -105,7 +105,7 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
     }
 
     override fun onMoreMenuClicked(song: Song) {
-        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner)
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
         }
