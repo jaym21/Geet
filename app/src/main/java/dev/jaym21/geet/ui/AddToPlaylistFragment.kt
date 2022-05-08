@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.IPlaylistsRVAdapter
 import dev.jaym21.geet.adapters.PlaylistsRVAdapter
@@ -56,6 +57,10 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             binding.btnCreateNewPlaylist.setOnClickListener {
                 showCreateNewPlaylistDialog()
             }
+
+            binding.ivBackButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
         } else {
             findNavController().popBackStack()
         }
@@ -63,7 +68,7 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
 
     private fun showCreateNewPlaylistDialog() {
         val alertBuilder = AlertDialog.Builder(requireContext())
-        val dialogLayout = layoutInflater.inflate(R.layout.create_playlist_dialog_layout, binding.root)
+        val dialogLayout = layoutInflater.inflate(R.layout.create_playlist_dialog_layout, null)
 
         val btnCreate: TextView = dialogLayout.findViewById(R.id.tvCreateDialog)
         val btnCancel: TextView = dialogLayout.findViewById(R.id.tvCancelDialog)
@@ -77,8 +82,17 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             val playlistName = nameEditText.text.toString()
             if (playlistName.isNotEmpty()) {
                 val playlistId = mainViewModel.createPlaylist(playlistName)
-
+                val ids: LongArray
+                if (songId == null) {
+                    ids = LongArray(0)
+                } else {
+                    ids = LongArray(1)
+                    ids[0] = songId!!
+                }
+                mainViewModel.addToPlaylist(playlistId, ids)
+                Snackbar.make(binding.root, "Created $playlistName playlist and added song", Snackbar.LENGTH_SHORT).show()
             }
+            createPlaylistDialog.dismiss()
         }
 
         btnCancel.setOnClickListener {
@@ -104,6 +118,8 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             ids[0] = songId!!
         }
         mainViewModel.addToPlaylist(playlist.id, ids)
+        Snackbar.make(binding.root, "Song added to ${playlist.name}", Snackbar.LENGTH_SHORT).show()
+        findNavController().popBackStack()
     }
 
     override fun onDestroy() {
