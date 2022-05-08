@@ -69,6 +69,12 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
             mainViewModel.playlistSongs.observe(viewLifecycleOwner) {
                 songs = it
                 songsAdapter?.submitList(it)
+                val totalTime = SongUtils.getTotalDuration(songs)
+                binding.tvPlaylistInfo.text = context?.getString(
+                    R.string.format_two,
+                    "${playlist?.noOfSongs} $songText",
+                    totalTime
+                )
             }
 
             playbackSessionViewModel?.mediaItems
