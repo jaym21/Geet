@@ -155,7 +155,6 @@ class MainViewModel @Inject constructor(
 
     fun addToPlaylist(playlistId: Long, ids: LongArray) {
         val returned = playlistRepository.addToPlaylist(playlistId, ids)
-        Log.d("TAGYOYO", "addToPlaylist: $returned")
     }
 
     fun getArtistAlbums(artistId: Long) {

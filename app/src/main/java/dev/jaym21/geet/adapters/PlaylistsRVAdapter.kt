@@ -30,7 +30,7 @@ class PlaylistsRVAdapter(private val listener: IPlaylistsRVAdapter): ListAdapter
 
     }
 
-    inner class PlaylistsViewHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class PlaylistsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val playlistName: TextView = itemView.findViewById(R.id.tvPlaylistName)
         val noOfSongs: TextView = itemView.findViewById(R.id.tvNoOfSongsPlaylist)
         val artwork1: ImageView = itemView.findViewById(R.id.ivAlbumsArtwork1)
