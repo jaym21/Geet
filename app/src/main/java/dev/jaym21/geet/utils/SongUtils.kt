@@ -54,6 +54,14 @@ object SongUtils {
         return null
     }
 
+    fun getTotalDuration(songs: List<Song>): String {
+        var totalTime: Long = 0
+        for (i in songs) {
+            totalTime += i.duration
+        }
+        return formatTimeStringShort(totalTime)
+    }
+
     fun getBackgroundColorFromPalette(palette: Palette): Int {
         var background = palette.getDarkVibrantColor(0xFF616261.toInt())
 
