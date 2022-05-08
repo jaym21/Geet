@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addToPlaylistFragment"
             app:destination="@id/addToPlaylistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playlistDetailsFragment"
+            app:destination="@id/playlistDetailsFragment" />
     </fragment>
 
     <fragment
@@ -44,5 +47,10 @@
         android:name="dev.jaym21.geet.ui.AddToPlaylistFragment"
         android:label="fragment_add_to_playlist"
         tools:layout="@layout/fragment_add_to_playlist" />
+    <fragment
+        android:id="@+id/playlistDetailsFragment"
+        android:name="dev.jaym21.geet.ui.details.PlaylistDetailsFragment"
+        android:label="fragment_playlist_details"
+        tools:layout="@layout/fragment_playlist_details" />
 
 </navigation>

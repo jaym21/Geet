@@ -94,7 +94,13 @@ class HomeFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_albumDetailsFragment, bundle)
             }
             Constants.PLAYLIST_MODE -> {
-
+                val bundle = Bundle().apply {
+                    putString(Constants.MEDIA_TYPE, mediaId.type)
+                    putString(Constants.MEDIA_ID, mediaId.mediaId)
+                    putString(Constants.MEDIA_CALLER, mediaId.caller)
+                    putParcelable(Constants.ARTIST, mediaId.mediaItem)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_playlistDetailsFragment, bundle)
             }
             else -> {}
         }

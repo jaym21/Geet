@@ -82,7 +82,7 @@
         android:id="@+id/tvArtistName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Album Name"
+        tools:text="Artist Name"
         android:textSize="18sp"
         android:fontFamily="@font/inter_semibold"
         android:textColor="@color/white"
