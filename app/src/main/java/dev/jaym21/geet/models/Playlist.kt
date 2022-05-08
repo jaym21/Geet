@@ -9,12 +9,12 @@ import kotlinx.android.parcel.Parcelize
 data class Playlist(
     val id: Long,
     val name: String,
-    val noOfSong: Int,
+    val noOfSongs: Int,
     var albumIds: List<Long> = emptyList()
 ) : MediaBrowserCompat.MediaItem(
     MediaDescriptionCompat.Builder()
         .setMediaId(MediaID(Constants.PLAYLIST_MODE.toString(), id.toString()).asString())
         .setTitle(name)
-        .setSubtitle("$noOfSong songs")
+        .setSubtitle("$noOfSongs songs")
         .build(), FLAG_BROWSABLE
 )

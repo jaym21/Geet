@@ -8,6 +8,7 @@ object Constants {
     const val SONG = "song"
     const val ALBUM = "album"
     const val ARTIST = "artist"
+    const val PLAYLIST = "playlist"
     const val MAIN_VIEW_PAGER_SIZE = 4
     const val YIELD_FREQUENCY = 165
     const val MINIMUM_INITIAL_DRAG_VELOCITY = 10

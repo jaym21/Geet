@@ -49,12 +49,12 @@ class PlaylistsRVAdapter(private val listener: IPlaylistsRVAdapter): ListAdapter
     override fun onBindViewHolder(holder: PlaylistsViewHolder, position: Int) {
         val currentItem = getItem(position)
         var noOfSongsText = "Song"
-        if (currentItem.noOfSong > 1) {
+        if (currentItem.noOfSongs > 1) {
             noOfSongsText = "Songs"
         }
 
         holder.playlistName.text = currentItem.name
-        holder.noOfSongs.text = "${currentItem.noOfSong} $noOfSongsText"
+        holder.noOfSongs.text = "${currentItem.noOfSongs} $noOfSongsText"
 
         val albumIds = currentItem.albumIds
         val images = mutableListOf<Bitmap>()

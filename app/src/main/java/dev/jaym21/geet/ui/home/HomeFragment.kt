@@ -98,7 +98,7 @@ class HomeFragment : BaseFragment() {
                     putString(Constants.MEDIA_TYPE, mediaId.type)
                     putString(Constants.MEDIA_ID, mediaId.mediaId)
                     putString(Constants.MEDIA_CALLER, mediaId.caller)
-                    putParcelable(Constants.ARTIST, mediaId.mediaItem)
+                    putParcelable(Constants.PLAYLIST, mediaId.mediaItem)
                 }
                 findNavController().navigate(R.id.action_homeFragment_to_playlistDetailsFragment, bundle)
             }
