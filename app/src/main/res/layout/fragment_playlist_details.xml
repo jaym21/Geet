@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,129 +7,134 @@
     tools:context=".ui.details.PlaylistDetailsFragment"
     android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/ivBackButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ic_back_arrow"
-        app:tint="@color/white"
-        android:elevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/llPlaylistArtworkMatrix"
-        android:layout_width="0dp"
-        android:layout_height="230dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="80dp"
-        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/ivBackButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_back_arrow"
+            app:tint="@color/white"
+            android:elevation="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
 
         <LinearLayout
-            android:id="@+id/llArtworkTopLayer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:id="@+id/llPlaylistArtworkMatrix"
+            android:layout_width="0dp"
+            android:layout_height="230dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="20dp">
 
-            <ImageView
-                android:id="@+id/ivAlbumsArtwork1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:id="@+id/llArtworkTopLayer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                tools:src="@drawable/ic_album_disk"/>
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/ivAlbumsArtwork2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                <ImageView
+                    android:id="@+id/ivAlbumsArtwork1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:src="@drawable/ic_album_disk"/>
+
+                <ImageView
+                    android:id="@+id/ivAlbumsArtwork2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:src="@drawable/ic_album_disk"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llArtworkBottomLayer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                tools:src="@drawable/ic_album_disk"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivAlbumsArtwork3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:src="@drawable/ic_album_disk"/>
+
+                <ImageView
+                    android:id="@+id/ivAlbumsArtwork4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:src="@drawable/ic_album_disk"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llArtworkBottomLayer"
+        <TextView
+            android:id="@+id/tvPlaylistName"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            tools:text="Playlist Name"
+            android:textSize="18sp"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/llPlaylistArtworkMatrix"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp" />
 
-            <ImageView
-                android:id="@+id/ivAlbumsArtwork3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                tools:src="@drawable/ic_album_disk"/>
+        <TextView
+            android:id="@+id/tvPlaylistInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="NoOfSongs, TotalTime"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/white_alpha_85"
+            app:layout_constraintTop_toBottomOf="@id/tvPlaylistName"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp" />
 
-            <ImageView
-                android:id="@+id/ivAlbumsArtwork4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                tools:src="@drawable/ic_album_disk"/>
+        <TextView
+            android:id="@+id/tvSongText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/songs"
+            android:textSize="15sp"
+            android:textColor="@color/white_alpha_90"
+            android:fontFamily="@font/inter_medium"
+            app:layout_constraintTop_toBottomOf="@id/tvPlaylistInfo"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"/>
 
-        </LinearLayout>
+        <View
+            android:id="@+id/dividerLine"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white_alpha_15"
+            app:layout_constraintTop_toBottomOf="@id/tvSongText"
+            android:layout_marginTop="8dp"/>
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPlaylistSongs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/dividerLine"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"/>
 
-    <TextView
-        android:id="@+id/tvPlaylistName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Playlist Name"
-        android:textSize="18sp"
-        android:fontFamily="@font/inter_semibold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/llPlaylistArtworkMatrix"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp" />
-
-    <TextView
-        android:id="@+id/tvPlaylistInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="NoOfSongs, TotalTime"
-        android:textSize="12sp"
-        android:fontFamily="@font/inter_regular"
-        android:textColor="@color/white_alpha_85"
-        app:layout_constraintTop_toBottomOf="@id/tvPlaylistName"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp" />
-
-    <TextView
-        android:id="@+id/tvSongText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/songs"
-        android:textSize="15sp"
-        android:textColor="@color/white_alpha_90"
-        android:fontFamily="@font/inter_medium"
-        app:layout_constraintTop_toBottomOf="@id/tvPlaylistInfo"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"/>
-
-    <View
-        android:id="@+id/dividerLine"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white_alpha_15"
-        app:layout_constraintTop_toBottomOf="@id/tvSongText"
-        android:layout_marginTop="8dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPlaylistSongs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/dividerLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="16dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

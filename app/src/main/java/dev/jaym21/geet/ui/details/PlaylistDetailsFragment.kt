@@ -82,6 +82,10 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
                 ?.observe(this) {
                     songsAdapter?.submitList(it as List<Song>)
                 }
+
+            binding.ivBackButton.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -143,7 +147,7 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
         val extras = getExtraBundle(songs.toSongIds(), playlist?.name!!)
         mainViewModel.mediaItemClicked(song, extras)
     }
-
+    //TODO: crashing on add to playlist click
     override fun onMoreMenuClicked(song: Song) {
         val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
         val bundle = Bundle().apply {
