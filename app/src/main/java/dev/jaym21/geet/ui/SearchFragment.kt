@@ -32,6 +32,8 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
     private var albumAdapter = AlbumsRVAdapter(this)
     private var artistAdapter = ArtistsRVAdapter(this)
     private var songs = listOf<Song>()
+    private var albums = listOf<Album>()
+    private var artists = listOf<Artist>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +65,35 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
         })
 
         searchViewModel.searchResults.observe(viewLifecycleOwner) {
+            songs = it.songs
+            albums = it.albums
+            artists = it.artists
+
             songsAdapter?.submitList(it.songs)
             albumAdapter.submitList(it.albums)
             artistAdapter.submitList(it.artists)
+
+            if (it.songs.isNullOrEmpty()) {
+                binding.tvNoSongsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoSongsText.visibility = View.GONE
+            }
+            if (it.albums.isNullOrEmpty()) {
+                binding.tvNoAlbumsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoAlbumsText.visibility = View.GONE
+            }
+            if (it.artists.isNullOrEmpty()) {
+                binding.tvNoArtistsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoArtistsText.visibility = View.GONE
+            }
+
+            if (it.songs.isNullOrEmpty() && it.albums.isNullOrEmpty() && it.artists.isNullOrEmpty()) {
+                binding.tvNoResultsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoResultsText.visibility = View.GONE
+            }
         }
 
         binding.ivBackButton.setOnClickListener {
@@ -99,11 +127,11 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
     }
 
     override fun onAlbumClick(album: Album) {
-
+        mainViewModel.mediaItemClicked(album, null)
     }
 
     override fun onArtistClick(artist: Artist) {
-
+        mainViewModel.mediaItemClicked(artist, null)
     }
 
     override fun onDestroy() {

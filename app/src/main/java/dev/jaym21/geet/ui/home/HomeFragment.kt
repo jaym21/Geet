@@ -50,6 +50,10 @@ class HomeFragment : BaseFragment() {
             tab.text = tabs[position]
         }.attach()
 
+        binding.ivSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+
         mainViewModel.currentMediaItem
             .map { it.getContentIfNotHandled() }
             .filter { it != null }

@@ -36,6 +36,7 @@
             android:textSize="14sp"
             android:textColor="@color/white"
             android:textColorHint="@color/white_alpha_60"
+            android:textCursorDrawable="@drawable/edittext_cursor"
             android:hint="@string/search_songs_artists_albums"
             android:background="@null"
             android:layout_marginStart="5dp"
