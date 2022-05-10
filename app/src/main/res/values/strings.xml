@@ -23,4 +23,6 @@
     <string name="give_a_playlist_name">Give a playlist name</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <string name="no_albums_available">No albums available</string>
+    <string name="no_songs_available">No songs available</string>
 </resources>

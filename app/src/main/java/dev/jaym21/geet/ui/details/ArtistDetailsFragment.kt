@@ -79,6 +79,11 @@ class ArtistDetailsFragment : BaseFragment(), IArtistAlbumsRVAdapter, ISongsRVAd
             mainViewModel.getArtistSongs(caller!!, artist?.id!!)
 
             mainViewModel.artistSongs.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.tvNoSongsText.visibility = View.VISIBLE
+                } else {
+                    binding.tvNoSongsText.visibility = View.GONE
+                }
                 songs = it
                 songsAdapter?.submitList(it)
             }
@@ -87,6 +92,11 @@ class ArtistDetailsFragment : BaseFragment(), IArtistAlbumsRVAdapter, ISongsRVAd
             mainViewModel.getArtistAlbums(artist?.id!!)
 
             mainViewModel.artistAlbums.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.tvNoAlbumsText.visibility = View.VISIBLE
+                } else {
+                    binding.tvNoAlbumsText.visibility = View.GONE
+                }
                 artistAlbumAdapter.submitList(it)
             }
 

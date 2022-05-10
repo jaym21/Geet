@@ -63,6 +63,11 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
             mainViewModel.getAlbumSongs(caller!!, album?.id!!)
 
             mainViewModel.albumSongs.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    binding.tvNoSongsText.visibility = View.VISIBLE
+                } else {
+                    binding.tvNoSongsText.visibility = View.GONE
+                }
                 songs = it
                 songsAdapter?.submitList(it)
 
