@@ -27,4 +27,5 @@
     <string name="no_songs_available">No songs available</string>
     <string name="search_songs_artists_albums">Search songs, artists, albums...</string>
     <string name="no_artists_available">No artists available</string>
+    <string name="no_results">No results</string>
 </resources>
