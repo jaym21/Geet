@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSearchBinding
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding

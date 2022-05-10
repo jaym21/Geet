@@ -1,9 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SearchFragment"
+    android:background="@color/colorPrimary">
 
+    <LinearLayout
+        android:id="@+id/llSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:background="@color/colorDarkDim"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/ivBackButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_back_arrow"
+            app:tint="@color/white"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_alpha_60"
+            android:hint="@string/search_songs_artists_albums"
+            android:background="@null"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSongText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/songs"
+        android:textSize="15sp"
+        android:textColor="@color/white_alpha_90"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintTop_toBottomOf="@id/llSearchBar"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:id="@+id/dividerLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white_alpha_15"
+        app:layout_constraintTop_toBottomOf="@id/tvSongText"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchSongs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvNoSongsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_songs_available"
+        android:textColor="@color/white_alpha_70"
+        android:textSize="13sp"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAlbumText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/albums"
+        android:textSize="15sp"
+        android:textColor="@color/white_alpha_90"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintTop_toBottomOf="@id/rvSearchSongs"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:id="@+id/dividerLine1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white_alpha_15"
+        app:layout_constraintTop_toBottomOf="@id/tvAlbumText"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAlbumsSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine1"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvNoAlbumsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_albums_available"
+        android:textColor="@color/white_alpha_70"
+        android:textSize="13sp"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine1"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvArtistText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/artists"
+        android:textSize="15sp"
+        android:textColor="@color/white_alpha_90"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintTop_toBottomOf="@id/rvAlbumsSearch"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:id="@+id/dividerLine2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white_alpha_15"
+        app:layout_constraintTop_toBottomOf="@id/tvArtistText"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvArtistSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine2"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvNoArtistsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_artists_available"
+        android:textColor="@color/white_alpha_70"
+        android:textSize="13sp"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toBottomOf="@id/dividerLine2"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
