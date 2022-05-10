@@ -36,8 +36,7 @@ object SongUtils {
                 ImageDecoder.decodeBitmap(source).copy(Bitmap.Config.RGBA_F16, true)
             }
         } catch (e: FileNotFoundException) {
-            //TODO: set as app icon
-            BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
+            BitmapFactory.decodeResource(context.resources, R.drawable.ic_album_disk)
         }
     }
 

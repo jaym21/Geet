@@ -62,7 +62,7 @@ class NotificationGenerator(private val context: Application) {
             .setShowActionsInCompactView(0, 1, 2)
             .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_STOP))
 
-        //TODO: change icon
+        //TODO: change icon not visible
         val notificationBuilder = NotificationCompat.Builder(context, Constants.NOTIFICATION_SONG_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setLargeIcon(artwork)

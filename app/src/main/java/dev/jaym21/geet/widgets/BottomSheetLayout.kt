@@ -59,8 +59,6 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
             // shape drawable, just in case weird things happen if background drawable is
             // completely transparent.
 
-            //TODO: add custom color according to artwork color
-
 //            background =
 //                (context.getDrawableSafe(R.drawable.ui_panel_bg) as LayerDrawable).apply {
 //                    setDrawableByLayerId(R.id.panel_overlay, containerBackgroundDrawable)

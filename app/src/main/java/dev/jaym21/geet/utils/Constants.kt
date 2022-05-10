@@ -3,8 +3,7 @@ package dev.jaym21.geet.utils
 object Constants {
 
     const val APP_PACKAGE_NAME = "dev.jaym21.geet"
-    //TODO: Add app icon
-    const val EMPTY_ARTWORK_URI = "android.resource://dev.jaym21.geet/drawable/ic_launcher_foreground"
+    const val EMPTY_ARTWORK_URI = "android.resource://dev.jaym21.geet/drawable/ic_album_disk"
     const val SONG = "song"
     const val ALBUM = "album"
     const val ARTIST = "artist"
