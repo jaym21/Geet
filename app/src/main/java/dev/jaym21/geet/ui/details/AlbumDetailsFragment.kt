@@ -21,7 +21,6 @@ import dev.jaym21.geet.ui.SongBottomSheetFragment
 import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.SongUtils
 
-//TODO: add collapsing toolbar
 class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
 
     private var _binding: FragmentAlbumDetailsBinding? = null
@@ -52,18 +51,9 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
             binding.tvArtistName.text = album?.artist
             Glide.with(requireContext()).load(SongUtils.getAlbumArtBitmap(requireContext(), album?.id)).into(binding.ivAlbumArtwork)
 
-            if (album!!.noOfSongs > 1) {
-                binding.tvAlbumInfo.text = context?.getString(
-                    R.string.format_two,
-                    album?.year?.toString() ?: getString(R.string.no_year),
-                    "${album?.noOfSongs} songs"
-                )
-            } else {
-                binding.tvAlbumInfo.text = context?.getString(
-                    R.string.format_two,
-                    album?.year?.toString() ?: getString(R.string.no_year),
-                    "${album?.noOfSongs} song"
-                )
+            var songText = "song"
+            if (album?.noOfSongs!! > 1) {
+                songText = "songs"
             }
 
             songsAdapter = SongsRVAdapter(this, this, nowPlayingViewModel)
@@ -75,6 +65,22 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
             mainViewModel.albumSongs.observe(viewLifecycleOwner) {
                 songs = it
                 songsAdapter?.submitList(it)
+
+                val totalTime = SongUtils.getTotalDuration(songs)
+                if (album?.year == 0) {
+                    binding.tvAlbumInfo.text = context?.getString(
+                        R.string.format_two,
+                        "${album?.noOfSongs} $songText",
+                        totalTime
+                    )
+                } else {
+                    binding.tvAlbumInfo.text = context?.getString(
+                        R.string.format_three,
+                        album?.year?.toString() ?: getString(R.string.no_year),
+                        "${album?.noOfSongs} $songText",
+                        totalTime
+                    )
+                }
             }
 
             playbackSessionViewModel?.mediaItems
