@@ -29,6 +29,7 @@
             android:layout_marginBottom="5dp"/>
         
         <EditText
+            android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
@@ -66,7 +67,7 @@
         android:layout_marginTop="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearchSongs"
+        android:id="@+id/rvSongsSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dividerLine"
@@ -93,7 +94,7 @@
         android:textSize="15sp"
         android:textColor="@color/white_alpha_90"
         android:fontFamily="@font/inter_medium"
-        app:layout_constraintTop_toBottomOf="@id/rvSearchSongs"
+        app:layout_constraintTop_toBottomOf="@id/rvSongsSearch"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"/>
 
