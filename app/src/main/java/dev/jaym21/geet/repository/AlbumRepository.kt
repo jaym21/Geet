@@ -41,6 +41,35 @@ class AlbumRepository(private val context: Context) {
         return album
     }
 
+    fun searchAlbums(searchQuery: String, limit: Int): List<Album> {
+        val cursor = makeAlbumCursor("album LIKE ?", arrayOf("$searchQuery%"))
+        val albums = arrayListOf<Album>()
+
+        if (cursor!= null && cursor.moveToFirst()) {
+            do {
+                albums.add(getAlbumFromCursor(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+
+        if (albums.size < limit) {
+            val moreCursor = makeAlbumCursor("album LIKE ?", arrayOf("%_$searchQuery%"))
+            val moreAlbums = arrayListOf<Album>()
+            if (moreCursor!= null && moreCursor.moveToFirst()) {
+                do {
+                    moreAlbums.add(getAlbumFromCursor(moreCursor))
+                } while (moreCursor.moveToNext())
+            }
+            cursor?.close()
+            albums += moreAlbums
+        }
+        return if (albums.size < limit) {
+            albums
+        }  else {
+            albums.subList(0, limit)
+        }
+    }
+
     fun getSongsForAlbum(caller: String?, albumId: Long): List<Song> {
         MediaID.currentCaller = caller
         val cursor = makeAlbumSongCursor(albumId)

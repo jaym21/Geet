@@ -37,6 +37,34 @@ class ArtistRepository(private val context: Context) {
         return artist
     }
 
+    fun searchArtist(searchQuery: String, limit: Int): List<Artist> {
+        val cursor = makeArtistCursor("artist LIKE ?", arrayOf("$searchQuery%"))
+        val artists = arrayListOf<Artist>()
+        if (cursor!= null && cursor.moveToFirst()) {
+            do {
+                artists.add(getArtistFromCursor(cursor))
+            } while (cursor.moveToNext())
+        }
+        cursor?.close()
+
+        if (artists.size < limit) {
+            val moreCursor = makeArtistCursor("artist LIKE ?", arrayOf("%_$searchQuery%"))
+            val moreArtists = arrayListOf<Artist>()
+            if (moreCursor!= null && moreCursor.moveToFirst()) {
+                do {
+                    moreArtists.add(getArtistFromCursor(moreCursor))
+                } while (moreCursor.moveToNext())
+            }
+            cursor?.close()
+            artists += moreArtists
+        }
+        return if (artists.size < limit) {
+            artists
+        }  else {
+            artists.subList(0, limit)
+        }
+    }
+
     fun getSongsForArtist(caller: String?, artistId: Long): List<Song> {
         MediaID.currentCaller = caller
         val cursor = makeArtistSongCursor(artistId)
