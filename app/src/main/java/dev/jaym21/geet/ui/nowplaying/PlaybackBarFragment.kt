@@ -1,16 +1,21 @@
 package dev.jaym21.geet.ui.nowplaying
 
+import android.graphics.Bitmap
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentPlaybackBarBinding
 import dev.jaym21.geet.models.MainNavigationAction
 import dev.jaym21.geet.ui.BaseFragment
+import dev.jaym21.geet.utils.SongUtils
 
 
 class PlaybackBarFragment : BaseFragment() {
@@ -18,6 +23,7 @@ class PlaybackBarFragment : BaseFragment() {
     private var _binding: FragmentPlaybackBarBinding? = null
     private val binding: FragmentPlaybackBarBinding
         get() = _binding!!
+    private var gradientDrawable: GradientDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +37,17 @@ class PlaybackBarFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         nowPlayingViewModel.currentData.observe(this) {
             binding.tvSongNameBar.text = it.title
             binding.tvSongArtistBar.text = it.artist
             Glide.with(requireContext()).load(it.artwork).transform(RoundedCorners(12)).into(binding.ivArtworkBar)
+
+            if(it.artwork != null) {
+                changeBackground(it.artwork!!)
+            } else {
+                changeBackground((0xFF616261).toInt())
+            }
+
             if (it.state == PlaybackStateCompat.STATE_PLAYING) {
                 binding.ivPlayPauseBar.setImageResource(R.drawable.ic_pause)
             } else {
@@ -77,5 +89,20 @@ class PlaybackBarFragment : BaseFragment() {
         binding.clPlaybackBarRoot.setOnClickListener {
             navigationViewModel.mainNavigateTo(MainNavigationAction.EXPAND)
         }
+    }
+
+    private fun changeBackground(bitmap: Bitmap) {
+        val getColorPaletteFromSongImage = Palette.from(bitmap).generate()
+        changeBackground(SongUtils.getBackgroundColorFromPalette(getColorPaletteFromSongImage))
+    }
+
+    private fun changeBackground(color: Int) {
+        gradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(color, ContextCompat.getColor(requireContext(), R.color.bottom_gradient)))
+        binding.clPlaybackBarRoot.background = gradientDrawable
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

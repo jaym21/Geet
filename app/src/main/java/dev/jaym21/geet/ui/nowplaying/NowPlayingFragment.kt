@@ -46,6 +46,7 @@ class NowPlayingFragment : BaseFragment() {
             } else {
                 changeBackground((0xFF616261).toInt())
             }
+
             if (it.position != null)
                 binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(it.position!!.toLong())
 

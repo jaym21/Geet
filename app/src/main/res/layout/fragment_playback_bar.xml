@@ -7,7 +7,7 @@
     tools:context=".ui.nowplaying.PlaybackBarFragment"
     android:elevation="5dp"
     android:id="@+id/clPlaybackBarRoot"
-    android:background="@color/color_accent_on_container">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/ivArtworkBar"
