@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +15,7 @@ import dev.jaym21.geet.databinding.FragmentHomeBinding
 import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.extensions.map
 import dev.jaym21.geet.models.MediaID
+import dev.jaym21.geet.models.SortType
 import dev.jaym21.geet.repository.SongsRepository
 import dev.jaym21.geet.ui.BaseFragment
 import dev.jaym21.geet.utils.Constants
@@ -63,6 +65,30 @@ class HomeFragment : BaseFragment() {
                     navigateToMediaItem(mediaID)
                 }
             }
+
+        binding.ivSort.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), binding.ivSort)
+            popupMenu.menuInflater.inflate(R.menu.sort_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.sort_a_z -> {
+                        mainViewModel.updateSortType(SortType.A_Z)
+                    }
+                    R.id.sort_z_a -> {
+                        mainViewModel.updateSortType(SortType.Z_A)
+                    }
+                    R.id.sort_year -> {
+                        mainViewModel.updateSortType(SortType.YEAR)
+                    }
+                    R.id.sort_duration -> {
+                        mainViewModel.updateSortType(SortType.DURATION)
+                    }
+                }
+                true
+            }
+            popupMenu.show()
+        }
     }
 
     private fun navigateToMediaItem(mediaId: MediaID) {
