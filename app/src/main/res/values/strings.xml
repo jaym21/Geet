@@ -28,4 +28,8 @@
     <string name="search_songs_artists_albums">Search songs, artists, albums...</string>
     <string name="no_artists_available">No artists available</string>
     <string name="no_results">No results</string>
+    <string name="ascending_a_z">Ascending A-Z</string>
+    <string name="descending_z_a">Descending Z-A</string>
+    <string name="by_year">By Year</string>
+    <string name="by_duration">By Duration</string>
 </resources>

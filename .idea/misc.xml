@@ -19,6 +19,7 @@
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_play.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_repeat.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_shuffle.xml" value="0.3828125" />
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_sort.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/ic_storage_permission.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/line_drawable.xml" value="0.3828125" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/drawable/play_pause_btn_bg.xml" value="0.3828125" />
@@ -59,6 +60,7 @@
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/layout/song_notification_expand.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/menu/song_popup_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Programming/AndroidAppDevelopment/Geet/app/src/main/res/menu/sort_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
