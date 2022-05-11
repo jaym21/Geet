@@ -1,11 +1,14 @@
 package dev.jaym21.geet.ui.nowplaying
 
+import android.graphics.Bitmap
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.jaym21.geet.R
@@ -19,6 +22,7 @@ class NowPlayingFragment : BaseFragment() {
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding: FragmentNowPlayingBinding
         get() = _binding!!
+    private var gradientDrawable: GradientDrawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +41,11 @@ class NowPlayingFragment : BaseFragment() {
             binding.tvSongArtist.text = it.artist
             Glide.with(requireContext()).load(it.artwork).transform(RoundedCorners(12)).into(binding.ivSongArtwork)
 
+            if(it.artwork != null) {
+                changeBackground(it.artwork!!)
+            } else {
+                changeBackground((0xFF616261).toInt())
+            }
             if (it.position != null)
                 binding.tvCurrentTime.text = SongUtils.formatTimeStringShort(it.position!!.toLong())
 
@@ -139,6 +148,15 @@ class NowPlayingFragment : BaseFragment() {
         }
     }
 
+    private fun changeBackground(bitmap: Bitmap) {
+        val getColorPaletteFromSongImage = Palette.from(bitmap).generate()
+        changeBackground(SongUtils.getBackgroundColorFromPalette(getColorPaletteFromSongImage))
+    }
+
+    private fun changeBackground(color: Int) {
+        gradientDrawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(color, ContextCompat.getColor(requireContext(), R.color.bottom_gradient)))
+        binding.clNowPlayingRoot.background = gradientDrawable
+    }
 
     override fun onDestroy() {
         super.onDestroy()
