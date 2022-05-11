@@ -15,12 +15,11 @@ import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.models.SortType
 
-//TODO: Add sortOrder changing implementation
 class SongsRepository(private val context: Context) {
 
     fun getSongs(caller: String?, sortType: SortType): List<Song> {
         MediaID.currentCaller = caller
-        val cursor = makeSongCursor(null, null)
+        val cursor = makeSongCursor(null, null, sortType)
         val songs = arrayListOf<Song>()
 
         if (cursor!= null && cursor.moveToFirst()) {
@@ -33,7 +32,7 @@ class SongsRepository(private val context: Context) {
     }
 
     fun getSongForId(id: Long): Song {
-        val cursor = makeSongCursor("_id = $id", null)
+        val cursor = makeSongCursor("_id = $id", null, SortType.A_Z)
         var song = Song()
         if (cursor!= null && cursor.moveToFirst()) {
             song = getSongFromCursor(cursor)
@@ -53,7 +52,7 @@ class SongsRepository(private val context: Context) {
         }
         selection += ")"
 
-        val cursor = makeSongCursor(selection, null)
+        val cursor = makeSongCursor(selection, null, SortType.A_Z)
         val songs = arrayListOf<Song>()
 
         if (cursor!= null && cursor.moveToFirst()) {
@@ -66,7 +65,7 @@ class SongsRepository(private val context: Context) {
     }
 
     fun searchSongs(searchQuery: String, limit: Int): List<Song> {
-        val cursor = makeSongCursor("title LIKE ?", arrayOf("$searchQuery%"))
+        val cursor = makeSongCursor("title LIKE ?", arrayOf("$searchQuery%"), SortType.A_Z)
         val songs = arrayListOf<Song>()
         if (cursor!= null && cursor.moveToFirst()) {
             do {
@@ -76,7 +75,7 @@ class SongsRepository(private val context: Context) {
         cursor?.close()
 
         if (songs.size < limit) {
-            val moreCursor = makeSongCursor("title LIKE ?", arrayOf("%_$searchQuery%"))
+            val moreCursor = makeSongCursor("title LIKE ?", arrayOf("%_$searchQuery%"), SortType.A_Z)
             val moreSongs = arrayListOf<Song>()
             if (moreCursor!= null && moreCursor.moveToFirst()) {
                 do {
@@ -116,8 +115,8 @@ class SongsRepository(private val context: Context) {
         return song
     }
 
-    private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?): Cursor? {
-        return makeSongCursor(selection, paramArrayOfString, MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
+    private fun makeSongCursor(selection: String?, paramArrayOfString: Array<String>?, sortType: SortType): Cursor? {
+        return makeSongCursor(selection, paramArrayOfString, sortType.rawValue)
     }
 
     private fun makeSongCursor(
@@ -145,8 +144,8 @@ class SongsRepository(private val context: Context) {
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             projection,
             selection,
-            null,
-            MediaStore.Audio.Artists.DEFAULT_SORT_ORDER
+            paramArrayOfString,
+            sortOrder
         )
     }
 

@@ -3,6 +3,7 @@ package dev.jaym21.geet.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -91,13 +92,39 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
 
             if (it.songs.isNullOrEmpty() && it.albums.isNullOrEmpty() && it.artists.isNullOrEmpty()) {
                 binding.tvNoResultsText.visibility = View.VISIBLE
+                changeTitlesAndDividerVisibility(false)
             } else {
                 binding.tvNoResultsText.visibility = View.GONE
+                changeTitlesAndDividerVisibility(true)
             }
         }
 
         binding.ivBackButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun changeTitlesAndDividerVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            binding.tvSongText.visibility = View.VISIBLE
+            binding.tvNoSongsText.visibility = View.VISIBLE
+            binding.dividerLine.visibility = View.VISIBLE
+            binding.tvAlbumText.visibility = View.VISIBLE
+            binding.tvNoAlbumsText.visibility = View.VISIBLE
+            binding.dividerLine1.visibility = View.VISIBLE
+            binding.tvArtistText.visibility = View.VISIBLE
+            binding.tvNoArtistsText.visibility = View.VISIBLE
+            binding.dividerLine2.visibility = View.VISIBLE
+        } else {
+            binding.tvSongText.visibility = View.GONE
+            binding.tvNoSongsText.visibility = View.GONE
+            binding.dividerLine.visibility = View.GONE
+            binding.tvAlbumText.visibility = View.GONE
+            binding.tvNoAlbumsText.visibility = View.GONE
+            binding.dividerLine1.visibility = View.GONE
+            binding.tvArtistText.visibility = View.GONE
+            binding.tvNoArtistsText.visibility = View.GONE
+            binding.dividerLine2.visibility = View.GONE
         }
     }
 
