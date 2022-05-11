@@ -44,9 +44,9 @@ class NowPlayingFragment : BaseFragment() {
                 binding.tvDuration.text = SongUtils.formatTimeStringShort(it.duration!!.toLong())
 
             if (it.state == PlaybackStateCompat.STATE_PLAYING) {
-                binding.ivPlayPause.setImageResource(R.drawable.ic_pause)
+                binding.ivPlayPause.setImageResource(R.drawable.ic_pause_circle)
             } else {
-                binding.ivPlayPause.setImageResource(R.drawable.ic_play)
+                binding.ivPlayPause.setImageResource(R.drawable.ic_play_circle)
             }
 
             when (it.repeatMode) {

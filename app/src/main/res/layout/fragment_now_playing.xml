@@ -165,8 +165,8 @@
 
     <ImageView
         android:id="@+id/ivPrevious"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:padding="12dp"
         app:tint="@color/white"
         android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -178,12 +178,10 @@
 
     <ImageView
         android:id="@+id/ivPlayPause"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:padding="12dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         app:tint="@color/white"
-        android:background="@drawable/play_pause_btn_bg"
-        app:srcCompat="@drawable/ic_play"
+        app:srcCompat="@drawable/ic_play_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -191,8 +189,8 @@
 
     <ImageView
         android:id="@+id/ivNext"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:padding="12dp"
         app:tint="@color/white"
         android:background="?android:attr/selectableItemBackgroundBorderless"
