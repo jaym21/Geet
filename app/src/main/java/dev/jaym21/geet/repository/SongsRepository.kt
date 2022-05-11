@@ -13,11 +13,12 @@ import dev.jaym21.geet.extensions.getString
 import dev.jaym21.geet.extensions.getStringOrNull
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.models.SortType
 
 //TODO: Add sortOrder changing implementation
 class SongsRepository(private val context: Context) {
 
-    fun getSongs(caller: String?): List<Song> {
+    fun getSongs(caller: String?, sortType: SortType): List<Song> {
         MediaID.currentCaller = caller
         val cursor = makeSongCursor(null, null)
         val songs = arrayListOf<Song>()

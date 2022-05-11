@@ -14,6 +14,7 @@ import dev.jaym21.geet.extensions.filter
 import dev.jaym21.geet.extensions.getExtraBundle
 import dev.jaym21.geet.extensions.toSongIds
 import dev.jaym21.geet.models.Song
+import dev.jaym21.geet.models.SortType
 import dev.jaym21.geet.ui.BaseFragment
 import dev.jaym21.geet.ui.SongBottomSheetFragment
 import dev.jaym21.geet.utils.Constants
@@ -42,7 +43,11 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
 
         setUpRecyclerView()
 
-        mainViewModel.loadSongs()
+        mainViewModel.loadSongs(SortType.A_Z)
+
+        mainViewModel.sortType.observe(viewLifecycleOwner) {
+            mainViewModel.loadSongs(it)
+        }
 
         mainViewModel.songs.observe(viewLifecycleOwner) {
             songs = it

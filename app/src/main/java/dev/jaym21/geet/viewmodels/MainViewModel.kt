@@ -46,6 +46,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private val _sortType: MutableLiveData<SortType> = MutableLiveData()
+    val sortType: LiveData<SortType> = _sortType
+
     private val _songs: MutableLiveData<List<Song>> =  MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
 
@@ -125,8 +128,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun loadSongs() = viewModelScope.launch(Dispatchers.IO) {
-        _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF))
+    fun updateSortType(sortType: SortType) {
+        _sortType.postValue(sortType)
+    }
+
+    fun loadSongs(sortType: SortType) = viewModelScope.launch(Dispatchers.IO) {
+        _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF, sortType))
     }
 
     fun getAlbumSongs(caller: String, albumId: Long) {

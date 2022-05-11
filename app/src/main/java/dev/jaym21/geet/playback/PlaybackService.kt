@@ -21,6 +21,7 @@ import dev.jaym21.geet.extensions.toIDList
 import dev.jaym21.geet.extensions.toRawMediaItems
 import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.QueueEntity
+import dev.jaym21.geet.models.SortType
 import dev.jaym21.geet.playback.player.SongPlayer
 import dev.jaym21.geet.repository.*
 import dev.jaym21.geet.utils.Constants
@@ -137,7 +138,7 @@ class PlaybackService: MediaBrowserServiceCompat(), LifecycleOwner {
         } else {
             when (mediaType?.toInt() ?: 0) {
                 Constants.ALL_SONGS_MODE -> {
-                    mediaItems.addAll(songRepository.getSongs(caller))
+                    mediaItems.addAll(songRepository.getSongs(caller, SortType.A_Z))
                 }
                 Constants.ALL_ALBUMS_MODE -> {
                     mediaItems.addAll(albumRepository.getAllAlbums(caller))
