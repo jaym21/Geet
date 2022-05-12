@@ -158,7 +158,7 @@ class MainViewModel @Inject constructor(
         return playlistRepository.createPlaylist(name)
     }
 
-    fun getPlaylistSongs(caller: String, playlistId: Long) {
+    fun getPlaylistSongs(caller: String?, playlistId: Long) {
         _playlistSongs.postValue(playlistRepository.getSongsInPlaylist(caller, playlistId))
     }
 

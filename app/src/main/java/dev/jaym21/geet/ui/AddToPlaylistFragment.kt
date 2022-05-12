@@ -16,10 +16,10 @@ import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.IPlaylistsRVAdapter
 import dev.jaym21.geet.adapters.PlaylistsRVAdapter
 import dev.jaym21.geet.databinding.FragmentAddToPlaylistBinding
+import dev.jaym21.geet.models.MediaID
 import dev.jaym21.geet.models.Playlist
 import dev.jaym21.geet.utils.Constants
 
-//TODO: check if song already present in playlist
 class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
 
     private var _binding: FragmentAddToPlaylistBinding? = null
@@ -27,6 +27,7 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
         get() = _binding!!
     private val playlistAdapter = PlaylistsRVAdapter(this)
     private var songId: Long? = null
+    private var songTitle: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +42,9 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
         super.onViewCreated(view, savedInstanceState)
 
         songId = arguments?.getLong(Constants.ADD_TO_PLAYLIST_SONG_ID_ARG)
+        songTitle = arguments?.getString(Constants.ADD_TO_PLAYLIST_SONG_TITLE_ARG)
 
-        if (songId != null) {
+        if (songId != null && songTitle != null) {
 
             setUpRecyclerView()
 
@@ -118,9 +120,28 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
             ids = LongArray(1)
             ids[0] = songId!!
         }
-        mainViewModel.addToPlaylist(playlist.id, ids)
-        Snackbar.make(binding.root, "Song added to ${playlist.name}", Snackbar.LENGTH_SHORT).show()
-        findNavController().popBackStack()
+
+        mainViewModel.getPlaylistSongs(MediaID.currentCaller, playlist.id)
+
+        mainViewModel.playlistSongs.observe(viewLifecycleOwner) {
+            Log.d("TAGYOYO", "songId: $songId")
+            var isPresent = false
+            for (i in it) {
+                Log.d("TAGYOYO", "id ${i.title}")
+                if (i.title == songTitle) {
+                    isPresent = true
+                }
+            }
+            Log.d("TAGYOYO", "AFTER: isPresent $isPresent")
+            if (!isPresent) {
+                mainViewModel.addToPlaylist(playlist.id, ids)
+                Snackbar.make(binding.root, "Song added to ${playlist.name}", Snackbar.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            } else {
+                Snackbar.make(binding.root, "Song already present in playlist", Snackbar.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }
+        }
     }
 
     override fun onDestroy() {

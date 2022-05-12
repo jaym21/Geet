@@ -58,6 +58,7 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
             binding.llAddToPlaylist.setOnClickListener {
                 val bundle = Bundle().apply {
                     putLong(Constants.ADD_TO_PLAYLIST_SONG_ID_ARG, song?.id!!)
+                    putString(Constants.ADD_TO_PLAYLIST_SONG_TITLE_ARG, song?.title)
                 }
 
                 when (clickFrom) {

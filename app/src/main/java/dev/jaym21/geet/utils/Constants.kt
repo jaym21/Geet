@@ -17,6 +17,7 @@ object Constants {
     const val MEDIA_CALLER = "MEDIA_CALLER"
     const val SONG_BOTTOM_SHEET_ARG = "song_bottom_sheet_arg"
     const val ADD_TO_PLAYLIST_SONG_ID_ARG = "add_to_playlist_song_id_arg"
+    const val ADD_TO_PLAYLIST_SONG_TITLE_ARG = "add_to_playlist_song_title_arg"
 
     //media session callback
     const val QUEUED_SONGS_LIST = "queued_songs_list"
