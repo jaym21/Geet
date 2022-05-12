@@ -74,22 +74,6 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
             albumAdapter.submitList(it.albums)
             artistAdapter.submitList(it.artists)
 
-            if (it.songs.isNullOrEmpty()) {
-                binding.tvNoSongsText.visibility = View.VISIBLE
-            } else {
-                binding.tvNoSongsText.visibility = View.GONE
-            }
-            if (it.albums.isNullOrEmpty()) {
-                binding.tvNoAlbumsText.visibility = View.VISIBLE
-            } else {
-                binding.tvNoAlbumsText.visibility = View.GONE
-            }
-            if (it.artists.isNullOrEmpty()) {
-                binding.tvNoArtistsText.visibility = View.VISIBLE
-            } else {
-                binding.tvNoArtistsText.visibility = View.GONE
-            }
-
             if (it.songs.isNullOrEmpty() && it.albums.isNullOrEmpty() && it.artists.isNullOrEmpty()) {
                 binding.tvNoResultsText.visibility = View.VISIBLE
                 changeTitlesAndDividerVisibility(false)
@@ -107,23 +91,17 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
     private fun changeTitlesAndDividerVisibility(isVisible: Boolean) {
         if (isVisible) {
             binding.tvSongText.visibility = View.VISIBLE
-            binding.tvNoSongsText.visibility = View.VISIBLE
             binding.dividerLine.visibility = View.VISIBLE
             binding.tvAlbumText.visibility = View.VISIBLE
-            binding.tvNoAlbumsText.visibility = View.VISIBLE
             binding.dividerLine1.visibility = View.VISIBLE
             binding.tvArtistText.visibility = View.VISIBLE
-            binding.tvNoArtistsText.visibility = View.VISIBLE
             binding.dividerLine2.visibility = View.VISIBLE
         } else {
             binding.tvSongText.visibility = View.GONE
-            binding.tvNoSongsText.visibility = View.GONE
             binding.dividerLine.visibility = View.GONE
             binding.tvAlbumText.visibility = View.GONE
-            binding.tvNoAlbumsText.visibility = View.GONE
             binding.dividerLine1.visibility = View.GONE
             binding.tvArtistText.visibility = View.GONE
-            binding.tvNoArtistsText.visibility = View.GONE
             binding.dividerLine2.visibility = View.GONE
         }
     }
@@ -145,7 +123,7 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
     }
 
     override fun onMoreMenuClicked(song: Song) {
-        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController(), Constants.CLICK_FROM_SEARCH)
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
         }

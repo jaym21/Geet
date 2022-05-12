@@ -19,6 +19,7 @@ import dev.jaym21.geet.databinding.FragmentAddToPlaylistBinding
 import dev.jaym21.geet.models.Playlist
 import dev.jaym21.geet.utils.Constants
 
+//TODO: check if song already present in playlist
 class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
 
     private var _binding: FragmentAddToPlaylistBinding? = null
