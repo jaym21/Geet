@@ -47,6 +47,7 @@ class AlbumDetailsFragment : BaseFragment(), ISongsRVAdapter {
         caller = arguments?.getString(Constants.MEDIA_CALLER)
 
         if (album != null && caller != null) {
+
             binding.tvAlbumName.text = album?.albumTitle
             binding.tvArtistName.text = album?.artist
             Glide.with(requireContext()).load(SongUtils.getAlbumArtBitmap(requireContext(), album?.id)).into(binding.ivAlbumArtwork)
