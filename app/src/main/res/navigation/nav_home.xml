@@ -51,17 +51,29 @@
         android:id="@+id/searchFragment"
         android:name="dev.jaym21.geet.ui.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_addToPlaylistFragment"
+            app:destination="@id/addToPlaylistFragment" />
+    </fragment>
     <fragment
         android:id="@+id/albumDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.AlbumDetailsFragment"
         android:label="fragment_album_details"
-        tools:layout="@layout/fragment_album_details" />
+        tools:layout="@layout/fragment_album_details" >
+        <action
+            android:id="@+id/action_albumDetailsFragment_to_addToPlaylistFragment"
+            app:destination="@id/addToPlaylistFragment" />
+    </fragment>
     <fragment
         android:id="@+id/artistDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.ArtistDetailsFragment"
         android:label="fragment_artist_details"
-        tools:layout="@layout/fragment_artist_details" />
+        tools:layout="@layout/fragment_artist_details" >
+        <action
+            android:id="@+id/action_artistDetailsFragment_to_addToPlaylistFragment"
+            app:destination="@id/addToPlaylistFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addToPlaylistFragment"
         android:name="dev.jaym21.geet.ui.AddToPlaylistFragment"
@@ -71,6 +83,10 @@
         android:id="@+id/playlistDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.PlaylistDetailsFragment"
         android:label="fragment_playlist_details"
-        tools:layout="@layout/fragment_playlist_details" />
+        tools:layout="@layout/fragment_playlist_details" >
+        <action
+            android:id="@+id/action_playlistDetailsFragment_to_addToPlaylistFragment"
+            app:destination="@id/addToPlaylistFragment" />
+    </fragment>
 
 </navigation>

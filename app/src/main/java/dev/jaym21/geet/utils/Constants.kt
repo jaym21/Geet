@@ -74,4 +74,11 @@ object Constants {
     const val PLAYLIST_MODE = 17
     const val REPEAT_MODE = "repeat_mode"
     const val SHUFFLE_MODE = "shuffle_mode"
+
+    //more menu click from
+    const val CLICK_FROM_ALL_SONG_DETAILS = "click_from_all_song_details"
+    const val CLICK_FROM_ALBUM_DETAILS = "click_from_album_details"
+    const val CLICK_FROM_ARTIST_DETAILS = "click_from_artist_details"
+    const val CLICK_FROM_PLAYLIST_DETAILS = "click_from_playlist_details"
+    const val CLICK_FROM_SEARCH = "click_from_search"
 }

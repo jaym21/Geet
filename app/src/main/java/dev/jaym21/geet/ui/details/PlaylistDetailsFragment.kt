@@ -2,7 +2,6 @@ package dev.jaym21.geet.ui.details
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -147,9 +146,9 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
         val extras = getExtraBundle(songs.toSongIds(), playlist?.name!!)
         mainViewModel.mediaItemClicked(song, extras)
     }
-    //TODO: crashing on add to playlist click
+
     override fun onMoreMenuClicked(song: Song) {
-        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController(), Constants.CLICK_FROM_PLAYLIST_DETAILS)
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
         }

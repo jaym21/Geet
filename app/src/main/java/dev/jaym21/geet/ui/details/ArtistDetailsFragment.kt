@@ -182,7 +182,7 @@ class ArtistDetailsFragment : BaseFragment(), IArtistAlbumsRVAdapter, ISongsRVAd
     }
 
     override fun onMoreMenuClicked(song: Song) {
-        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController())
+        val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController(), Constants.CLICK_FROM_ARTIST_DETAILS)
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
         }

@@ -17,7 +17,7 @@ import dev.jaym21.geet.utils.Constants
 import dev.jaym21.geet.utils.SongUtils
 import dev.jaym21.geet.viewmodels.MainViewModel
 
-class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private val lifecycleOwner: LifecycleOwner, private val navController: NavController) : BottomSheetDialogFragment() {
+class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private val lifecycleOwner: LifecycleOwner, private val navController: NavController, private val clickFrom: String) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSongBottomSheetBinding? = null
     private val binding: FragmentSongBottomSheetBinding
@@ -59,7 +59,25 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
                 val bundle = Bundle().apply {
                     putLong(Constants.ADD_TO_PLAYLIST_SONG_ID_ARG, song?.id!!)
                 }
-                navController.navigate(R.id.action_homeFragment_to_addToPlaylistFragment, bundle)
+
+                when (clickFrom) {
+                    Constants.CLICK_FROM_ALL_SONG_DETAILS -> {
+                        navController.navigate(R.id.action_homeFragment_to_addToPlaylistFragment, bundle)
+                    }
+                    Constants.CLICK_FROM_ALBUM_DETAILS -> {
+                        navController.navigate(R.id.action_albumDetailsFragment_to_addToPlaylistFragment, bundle)
+                    }
+                    Constants.CLICK_FROM_ARTIST_DETAILS -> {
+                        navController.navigate(R.id.action_artistDetailsFragment_to_addToPlaylistFragment, bundle)
+                    }
+                    Constants.CLICK_FROM_PLAYLIST_DETAILS -> {
+                        navController.navigate(R.id.action_playlistDetailsFragment_to_addToPlaylistFragment, bundle)
+                    }
+                    Constants.CLICK_FROM_SEARCH -> {
+                        navController.navigate(R.id.action_searchFragment_to_addToPlaylistFragment, bundle)
+                    }
+                }
+
                 dismiss()
             }
         } else {
