@@ -54,8 +54,13 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_addToPlaylistFragment"
-            app:destination="@id/addToPlaylistFragment" />
+            app:destination="@id/addToPlaylistFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
+
     <fragment
         android:id="@+id/albumDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.AlbumDetailsFragment"
@@ -63,8 +68,13 @@
         tools:layout="@layout/fragment_album_details" >
         <action
             android:id="@+id/action_albumDetailsFragment_to_addToPlaylistFragment"
-            app:destination="@id/addToPlaylistFragment" />
+            app:destination="@id/addToPlaylistFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
+
     <fragment
         android:id="@+id/artistDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.ArtistDetailsFragment"
@@ -72,13 +82,19 @@
         tools:layout="@layout/fragment_artist_details" >
         <action
             android:id="@+id/action_artistDetailsFragment_to_addToPlaylistFragment"
-            app:destination="@id/addToPlaylistFragment" />
+            app:destination="@id/addToPlaylistFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
+
     <fragment
         android:id="@+id/addToPlaylistFragment"
         android:name="dev.jaym21.geet.ui.AddToPlaylistFragment"
         android:label="fragment_add_to_playlist"
         tools:layout="@layout/fragment_add_to_playlist" />
+
     <fragment
         android:id="@+id/playlistDetailsFragment"
         android:name="dev.jaym21.geet.ui.details.PlaylistDetailsFragment"
@@ -86,7 +102,11 @@
         tools:layout="@layout/fragment_playlist_details" >
         <action
             android:id="@+id/action_playlistDetailsFragment_to_addToPlaylistFragment"
-            app:destination="@id/addToPlaylistFragment" />
+            app:destination="@id/addToPlaylistFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
 </navigation>
