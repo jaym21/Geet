@@ -1,6 +1,5 @@
 package dev.jaym21.geet.repository
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.extensions.equalsBy

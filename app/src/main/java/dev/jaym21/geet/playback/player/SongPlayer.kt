@@ -287,7 +287,7 @@ class SongPlayer(
             isPlayingCallback(this, false)
     }
 
-    fun updatePlaybackState(applier: PlaybackStateCompat.Builder.() -> Unit) {
+    private fun updatePlaybackState(applier: PlaybackStateCompat.Builder.() -> Unit) {
         applier(stateBuilder)
         setPlaybackState(stateBuilder.build())
     }
@@ -300,7 +300,7 @@ class SongPlayer(
     }
 
     //setting current song meta data in media session
-    fun setMetaData(song: Song) {
+    private fun setMetaData(song: Song) {
         //getting song artwork from album
         val artwork = SongUtils.getAlbumArtBitmap(context, song.albumId)
         //making media meta data

@@ -3,14 +3,14 @@ package dev.jaym21.geet.extensions
 import android.support.v4.media.session.MediaSessionCompat
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.repository.SongsRepository
+import dev.jaym21.geet.utils.SongUtils
+import java.util.*
 
 fun <T> List<T>?.moveElement(fromIndex: Int, toIndex: Int): List<T> {
     if (this == null) {
-        return emptyList()
+        return Collections.emptyList()
     }
-    return toMutableList().apply {
-        add(toIndex, removeAt(fromIndex))
-    }
+    return toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
 }
 
 fun LongArray.toQueue(songsRepository: SongsRepository): List<MediaSessionCompat.QueueItem> {
@@ -46,4 +46,24 @@ fun <T> List<T>.equalsBy(other: List<T>, by: (left: T, right: T) -> Boolean): Bo
         }
     }
     return true
+}
+
+fun LongArray.convertToString(): String {
+    var result = ""
+    for (i in this) {
+        result = "$result $i"
+    }
+    return result
+}
+
+fun List<Song>.reorderByIds(ids: LongArray): List<Song> {
+    val originalSongs = this
+    val result = mutableListOf<Song>()
+    for (id in ids) {
+        val song = SongUtils.getSongWithId(originalSongs, id)
+        if (song != null) {
+            result.add(song)
+        }
+    }
+    return result
 }

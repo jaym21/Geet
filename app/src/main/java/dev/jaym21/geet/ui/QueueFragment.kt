@@ -1,6 +1,7 @@
 package dev.jaym21.geet.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,12 @@ import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.IQueueRVAdapter
 import dev.jaym21.geet.adapters.QueueRVAdapter
 import dev.jaym21.geet.databinding.FragmentQueueBinding
+import dev.jaym21.geet.extensions.convertToString
+import dev.jaym21.geet.extensions.getExtraBundle
+import dev.jaym21.geet.extensions.reorderByIds
+import dev.jaym21.geet.extensions.toSongIds
+import dev.jaym21.geet.models.QueueData
+import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.widgets.QueueDragCallback
 
 class QueueFragment : BaseFragment(), IQueueRVAdapter {
@@ -23,6 +30,10 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
     private var queueAdapter = QueueRVAdapter(this)
     private var touchHelper: ItemTouchHelper? = null
     private var callback: QueueDragCallback? = null
+    private var songs = listOf<Song>()
+    private var queueData: QueueData? = null
+    private var queueIds: LongArray? = null
+    private var areSongsAdded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +54,18 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         setUpRecyclerView()
 
         nowPlayingViewModel.queueData.observe(viewLifecycleOwner) {
+            Log.d("TAGYOYO", "onViewCreated: ${it.queue.convertToString()}")
+            queueData = it
+            queueIds = it.queue
             mainViewModel.getSongForIds(it.queue)
         }
 
         mainViewModel.songsForIds.observe(viewLifecycleOwner) {
-            queueAdapter.submitList(it)
+            Log.d("TAGYOYO", "onViewCreated: songs $it")
+            songs = it
+            queueAdapter.updateData(it)
         }
     }
-
 
     private fun setUpRecyclerView() {
         binding.apply {
@@ -58,6 +73,11 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
             getTouchHelper().attachToRecyclerView(rvQueue)
             rvQueue.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
+    }
+
+    override fun onSongClicked(song: Song) {
+        val extras = queueData?.queueTitle?.let { getExtraBundle(songs.toSongIds(), it) }
+        mainViewModel.mediaItemClicked(song, extras)
     }
 
     override fun onPickUp(viewHolder: RecyclerView.ViewHolder) {

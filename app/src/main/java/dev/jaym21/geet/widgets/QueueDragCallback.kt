@@ -2,6 +2,7 @@ package dev.jaym21.geet.widgets
 
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
@@ -24,8 +25,6 @@ import kotlin.math.sign
 
 class QueueDragCallback(private val mainViewModel: MainViewModel, private val queueAdapter: QueueRVAdapter): ItemTouchHelper.Callback() {
 
-    private var shouldElevate = true
-
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
@@ -39,21 +38,22 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val qu
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        val from = viewHolder.absoluteAdapterPosition
-        val to = target.absoluteAdapterPosition
+        val from = viewHolder.bindingAdapterPosition
+        val to = target.bindingAdapterPosition
 
+        Log.d("TAGYOYO", "onMove: from $from to $to")
+        queueAdapter.reorderSong(from, to)
         val extras = Bundle().apply {
             putInt(Constants.QUEUE_FROM, from)
             putInt(Constants.QUEUE_TO, to)
         }
         mainViewModel.transportControls().sendCustomAction(Constants.ACTION_QUEUE_REORDER, extras)
-
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val extras = Bundle()
-        val songId = queueAdapter.getSongIdForPosition(viewHolder.absoluteAdapterPosition)
+        val songId = queueAdapter.getSongIdForPosition(viewHolder.bindingAdapterPosition)
         extras.putLong(Constants.SONG, songId)
         mainViewModel.transportControls().sendCustomAction(Constants.ACTION_SONG_DELETED, extras)
     }
@@ -72,6 +72,7 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val qu
             .addActionIcon(R.drawable.ic_delete)
             .create()
             .decorate()
+
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
