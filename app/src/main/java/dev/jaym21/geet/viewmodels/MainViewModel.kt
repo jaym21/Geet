@@ -46,6 +46,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    var isBeingReordered = false
+
     private val _sortType: MutableLiveData<SortType> = MutableLiveData()
     val sortType: LiveData<SortType> = _sortType
 

@@ -63,7 +63,11 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         mainViewModel.songsForIds.observe(viewLifecycleOwner) {
             Log.d("TAGYOYO", "onViewCreated: songs $it")
             songs = it
-            queueAdapter.updateData(it)
+            if (mainViewModel.isBeingReordered) {
+                mainViewModel.isBeingReordered = false
+            } else {
+                queueAdapter.updateData(it)
+            }
         }
     }
 

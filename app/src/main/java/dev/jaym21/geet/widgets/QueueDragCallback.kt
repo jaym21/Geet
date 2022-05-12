@@ -42,6 +42,7 @@ class QueueDragCallback(private val mainViewModel: MainViewModel, private val qu
         val to = target.bindingAdapterPosition
 
         Log.d("TAGYOYO", "onMove: from $from to $to")
+        mainViewModel.isBeingReordered = true
         queueAdapter.reorderSong(from, to)
         val extras = Bundle().apply {
             putInt(Constants.QUEUE_FROM, from)
