@@ -3,8 +3,8 @@
     <color name="colorPrimary">#121212</color>
     <color name="colorDark">#121212</color>
     <color name="colorAccent">#DC143C</color>
-    <color name="colorAccentDark">#003546</color>
-    <color name="color_accent_on_container">#2D3639</color>
+    <color name="colorAccentDark">#800019</color>
+    <color name="color_accent_on_container">#A5354C</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorDarkDim">#232323</color>

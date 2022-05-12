@@ -102,7 +102,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="16dp"/>
 
-
         <TextView
             android:id="@+id/tvNoSongsText"
             android:layout_width="wrap_content"
@@ -115,6 +114,17 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/ic_play"
+            android:background="@drawable/play_pause_btn_bg"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/ivAlbumArtwork"
+            app:layout_constraintBottom_toTopOf="@id/tvSongText"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
