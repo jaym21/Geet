@@ -17,7 +17,7 @@
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 
     <ImageView
@@ -28,7 +28,7 @@
         app:tint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp" />
 
     <ImageView
@@ -37,9 +37,9 @@
         android:layout_height="18dp"
         android:src="@drawable/ic_search"
         app:tint="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivSort"
+        app:layout_constraintBottom_toBottomOf="@id/ivSort"
         app:layout_constraintEnd_toStartOf="@id/ivSort"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"/>
 
     <com.google.android.material.tabs.TabLayout
