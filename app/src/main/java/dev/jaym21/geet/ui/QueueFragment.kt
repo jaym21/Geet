@@ -24,7 +24,7 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
     private var _binding: FragmentQueueBinding? = null
     private val binding: FragmentQueueBinding
         get() = _binding!!
-    private var queueAdapter = QueueRVAdapter(this)
+    private var queueAdapter: QueueRVAdapter? = null
     private var touchHelper: ItemTouchHelper? = null
     private var callback: QueueDragCallback? = null
     private var songs = listOf<Song>()
@@ -43,6 +43,8 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        queueAdapter = QueueRVAdapter(this, this, nowPlayingViewModel)
+
         binding.ivBackButtonQueue.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -50,21 +52,19 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         setUpRecyclerView()
 
         nowPlayingViewModel.queueData.observe(viewLifecycleOwner) {
-            Log.d("TAGYOYO", "onViewCreated: ${it.queue.convertToString()}")
             queueData = it
             queueIds = it.queue
             mainViewModel.getSongForIds(it.queue)
         }
 
         mainViewModel.songsForIds.observe(viewLifecycleOwner) {
-            Log.d("TAGYOYO", "onViewCreated: songs $it")
             if (mainViewModel.isBeingReordered) {
                 mainViewModel.isBeingReordered = false
             } else {
                 songs = it
                 val orderedSongs = queueIds?.let { it1 -> songs.keepInOrder(it1) }
                 if (orderedSongs != null) {
-                    queueAdapter.updateData(orderedSongs)
+                    queueAdapter?.updateData(orderedSongs)
                 }
             }
         }
@@ -93,7 +93,7 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
         if (instance != null) {
             return instance
         }
-        val newCallback = QueueDragCallback(mainViewModel, queueAdapter)
+        val newCallback = QueueDragCallback(mainViewModel, queueAdapter!!)
         val newInstance = ItemTouchHelper(newCallback)
         callback = newCallback
         touchHelper = newInstance

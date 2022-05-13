@@ -69,7 +69,7 @@ class SongsRVAdapter(private val listener: ISongsRVAdapter, private val lifecycl
         if (position == nowPlayingPosition) {
             holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorAccent))
         } else {
-            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white_alpha_85))
+            holder.artist.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white_alpha_70))
         }
 
         holder.root.setOnClickListener {
