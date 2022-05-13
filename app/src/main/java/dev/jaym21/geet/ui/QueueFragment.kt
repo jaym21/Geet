@@ -14,10 +14,7 @@ import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.IQueueRVAdapter
 import dev.jaym21.geet.adapters.QueueRVAdapter
 import dev.jaym21.geet.databinding.FragmentQueueBinding
-import dev.jaym21.geet.extensions.convertToString
-import dev.jaym21.geet.extensions.getExtraBundle
-import dev.jaym21.geet.extensions.reorderByIds
-import dev.jaym21.geet.extensions.toSongIds
+import dev.jaym21.geet.extensions.*
 import dev.jaym21.geet.models.QueueData
 import dev.jaym21.geet.models.Song
 import dev.jaym21.geet.widgets.QueueDragCallback
@@ -33,7 +30,6 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
     private var songs = listOf<Song>()
     private var queueData: QueueData? = null
     private var queueIds: LongArray? = null
-    private var areSongsAdded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,11 +58,14 @@ class QueueFragment : BaseFragment(), IQueueRVAdapter {
 
         mainViewModel.songsForIds.observe(viewLifecycleOwner) {
             Log.d("TAGYOYO", "onViewCreated: songs $it")
-            songs = it
             if (mainViewModel.isBeingReordered) {
                 mainViewModel.isBeingReordered = false
             } else {
-                queueAdapter.updateData(it)
+                songs = it
+                val orderedSongs = queueIds?.let { it1 -> songs.keepInOrder(it1) }
+                if (orderedSongs != null) {
+                    queueAdapter.updateData(orderedSongs)
+                }
             }
         }
     }
