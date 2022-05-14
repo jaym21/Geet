@@ -98,8 +98,11 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
         val alertBuilder = AlertDialog.Builder(requireContext())
         val dialogLayout = layoutInflater.inflate(R.layout.delete_playlist_dialog_layout, null)
 
+        val tvDeletePlaylist: TextView = dialogLayout.findViewById(R.id.tvConfirmDeleteText)
         val btnDelete: TextView = dialogLayout.findViewById(R.id.tvDeleteDialog)
         val btnCancel: TextView = dialogLayout.findViewById(R.id.tvCancelDialogDelete)
+
+        tvDeletePlaylist.text = "Delete ${playlist?.name}?"
 
         alertBuilder.setView(dialogLayout)
         val deleteDialog = alertBuilder.create()

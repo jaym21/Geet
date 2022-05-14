@@ -168,8 +168,11 @@ class PlaylistRepository(private val context: Context) {
 
     fun deleteTrackFromPlaylist(songId: Long, playlistId: Long) {
         val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-        val where = MediaStore.Audio.Playlists.Members.AUDIO_ID + " = " + songId
-        context.contentResolver.delete(uri, where, null)
+        context.contentResolver.delete(
+            uri,
+            "${MediaStore.Audio.Playlists.Members.AUDIO_ID} = ?",
+            arrayOf(songId.toString())
+        )
     }
 
     private fun cleanupPlaylist(

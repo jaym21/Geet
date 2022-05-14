@@ -134,22 +134,29 @@ class MainViewModel @Inject constructor(
         _sortType.postValue(sortType)
     }
 
+    //song
     fun loadSongs(sortType: SortType) = viewModelScope.launch(Dispatchers.IO) {
         _songs.postValue(songsRepository.getSongs(MediaID.CALLER_SELF, sortType))
+    }
+
+    fun getSongForIds(ids: LongArray) = viewModelScope.launch {
+        _songsForIds.postValue(songsRepository.getSongsForIds(ids))
+    }
+
+    fun getSongForId(id: Long) = viewModelScope.launch {
+        _songForId.postValue(songsRepository.getSongForId(id))
+    }
+
+    //album
+    fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
+        _albums.postValue(albumsRepository.getAllAlbums(MediaID.CALLER_SELF))
     }
 
     fun getAlbumSongs(caller: String, albumId: Long) {
         _albumSongs.postValue(albumsRepository.getSongsForAlbum(caller, albumId))
     }
 
-    fun getArtistSongs(caller: String, artistId: Long) {
-        _artistSongs.postValue(artistsRepository.getSongsForArtist(caller, artistId))
-    }
-
-    fun loadAlbums() = viewModelScope.launch(Dispatchers.IO) {
-        _albums.postValue(albumsRepository.getAllAlbums(MediaID.CALLER_SELF))
-    }
-
+    //playlist
     fun loadPlaylists() = viewModelScope.launch(Dispatchers.IO) {
         _playlists.postValue(playlistRepository.getAllPlaylists(MediaID.CALLER_SELF))
     }
@@ -174,20 +181,17 @@ class MainViewModel @Inject constructor(
         playlistRepository.deleteTrackFromPlaylist(songId, playlistId)
     }
 
-    fun getArtistAlbums(artistId: Long) {
-        _artistAlbums.postValue(albumsRepository.getAlbumsForArtist(artistId))
-    }
-
+    //artist
     fun loadArtists() = viewModelScope.launch(Dispatchers.IO) {
         _artists.postValue(artistsRepository.getAllArtists(MediaID.CALLER_SELF))
     }
 
-    fun getSongForIds(ids: LongArray) = viewModelScope.launch {
-        _songsForIds.postValue(songsRepository.getSongsForIds(ids))
+    fun getArtistSongs(caller: String, artistId: Long) {
+        _artistSongs.postValue(artistsRepository.getSongsForArtist(caller, artistId))
     }
 
-    fun getSongForId(id: Long) = viewModelScope.launch {
-        _songForId.postValue(songsRepository.getSongForId(id))
+    fun getArtistAlbums(artistId: Long) {
+        _artistAlbums.postValue(albumsRepository.getAlbumsForArtist(artistId))
     }
 
     //bottom sheet
