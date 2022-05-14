@@ -13,6 +13,7 @@ import dev.jaym21.geet.extensions.isPrepared
 import dev.jaym21.geet.extensions.map
 import dev.jaym21.geet.models.*
 import dev.jaym21.geet.playback.player.PlaybackSessionConnector
+import dev.jaym21.geet.playback.player.SongPlayer
 import dev.jaym21.geet.repository.AlbumRepository
 import dev.jaym21.geet.repository.ArtistRepository
 import dev.jaym21.geet.repository.PlaylistRepository
@@ -27,7 +28,8 @@ class MainViewModel @Inject constructor(
     private val albumsRepository: AlbumRepository,
     private val artistsRepository: ArtistRepository,
     private val playlistRepository: PlaylistRepository,
-    private val playbackSessionConnector: PlaybackSessionConnector
+    private val playbackSessionConnector: PlaybackSessionConnector,
+    private val songPlayer: SongPlayer
 ): ViewModel() {
 
     val rootMediaId: LiveData<MediaID> = playbackSessionConnector.isConnected.map { isConnected ->
@@ -101,7 +103,6 @@ class MainViewModel @Inject constructor(
     }
 
     private fun browseToItem(clickedItem: MediaBrowserCompat.MediaItem) {
-        Log.d("TAGYOYO", "browseToItem: ${clickedItem.mediaId}")
         _navigateToMediaItem.value = Event(MediaID().fromString(clickedItem.mediaId!!).apply {
             this.mediaItem = clickedItem
         })
@@ -132,6 +133,15 @@ class MainViewModel @Inject constructor(
 
     fun updateSortType(sortType: SortType) {
         _sortType.postValue(sortType)
+    }
+
+    fun addSongToQueue(songId: Long) {
+        val queueIds = songPlayer.getQueueIds()
+        val resultList = queueIds.toMutableList()
+        resultList.add(songId)
+
+        val resultLongArray = resultList.toLongArray()
+        songPlayer.setQueue(resultLongArray, "Custom Queue")
     }
 
     //song

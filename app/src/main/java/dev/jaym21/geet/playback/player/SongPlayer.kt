@@ -204,6 +204,10 @@ class SongPlayer(
         }
     }
 
+    fun getQueueIds(): LongArray {
+        return queue.ids
+    }
+
     fun setQueue(ids: LongArray, title: String) {
         this.queue.ids = ids
         this.queue.title = title
