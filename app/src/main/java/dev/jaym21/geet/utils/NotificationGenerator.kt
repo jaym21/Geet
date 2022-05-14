@@ -78,7 +78,6 @@ class NotificationGenerator(private val context: Application) {
             .addAction(playPauseAction(context, playPauseButton))
             .addAction(nextAction(context))
             .setAutoCancel(false)
-            .setOngoing(true)
 
         //getting color palette using artwork
         if (artwork != null) {

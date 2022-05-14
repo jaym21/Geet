@@ -61,7 +61,11 @@ class SearchViewModel @Inject constructor(
                 _searchResults.postValue(searchResultData)
             }
         } else {
-            _searchResults.postValue(searchResultData.clearResults())
+            clearResults()
         }
+    }
+
+    fun clearResults() {
+        _searchResults.postValue(searchResultData.clearResults())
     }
 }

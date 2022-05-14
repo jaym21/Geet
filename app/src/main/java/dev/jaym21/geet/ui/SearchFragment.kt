@@ -58,6 +58,9 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
 
             override fun onTextChanged(cs: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 searchViewModel.search(cs.toString())
+                if (cs?.length == 0) {
+                    searchViewModel.clearResults()
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -133,14 +136,17 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
 
     override fun onAlbumClick(album: Album) {
         mainViewModel.mediaItemClicked(album, null)
+        findNavController().popBackStack()
     }
 
     override fun onArtistClick(artist: Artist) {
         mainViewModel.mediaItemClicked(artist, null)
+        findNavController().popBackStack()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        searchViewModel.clearResults()
         _binding = null
     }
 }
