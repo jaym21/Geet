@@ -1,10 +1,12 @@
 package dev.jaym21.geet.ui.details
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,11 +89,33 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
             }
 
             binding.ivDeletePlaylist.setOnClickListener {
-                //TODO: Add a confirmation alert dialog
-                mainViewModel.deletePlaylist(playlist?.id!!)
-                findNavController().popBackStack()
+                showDeleteDialog()
             }
         }
+    }
+
+    private fun showDeleteDialog() {
+        val alertBuilder = AlertDialog.Builder(requireContext())
+        val dialogLayout = layoutInflater.inflate(R.layout.delete_playlist_dialog_layout, null)
+
+        val btnDelete: TextView = dialogLayout.findViewById(R.id.tvDeleteDialog)
+        val btnCancel: TextView = dialogLayout.findViewById(R.id.tvCancelDialogDelete)
+
+        alertBuilder.setView(dialogLayout)
+        val deleteDialog = alertBuilder.create()
+        deleteDialog.setCanceledOnTouchOutside(false)
+
+        btnDelete.setOnClickListener {
+            mainViewModel.deletePlaylist(playlist?.id!!)
+            deleteDialog.dismiss()
+            findNavController().popBackStack()
+        }
+
+        btnCancel.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        deleteDialog.show()
     }
 
     private fun addArtwork(albumIds: List<Long>) {
