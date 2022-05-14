@@ -92,18 +92,6 @@ class HomeFragment : BaseFragment() {
 
     private fun navigateToMediaItem(mediaId: MediaID) {
         when (mediaId.type?.toInt()) {
-            Constants.ALL_SONGS_MODE -> {
-
-            }
-            Constants.ALL_ALBUMS_MODE -> {
-
-            }
-            Constants.ALL_ARTISTS_MODE -> {
-
-            }
-            Constants.ALL_PLAYLISTS_MODE -> {
-
-            }
             Constants.ARTIST_MODE -> {
                 val bundle = Bundle().apply {
                     putString(Constants.MEDIA_TYPE, mediaId.type)
