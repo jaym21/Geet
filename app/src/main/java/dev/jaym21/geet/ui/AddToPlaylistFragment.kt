@@ -96,6 +96,7 @@ class AddToPlaylistFragment : BaseFragment(), IPlaylistsRVAdapter {
                 Snackbar.make(binding.root, "Created $playlistName playlist and added song", Snackbar.LENGTH_SHORT).show()
             }
             createPlaylistDialog.dismiss()
+            findNavController().popBackStack()
         }
 
         btnCancel.setOnClickListener {

@@ -32,4 +32,5 @@
     <string name="descending_z_a">Descending Z-A</string>
     <string name="by_year">By Year</string>
     <string name="by_duration">By Duration</string>
+    <string name="remove_from_this_playlist">Remove from this playlist</string>
 </resources>

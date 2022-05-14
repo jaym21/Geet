@@ -163,7 +163,15 @@ class MainViewModel @Inject constructor(
     }
 
     fun addToPlaylist(playlistId: Long, ids: LongArray) {
-        val returned = playlistRepository.addToPlaylist(playlistId, ids)
+        playlistRepository.addToPlaylist(playlistId, ids)
+    }
+
+    fun deletePlaylist(playlistId: Long) {
+        playlistRepository.deletePlaylist(playlistId)
+    }
+
+    fun deleteSongFromPlaylist(songId: Long, playlistId: Long) {
+        playlistRepository.deleteTrackFromPlaylist(songId, playlistId)
     }
 
     fun getArtistAlbums(artistId: Long) {

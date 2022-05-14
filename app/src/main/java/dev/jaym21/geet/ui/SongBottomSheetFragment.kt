@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dev.jaym21.geet.R
 import dev.jaym21.geet.databinding.FragmentSongBottomSheetBinding
 import dev.jaym21.geet.models.Song
@@ -23,6 +24,7 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
     private val binding: FragmentSongBottomSheetBinding
         get() = _binding!!
     private var song: Song? = null
+    private var playlistId: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +40,13 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
 
         song = arguments?.getParcelable(Constants.SONG_BOTTOM_SHEET_ARG)
 
+        playlistId = arguments?.getLong(Constants.PLAYLIST_ID_BOTTOM_SHEET_ARG)
+
         if (song != null) {
+
+            if (clickFrom == Constants.CLICK_FROM_PLAYLIST_DETAILS) {
+                binding.llRemoveFromPlaylist.visibility = View.VISIBLE
+            }
 
             binding.tvSongNameSheet.text = song?.title
             binding.tvArtistNameSheet.text = song?.artist
@@ -81,6 +89,13 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
 
                 dismiss()
             }
+
+            binding.llRemoveFromPlaylist.setOnClickListener {
+                playlistId?.let { id -> mainViewModel.deleteSongFromPlaylist(song?.id!!, id) }
+                Snackbar.make(binding.root, "${song?.title} deleted from playlist", Snackbar.LENGTH_SHORT).show()
+                dismiss()
+            }
+
         } else {
             dismiss()
         }

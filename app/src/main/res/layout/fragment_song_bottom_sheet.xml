@@ -82,6 +82,36 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llRemoveFromPlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_remove_circle"
+            app:tint="@color/white_alpha_60" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/remove_from_this_playlist"
+            android:textColor="@color/white"
+            android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/llAddToQueue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

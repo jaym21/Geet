@@ -85,6 +85,12 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
             binding.ivBackButton.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            binding.ivDeletePlaylist.setOnClickListener {
+                //TODO: Add a confirmation alert dialog
+                mainViewModel.deletePlaylist(playlist?.id!!)
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -151,6 +157,7 @@ class PlaylistDetailsFragment : BaseFragment(), ISongsRVAdapter {
         val songBottomSheetFragment = SongBottomSheetFragment(mainViewModel, viewLifecycleOwner, findNavController(), Constants.CLICK_FROM_PLAYLIST_DETAILS)
         val bundle = Bundle().apply {
             putParcelable(Constants.SONG_BOTTOM_SHEET_ARG, song)
+            putLong(Constants.PLAYLIST_ID_BOTTOM_SHEET_ARG, playlist?.id!!)
         }
         songBottomSheetFragment.arguments = bundle
         songBottomSheetFragment.show(requireActivity().supportFragmentManager, "SongBottomSheetFragment")

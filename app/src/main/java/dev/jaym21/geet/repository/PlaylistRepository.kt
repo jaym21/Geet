@@ -88,8 +88,13 @@ class PlaylistRepository(private val context: Context) {
     }
 
     private fun makePlaylistCursor(): Cursor? {
-        return context.contentResolver.query(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI,
-            arrayOf(BaseColumns._ID, MediaStore.Audio.PlaylistsColumns.NAME), null, null, MediaStore.Audio.Playlists.DEFAULT_SORT_ORDER)
+        return context.contentResolver.query(
+            MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI,
+            arrayOf(BaseColumns._ID, MediaStore.Audio.PlaylistsColumns.NAME),
+            null,
+            null,
+            MediaStore.Audio.Playlists.DEFAULT_SORT_ORDER
+        )
     }
 
     private fun getPlaylistFromCursor(cursor: Cursor): Playlist {
@@ -151,7 +156,7 @@ class PlaylistRepository(private val context: Context) {
         return songs
     }
 
-    private fun deletePlaylist(playlistId: Long): Int {
+    fun deletePlaylist(playlistId: Long): Int {
         val localUri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
         val localStringBuilder = StringBuilder().apply {
             append("_id IN (")
@@ -161,6 +166,11 @@ class PlaylistRepository(private val context: Context) {
         return context.contentResolver.delete(localUri, localStringBuilder.toString(), null)
     }
 
+    fun deleteTrackFromPlaylist(songId: Long, playlistId: Long) {
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val where = MediaStore.Audio.Playlists.Members.AUDIO_ID + " = " + songId
+        context.contentResolver.delete(uri, where, null)
+    }
 
     private fun cleanupPlaylist(
         playlistId: Long,
