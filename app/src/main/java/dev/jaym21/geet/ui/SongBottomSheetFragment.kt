@@ -52,6 +52,11 @@ class SongBottomSheetFragment(private val mainViewModel: MainViewModel, private 
             val albumArtUri = SongUtils.getAlbumArtUri(song?.albumId!!)
             Glide.with(requireContext()).load(albumArtUri).transform(RoundedCorners(12)).into(binding.ivSongArtworkSheet)
 
+            binding.llAddToQueue.setOnClickListener {
+                mainViewModel.addSongToQueue(song?.id!!)
+                dismiss()
+            }
+
             binding.llGoToAlbum.setOnClickListener {
                 mainViewModel.goToAlbum(song!!)
                 dismiss()
