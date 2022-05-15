@@ -55,7 +55,7 @@ class SongPlayer(
         setPlaybackState(stateBuilder.build())
 
         val sessionIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-        val sessionActivityPendingIntent = PendingIntent.getActivity(context, 0, sessionIntent, 0)
+        val sessionActivityPendingIntent = PendingIntent.getActivity(context, 0, sessionIntent, PendingIntent.FLAG_IMMUTABLE)
         setSessionActivity(sessionActivityPendingIntent)
         isActive = true
     }
