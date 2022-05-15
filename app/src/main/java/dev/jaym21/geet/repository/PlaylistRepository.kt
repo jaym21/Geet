@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.database.Cursor
+import android.os.Build
 import android.os.RemoteException
 import android.provider.BaseColumns
 import android.provider.MediaStore
@@ -64,7 +65,11 @@ class PlaylistRepository(private val context: Context) {
 
     fun addToPlaylist(playlistId: Long, ids: LongArray): Int {
         val projection = arrayOf("max(${MediaStore.Audio.Playlists.Members.PLAY_ORDER})")
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.Members.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, playlistId)
+        } else {
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        }
 
         val base: Int = context.contentResolver.query(uri, projection, null, null, null)?.use {
             if (it.moveToFirst()) {
@@ -86,8 +91,13 @@ class PlaylistRepository(private val context: Context) {
     }
 
     private fun makePlaylistCursor(): Cursor? {
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        } else {
+            MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+        }
         return context.contentResolver.query(
-            MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI,
+            uri,
             arrayOf(BaseColumns._ID, MediaStore.Audio.PlaylistsColumns.NAME),
             null,
             null,
@@ -155,7 +165,11 @@ class PlaylistRepository(private val context: Context) {
     }
 
     fun deletePlaylist(playlistId: Long): Int {
-        val localUri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+        val localUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        } else {
+            MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+        }
         val localStringBuilder = StringBuilder().apply {
             append("_id IN (")
             append(playlistId)
@@ -165,7 +179,11 @@ class PlaylistRepository(private val context: Context) {
     }
 
     fun deleteTrackFromPlaylist(songId: Long, playlistId: Long) {
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.Members.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, playlistId)
+        } else {
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        }
         context.contentResolver.delete(
             uri,
             "${MediaStore.Audio.Playlists.Members.AUDIO_ID} = ?",
@@ -179,7 +197,11 @@ class PlaylistRepository(private val context: Context) {
         closeCursorAfter: Boolean
     ) {
         val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Playlists.Members.AUDIO_ID)
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.Members.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, playlistId)
+        } else {
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        }
         val ops = arrayListOf<ContentProviderOperation>().apply {
             add(ContentProviderOperation.newDelete(uri).build())
         }
@@ -234,7 +256,11 @@ class PlaylistRepository(private val context: Context) {
     }
 
     private fun getSongCountForPlaylist(playlistId: Long): Int {
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.Members.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, playlistId)
+        } else {
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        }
         return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Playlists._ID), "${MediaStore.Audio.AudioColumns.IS_MUSIC}=1 AND ${MediaStore.Audio.AudioColumns.TITLE} != ''", null, null)?.use {
             if (it.moveToFirst()) {
                 it.count
@@ -245,8 +271,13 @@ class PlaylistRepository(private val context: Context) {
     }
 
     private fun countPlaylist(playlistId: Long): Int {
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Audio.Playlists.Members.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, playlistId)
+        } else {
+            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        }
         return context.contentResolver.query(
-            MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId),
+            uri,
             arrayOf(MediaStore.Audio.Playlists.Members.AUDIO_ID),
             null,
             null,
