@@ -36,7 +36,12 @@ class ArtistsFragment : BaseFragment(), IArtistsRVAdapter {
         mainViewModel.loadArtists()
 
         mainViewModel.artists.observe(viewLifecycleOwner) {
-            artistsAdapter.submitList(it)
+            if (it.isNullOrEmpty()) {
+                binding.tvNoArtistsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoArtistsText.visibility = View.GONE
+                artistsAdapter.submitList(it)
+            }
         }
 
         playbackSessionViewModel?.mediaItems

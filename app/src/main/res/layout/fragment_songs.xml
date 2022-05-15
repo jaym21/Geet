@@ -21,4 +21,19 @@
         android:layout_marginTop="10dp"
         tools:listitem="@layout/item_song_layout"/>
 
+    <TextView
+        android:id="@+id/tvNoSongsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_songs_available"
+        android:textColor="@color/white_alpha_70"
+        android:textSize="15sp"
+        android:fontFamily="@font/inter_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,12 @@ class AlbumsFragment : BaseFragment(), IAlbumsRVAdapter {
         mainViewModel.loadAlbums()
 
         mainViewModel.albums.observe(viewLifecycleOwner) {
-            albumsAdapter.submitList(it)
+            if (it.isNullOrEmpty()) {
+                binding.tvNoAlbumsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoAlbumsText.visibility = View.GONE
+                albumsAdapter.submitList(it)
+            }
         }
 
         playbackSessionViewModel?.mediaItems

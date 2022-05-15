@@ -50,8 +50,11 @@ class SongsFragment : BaseFragment(), ISongsRVAdapter {
         }
 
         mainViewModel.songs.observe(viewLifecycleOwner) {
-            songs = it
-            if (!it.isNullOrEmpty()) {
+            if (it.isNullOrEmpty()) {
+                binding.tvNoSongsText.visibility = View.VISIBLE
+            } else {
+                binding.tvNoSongsText.visibility = View.GONE
+                songs = it
                 songsAdapter?.submitList(it)
             }
         }
