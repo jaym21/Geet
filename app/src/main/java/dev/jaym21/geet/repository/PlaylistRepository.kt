@@ -8,8 +8,6 @@ import android.database.Cursor
 import android.os.RemoteException
 import android.provider.BaseColumns
 import android.provider.MediaStore
-import androidx.room.util.CursorUtil.getColumnIndexOrThrow
-import dev.jaym21.geet.db.QueueDAO
 import dev.jaym21.geet.extensions.*
 import dev.jaym21.geet.extensions.getInt
 import dev.jaym21.geet.extensions.getLong

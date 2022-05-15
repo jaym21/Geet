@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.jaym21.geet.R
 import dev.jaym21.geet.adapters.*
@@ -114,7 +115,7 @@ class SearchFragment : BaseFragment(), IAlbumsRVAdapter, IArtistsRVAdapter, ISon
             rvSongsSearch.adapter = songsAdapter
             rvSongsSearch.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             rvAlbumsSearch.adapter = albumAdapter
-            rvAlbumsSearch.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            rvAlbumsSearch.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
             rvArtistSearch.adapter = artistAdapter
             rvArtistSearch.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
