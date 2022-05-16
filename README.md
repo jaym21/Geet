@@ -21,6 +21,10 @@
 |---	|---	|---
 |  ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot4.png)    |  ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot5.png)    |   ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot6.png)  
 
+| Artist Details |  Search Results  |  Playlists
+|---	|---	|---
+|  ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot7.png)    |  ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot8.png)    |   ![](https://github.com/jaym21/Geet/blob/main/screenshots/screenshot9.png)  
+
 
 
 
