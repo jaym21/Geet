@@ -15,9 +15,11 @@ import androidx.palette.graphics.Palette
 import dev.jaym21.geet.R
 import dev.jaym21.geet.playback.PlaybackService
 import dev.jaym21.geet.ui.MainActivity
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@DelicateCoroutinesApi
 class NotificationGenerator(private val context: Application) {
 
     private var whenTime = -1L
@@ -49,7 +51,7 @@ class NotificationGenerator(private val context: Application) {
 
         //pending intent for notification card click
         val nowPlayingIntent = Intent(context, MainActivity::class.java)
-        val notificationClickIntent = PendingIntent.getActivity(context, 0, nowPlayingIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val notificationClickIntent = PendingIntent.getActivity(context, 0, nowPlayingIntent, PendingIntent.FLAG_MUTABLE)
 
         if (whenTime == -1L)
             whenTime = System.currentTimeMillis()
@@ -93,7 +95,7 @@ class NotificationGenerator(private val context: Application) {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
             action = Constants.ACTION_NOTIFICATION_PREVIOUS
         }
-        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
+        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, PendingIntent.FLAG_MUTABLE)
         return NotificationCompat.Action(R.drawable.ic_skip_previous, "", pendingIntent)
     }
 
@@ -101,7 +103,7 @@ class NotificationGenerator(private val context: Application) {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
             action = Constants.ACTION_NOTIFICATION_PLAY_PAUSE
         }
-        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
+        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, PendingIntent.FLAG_MUTABLE)
         return NotificationCompat.Action(playPauseButton, "", pendingIntent)
     }
 
@@ -109,7 +111,7 @@ class NotificationGenerator(private val context: Application) {
         val actionIntent = Intent(context, PlaybackService::class.java).apply {
             action = Constants.ACTION_NOTIFICATION_NEXT
         }
-        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, 0)
+        val pendingIntent = PendingIntent.getService(context, 0, actionIntent, PendingIntent.FLAG_MUTABLE)
         return NotificationCompat.Action(R.drawable.ic_skip_next, "", pendingIntent)
     }
 
