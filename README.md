@@ -3,7 +3,13 @@
 <br/>
 
 ## Features 💡
-
+- Geet is an music player application to play songs in local storage of device.
+- Songs are played in a queue.
+- Queued songs can be deleted or their position can be changed in the queue.
+- Albums and artists can be used to browse songs of a particular album or artist.
+- Multiple custom playlists can be created.
+- Songs can be shuffled and repeated.
+- Songs can be controlled from notification panel and lock screen of device.  
 ## Screenshots 📸
 </br>
 
